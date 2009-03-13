@@ -1,0 +1,20 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+  <l:layout title="${it.displayName}">
+    <st:include page="sidepanel.jelly" it="${it.parent}"/>
+    <l:main-panel>
+    Descriptor count: ${it.descriptorIndex}
+      <j:forEach var="desc" items="${it.descriptors}">
+        <p>${desc}</p>
+      </j:forEach>
+      <f:form method="post" name="sliceconfig" action="sliceconfigSubmit">
+        <input type="hidden" name="slicedescriptorindex" value="${it.descriptorIndex}"/>
+        <f:block>
+          <st:include page="sliceconfig.jelly" it="${it.slice}"/>
+        </f:block>
+        <f:block>
+          <f:submit value="${%Save}" />
+        </f:block>
+      </f:form>
+    </l:main-panel>
+  </l:layout>
+</j:jelly>
