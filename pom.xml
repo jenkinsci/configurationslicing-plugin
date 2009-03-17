@@ -9,7 +9,7 @@
 
   <artifactId>ConfigurationSlicing</artifactId>
   <packaging>hpi</packaging>
-  <version>1.1</version>
+  <version>1.1-SNAPSHOT</version>
   <name>Configuration Slicing plugin</name>
   <description>Allows configuration of a single property across a group of projects</description>
 
