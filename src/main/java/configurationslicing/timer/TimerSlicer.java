@@ -1,9 +1,13 @@
 package configurationslicing.timer;
 
+import java.io.IOException;
+
 import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
+
+import antlr.ANTLRException;
 
 import configurationslicing.AbstractProjectSlicer;
 import hudson.Extension;
@@ -25,7 +29,16 @@ public class TimerSlicer extends AbstractProjectSlicer<TimerSlice> {
     }
 
     public boolean transform(TimerSlice t, AbstractProject i) {
-        return t.transform(i);
+        try {
+            return t.transform((TimerTrigger)i.getTrigger(TimerTrigger.class), i);
+        } catch (ANTLRException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public String getName() {

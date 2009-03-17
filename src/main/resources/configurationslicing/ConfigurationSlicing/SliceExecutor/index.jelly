@@ -2,13 +2,9 @@
   <l:layout title="${it.displayName}">
     <st:include page="sidepanel.jelly" it="${it.parent}"/>
     <l:main-panel>
-    Descriptor count: ${it.descriptorIndex}
-      <j:forEach var="desc" items="${it.descriptors}">
-        <p>${desc}</p>
-      </j:forEach>
       <f:form method="post" name="sliceconfig" action="sliceconfigSubmit">
-        <input type="hidden" name="slicedescriptorindex" value="${it.descriptorIndex}"/>
         <f:block>
+          <j:set var="worklist" value="${it.worklist}"/> 
           <st:include page="sliceconfig.jelly" it="${it.slice}"/>
         </f:block>
         <f:block>

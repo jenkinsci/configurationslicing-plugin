@@ -9,7 +9,7 @@ import hudson.model.Describable;
 import hudson.model.Hudson;
 
 public abstract class AbstractProjectSlicer<T> 
-implements Slicer<T, AbstractProject>, ExtensionPoint{
+implements Slicer<T, AbstractProject> {
     public final List<AbstractProject> getWorkDomain() {
         return Hudson.getInstance().getItems(AbstractProject.class);
     }

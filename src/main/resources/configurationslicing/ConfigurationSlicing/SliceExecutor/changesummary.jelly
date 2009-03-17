@@ -1,9 +1,9 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
   <l:layout title="${it.displayName}">
-    <st:include page="sidepanel.jelly" />
+    <st:include page="sidepanel.jelly" it="${it.parent}"/>
     <l:main-panel>
-      <j:forEach var="axis" items="${it.axes}">
-        <p><a href='${axis.url}'>${axis.name}</a></p>
+      <j:forEach var="item" items="${it.changed}">
+        <p>Updated ${item.name}</p>
       </j:forEach>
     </l:main-panel>
   </l:layout>

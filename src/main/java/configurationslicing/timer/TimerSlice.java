@@ -1,5 +1,6 @@
 package configurationslicing.timer;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +11,8 @@ import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
+
+import antlr.ANTLRException;
 
 import configurationslicing.Slice;
 
@@ -34,12 +37,13 @@ public class TimerSlice extends Slice implements Serializable {
         projectToLines = new HashMap<String, List<String>>();
         String [] lines = spec.split("\n");
         for(String line : lines) {
+            System.out.println("Processing: " + line);
             String[] bits = line.split("::", 2);
             if(bits.length < 2) continue;
             String timerline = bits[0].trim();
             String [] projects = bits[1].split(",");
             for(String project : projects) {
-                addLine(projectToLines, project, timerline);
+                addLine(projectToLines, project.trim(), timerline.trim());
             }
             
         }
@@ -77,29 +81,34 @@ public class TimerSlice extends Slice implements Serializable {
         return ret.toString();
     }
     
-    public boolean transform(AbstractProject<?, ?> i) {
-        return false;
+    public boolean transform(TimerTrigger trigger, AbstractProject<?, ?> i) throws ANTLRException, IOException {
+        List<String> lines = projectToLines.get(i.getName());
+        if(lines == null) return false;
+        boolean disabled = false;
+        StringBuffer triggerspec = new StringBuffer();
+        for(String line : lines) {
+            line = line.trim();
+            if(line.equals("(disabled)")) {
+                disabled=true;
+                continue;
+            }
+            triggerspec.append(line);
+        }
+        TimerTrigger newtrigger = null;
+        if(!disabled) {
+            newtrigger = new TimerTrigger(triggerspec.toString());
+        }
+        if(trigger != null) {
+            i.removeTrigger(trigger.getDescriptor());
+        }
+        if(newtrigger != null) 
+            i.addTrigger(newtrigger);
+        return true;
     }
-    
-    
-    @Extension
-    public static final class DescriptorImpl extends Descriptor<Slice> {
-        protected DescriptorImpl(Class<? extends Slice> c) {
-            super(c);
-        }
-        
-        protected DescriptorImpl() { }
-        
-        @Override
-        public TimerSlice newInstance(StaplerRequest req, JSONObject formData)
-                throws FormException {
-            return req.bindJSON(TimerSlice.class, formData);
-        }
 
-        @Override
-        public String getDisplayName() {
-            return "A slice describing the timer configuration for a group of jobs";
-        }
-        
+    @Override
+    public TimerSlice newInstance(StaplerRequest req, JSONObject formData)
+            throws FormException {
+        return req.bindJSON(TimerSlice.class, formData);
     }
 }
