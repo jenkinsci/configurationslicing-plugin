@@ -12,6 +12,7 @@
   <version>1.3-SNAPSHOT</version>
   <name>Configuration Slicing plugin</name>
   <description>Allows configuration of a single property across a group of projects</description>
+  <url>http://hudson.gotdns.com/wiki/display/HUDSON/Configuration+Slicing+Plugin</url>
 
   <scm>
     <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/ConfigurationSlicing-1.1</connection>
