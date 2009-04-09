@@ -26,6 +26,11 @@ import hudson.tasks.Builder;
 public class ConfigurationSlicing extends ManagementLink {
 
     @Override
+    public String getDescription() {
+        return "Configure a single aspect across a group of items, in contrast to the traditional configuration of all aspects of a single item";
+    }
+
+    @Override
     public String getIconFileName() {
         return "orange-square.gif";
     }
