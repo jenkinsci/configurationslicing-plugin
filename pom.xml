@@ -9,14 +9,14 @@
 
   <artifactId>ConfigurationSlicing</artifactId>
   <packaging>hpi</packaging>
-  <version>1.4</version>
+  <version>1.5-SNAPSHOT</version>
   <name>Configuration Slicing plugin</name>
   <description>Allows configuration of a single property across a group of projects</description>
   <url>http://hudson.gotdns.com/wiki/display/HUDSON/Configuration+Slicing+Plugin</url>
 
   <scm>
-    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/ConfigurationSlicing-1.4</connection>
-    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/ConfigurationSlicing-1.4</developerConnection>
-    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/bitkeeper/tags/ConfigurationSlicing-1.4</url>
+    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/ConfigurationSlicing-1.1</connection>
+    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/ConfigurationSlicing-1.1</developerConnection>
+    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/bitkeeper/tags/ConfigurationSlicing-1.1</url>
   </scm>
 </project>
