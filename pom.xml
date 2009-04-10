@@ -7,7 +7,7 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>configurationslicing</artifactId>
+  <artifactId>ConfigurationSlicing</artifactId>
   <packaging>hpi</packaging>
   <version>1.5-SNAPSHOT</version>
   <name>Configuration Slicing plugin</name>
