@@ -28,10 +28,19 @@ public class UnorderedStringSlice<I> extends Slice {
     private UnorderedStringSlicer.UnorderedStringSlicerSpec<I> spec;
     
     // reconstruct our datastructure after the user has made changes
-    public UnorderedStringSlice(UnorderedStringSlicerSpec<I> spec, List<ItemState> list) {
+    public UnorderedStringSlice(UnorderedStringSlicerSpec<I> spec, String mapping) {
         this(spec);
-        for(ItemState istate : list) {
-            add(istate.itemname, istate.values);
+        nameToValues = new HashMap<String, Set<String>>();
+        String [] lines = mapping.split("\n");
+        for(String line : lines) {
+            String[] bits = line.split("::", 2);
+            if(bits.length < 2) continue;
+            String value = bits[0].trim();
+            String [] itemNames = bits[1].split(",");
+            for(String itemName : itemNames) {
+                addLine(nameToValues, itemName.trim(), value.trim());
+            }
+            
         }
     }
     
@@ -81,18 +90,6 @@ public class UnorderedStringSlice<I> extends Slice {
     @Override
     public Slice newInstance(StaplerRequest req, JSONObject formData)
            throws FormException {
-        System.out.println(formData);
-        return new UnorderedStringSlice<I>(UnorderedStringSlice.this.spec, req.bindJSONToList(ItemState.class, formData.get("itemstate")));
-    }
-    
-    public static class ItemState {
-        private String itemname;
-        private List<String> values;
-
-        @DataBoundConstructor
-        public ItemState(String itemname, List<String> checked) {
-            this.itemname=itemname;
-            this.values=checked;
-        }
+        return new UnorderedStringSlice<I>(UnorderedStringSlice.this.spec, formData.getString("mapping"));
     }
 }
