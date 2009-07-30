@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.jvnet.hudson.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>1.297</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>configurationslicing</artifactId>
+  <packaging>hpi</packaging>
+  <version>1.9</version>
+  <name>Configuration Slicing plugin</name>
+  <description>Allows configuration of a single property across a group of projects</description>
+  <url>http://hudson.gotdns.com/wiki/display/HUDSON/Configuration+Slicing+Plugin</url>
+
+  <scm>
+    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/configurationslicing-1.9</connection>
+    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/configurationslicing-1.9</developerConnection>
+    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/configurationslicing/tags/configurationslicing-1.9</url>
+  </scm>
+</project>

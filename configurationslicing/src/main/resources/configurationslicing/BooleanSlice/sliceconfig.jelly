@@ -1,0 +1,15 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  <f:entry title="${it.spec.name}">
+    <j:forEach var="item" items="${worklist}" varStatus="loop">
+      <div name="itemstate" id="itemstate${loop.index}">
+      <f:rowSet ref="itemstate${loop.index}">
+      <j:set var="itemname" value="${it.spec.getName(item)}"/>
+        <f:entry title="${itemname}">
+          <input type="hidden" name="my.itemname" value="${itemname}"/>
+          <f:checkbox name="my.checked" checked="${it.spec.getValue(item)}"/>
+        </f:entry>
+       </f:rowSet>
+      </div>
+    </j:forEach>
+  </f:entry>
+</j:jelly>
