@@ -9,7 +9,7 @@
 
   <artifactId>configurationslicing</artifactId>
   <packaging>hpi</packaging>
-  <version>1.10-SNAPSHOT</version>
+  <version>1.9-SNAPSHOT</version>
   <name>Configuration Slicing plugin</name>
   <description>Allows configuration of a single property across a group of projects</description>
   <url>http://hudson.gotdns.com/wiki/display/HUDSON/Configuration+Slicing+Plugin</url>
