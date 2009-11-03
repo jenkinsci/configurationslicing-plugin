@@ -20,9 +20,10 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
     }
     
     public static class JdkSlicerSpec implements UnorderedStringSlicerSpec<AbstractProject<?,?>> {
+        private static final String DEFAULT = "(Default)";
 
         public String getName() {
-            return "JDK to use";
+            return "JDK per project";
         }
 
         public String getName(AbstractProject<?, ?> item) {
@@ -35,7 +36,9 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
 
         public List<String> getValues(AbstractProject<?, ?> item) {
             List<String> ret = new ArrayList<String>();
-            ret.add(item.getJDK().getName());
+            JDK jdk = item.getJDK();
+            String name = jdk == null ? DEFAULT : jdk.getName();
+            ret.add(name);
             return ret;
         }
 
