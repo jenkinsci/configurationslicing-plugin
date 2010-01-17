@@ -46,13 +46,20 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
         }
 
         public List<String> getValues(AbstractProject<?, ?> item) {
-            List<String> ret = new ArrayList<String>();
+            String retString = null;
             LogRotator logrotator = item.getLogRotator();
             if(logrotator == null) {
-                ret.add(DISABLED);
+                retString=DISABLED;
             } else {
-                ret.add(logrotator.getDaysToKeepStr());
+                String daysToKeepStr = logrotator.getDaysToKeepStr();
+                if(daysToKeepStr.length() == 0) {
+                    retString=DISABLED;
+                } else {
+                    retString=daysToKeepStr;
+                }
             }
+            List<String> ret = new ArrayList<String>();
+            ret.add(retString);
             return ret;
         }
 
@@ -72,7 +79,7 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
             }
             boolean disabled = false;
             for(String line : set) {
-                if(line.equals(DISABLED)) {
+                if(line.length() == 0 || line.equals(DISABLED)) {
                     disabled = true;
                 } else {
                     int val = Integer.parseInt(line);
@@ -113,13 +120,20 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
         }
 
         public List<String> getValues(AbstractProject<?, ?> item) {
-            List<String> ret = new ArrayList<String>();
+            String retString = null;
             LogRotator logrotator = item.getLogRotator();
             if(logrotator == null) {
-                ret.add(DISABLED);
+                retString=DISABLED;
             } else {
-                ret.add(logrotator.getNumToKeepStr());
+                String numToKeepStr = logrotator.getNumToKeepStr();
+                if(numToKeepStr.length() == 0) {
+                    retString=DISABLED;
+                } else {
+                    retString=numToKeepStr;
+                }
             }
+            List<String> ret = new ArrayList<String>();
+            ret.add(retString);
             return ret;
         }
 
@@ -139,7 +153,7 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
             }
             boolean disabled = false;
             for(String line : set) {
-                if(line.equals(DISABLED)) {
+                if(line.length() == 0 || line.equals(DISABLED)) {
                     disabled = true;
                 } else {
                     int val = Integer.parseInt(line);
