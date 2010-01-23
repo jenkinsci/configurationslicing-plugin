@@ -13,4 +13,12 @@
   <name>Configuration Slicing plugin</name>
   <description>Allows configuration of a single property across a group of projects</description>
   <url>http://wiki.hudson-ci.org/display/HUDSON/Configuration+Slicing+Plugin</url>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.jvnet.hudson.main</groupId>
+      <artifactId>maven-plugin</artifactId>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
 </project>
