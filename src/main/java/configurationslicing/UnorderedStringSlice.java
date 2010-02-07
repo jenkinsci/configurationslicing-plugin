@@ -33,10 +33,11 @@ public class UnorderedStringSlice<I> extends Slice {
         nameToValues = new HashMap<String, Set<String>>();
         String [] lines = mapping.split("\n");
         for(String line : lines) {
-            String[] bits = line.split("::", 2);
-            if(bits.length < 2) continue;
-            String value = bits[0].trim();
-            String [] itemNames = bits[1].split(",");
+            String TOKEN = "::";
+            int tokenIdx = line.lastIndexOf(TOKEN);
+            if(tokenIdx < 0) continue;
+            String value = line.substring(0,tokenIdx).trim();
+            String [] itemNames = line.substring(tokenIdx+TOKEN.length()).split(",");
             for(String itemName : itemNames) {
                 addLine(nameToValues, itemName.trim(), value.trim());
             }
