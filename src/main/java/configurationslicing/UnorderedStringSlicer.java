@@ -30,7 +30,12 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
     }
 
     public boolean transform(UnorderedStringSlice<I> t, I i) {
-        return spec.setValues(i, t.get(spec.getName(i)));
+    	Set<String> set = t.get(spec.getName(i));
+    	if (set == null) {
+    		return false;
+    	} else {
+    		return spec.setValues(i, set);
+    	}
     }
 
     public String getName() {

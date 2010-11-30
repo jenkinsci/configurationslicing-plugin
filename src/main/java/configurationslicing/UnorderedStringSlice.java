@@ -3,21 +3,20 @@
  */
 package configurationslicing;
 
-import hudson.Extension;
-import hudson.model.Descriptor;
 import hudson.model.Descriptor.FormException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
@@ -28,20 +27,19 @@ public class UnorderedStringSlice<I> extends Slice {
     private UnorderedStringSlicer.UnorderedStringSlicerSpec<I> spec;
     
     // reconstruct our datastructure after the user has made changes
-    public UnorderedStringSlice(UnorderedStringSlicerSpec<I> spec, String mapping) {
+    public UnorderedStringSlice(UnorderedStringSlicerSpec<I> spec, List<String> configurationValues, List<String> itemNames) {
         this(spec);
         nameToValues = new HashMap<String, Set<String>>();
-        String [] lines = mapping.split("\n");
-        for(String line : lines) {
-            String TOKEN = "::";
-            int tokenIdx = line.lastIndexOf(TOKEN);
-            if(tokenIdx < 0) continue;
-            String value = line.substring(0,tokenIdx).trim();
-            String [] itemNames = line.substring(tokenIdx+TOKEN.length()).split(",");
-            for(String itemName : itemNames) {
-                addLine(nameToValues, itemName.trim(), value.trim());
+        for (int i = 0; i < configurationValues.size(); i++) {
+        	String value = configurationValues.get(i);
+        	String namesString = itemNames.get(i);
+        	String[] namesSplit = namesString.split("[\\s,]");
+            for(String itemName : namesSplit) {
+            	itemName = itemName.trim();
+            	if (itemName.length() > 0) {
+            		addLine(nameToValues, itemName, value.trim());
+            	}
             }
-            
         }
     }
     
@@ -71,26 +69,51 @@ public class UnorderedStringSlice<I> extends Slice {
     public UnorderedStringSlicerSpec<I> getSpec() {
         return spec;
     }
-    
-    public String getMapping() {
-        StringBuffer ret = new StringBuffer();
-        for(Map.Entry<String, Set<String>> ent : valueToNames.entrySet()) {
-            ret.append(ent.getKey());
-            ret.append(" :: ");
-            boolean first = true;
-            for(String proj : ent.getValue()) {
-                if(!first) ret.append(", ");
-                ret.append(proj);
-                first=false;
-            }
-            ret.append("\n");
-        }
-        return ret.toString();
+    public List<String> getConfiguredValues() {
+    	List<String> list = new ArrayList<String>(valueToNames.keySet());
+    	Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
+    	// we need this so you can add new items
+    	if (!list.contains("")) {
+    		list.add("");
+    	}
+    	return list;
+    }
+    public String getItemNamesString(String configurationString) {
+    	List<String> list = getItemNames(configurationString);
+    	StringBuilder buf = new StringBuilder();
+    	for (String job: list) {
+    		if (buf.length() > 0) {
+    			buf.append("\n");
+    		}
+    		buf.append(job);
+    	}
+    	return buf.toString();
+    }
+    public List<String> getItemNames(String configurationString) {
+    	Set<String> set = valueToNames.get(configurationString);
+    	if (set == null) {
+        	// particularly applies to the empty option
+    		return new ArrayList<String>();
+    	}
+    	List<String> list = new ArrayList<String>(set);
+    	Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
+    	return list;
     }
 
     @Override
     public Slice newInstance(StaplerRequest req, JSONObject formData)
            throws FormException {
-        return new UnorderedStringSlice<I>(UnorderedStringSlice.this.spec, formData.getString("mapping"));
+        return new UnorderedStringSlice<I>(UnorderedStringSlice.this.spec, 
+        		getStringList(formData, "configValue"),
+        		getStringList(formData, "itemNames")
+        		);
+    }
+    private List<String> getStringList(JSONObject formData, String key) {
+    	JSONArray array = formData.getJSONArray(key);
+    	List<String> list = new ArrayList<String>();
+    	for (Object o: array) {
+    		list.add((String) o);
+    	}
+    	return list;
     }
 }

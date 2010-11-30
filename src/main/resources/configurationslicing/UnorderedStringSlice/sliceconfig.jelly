@@ -1,5 +1,12 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <f:entry title="${it.spec.name}">
-    <f:textarea name="mapping" value="${it.mapping}"/>
-  </f:entry>
+	<span style="font-weight: bold; font-style: italic">${it.spec.name}</span>
+	<table width="100%">
+		<tr><th><b>Configured Value</b></th><th><b>Item Names</b></th></tr>
+		<j:forEach var="configuredValue" items="${it.configuredValues}">
+		<tr>
+			<td width="50%"><f:textarea name="configValue" value="${configuredValue}"/></td>
+			<td width="50%"><f:textarea name="itemNames" value="${it.getItemNamesString(configuredValue)}"/></td>
+		</tr>
+		</j:forEach>
+	</table>
 </j:jelly>
