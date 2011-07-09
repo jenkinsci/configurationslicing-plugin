@@ -33,7 +33,7 @@ public class UnorderedStringSlice<I> extends Slice {
         for (int i = 0; i < configurationValues.size(); i++) {
         	String value = configurationValues.get(i);
         	String namesString = itemNames.get(i);
-        	String[] namesSplit = namesString.split("[\\s,]");
+        	String[] namesSplit = namesString.split("\\n");
             for(String itemName : namesSplit) {
             	itemName = itemName.trim();
             	if (itemName.length() > 0) {

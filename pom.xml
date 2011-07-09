@@ -21,4 +21,29 @@
       <optional>true</optional>
     </dependency>
   </dependencies>
+  
+  	<scm>
+		<connection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/configurationslicing</connection>
+		<developerConnection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/configurationslicing</developerConnection>
+		<url>https://svn.jenkins-ci.org/trunk/hudson/plugins/configurationslicing</url>
+	</scm>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<goals>deploy</goals>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<distributionManagement>
+		<repository>
+			<id>maven.jenkins-ci.org</id>
+			<url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
+		</repository>
+	</distributionManagement>
+  
 </project>

@@ -1,6 +1,6 @@
 <projectDescription>
   <name>configurationslicing</name>
-  <comment>Allows configuration of a single property across a group of projects</comment>
+  <comment>Allows configuration of a single property across a group of projects. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
   <projects/>
   <buildSpec>
     <buildCommand>
