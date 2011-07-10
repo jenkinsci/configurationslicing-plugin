@@ -19,9 +19,9 @@ import configurationslicing.UnorderedStringSlicer;
 public class CustomWorkspaceStringSlicer extends UnorderedStringSlicer<AbstractProject<?,?>>{
 
     public CustomWorkspaceStringSlicer() {
-        super(new TimerSliceSpec());
+        super(new CustomWorkspaceStringSliceSpec());
     }
-    public static class TimerSliceSpec implements UnorderedStringSlicerSpec<AbstractProject<?,?>> {
+    public static class CustomWorkspaceStringSliceSpec implements UnorderedStringSlicerSpec<AbstractProject<?,?>> {
 
         private static final String DISABLED = "(Disabled)";
 
@@ -52,7 +52,7 @@ public class CustomWorkspaceStringSlicer extends UnorderedStringSlicer<AbstractP
             return workspace;
         }
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
+        @SuppressWarnings({ "unchecked" })
 		public List<AbstractProject<?, ?>> getWorkDomain() {
             return (List) Hudson.getInstance().getItems(FreeStyleProject.class);
         }
