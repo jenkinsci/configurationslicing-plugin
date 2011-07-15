@@ -15,6 +15,10 @@ public class TimerSliceStringSlicer extends UnorderedStringSlicer<AbstractProjec
     }
     public static class TimerSliceSpec extends AbstractTimerSliceSpec {
 
+    	public TimerSliceSpec() {
+			super(TimerTrigger.class);
+		}
+    	
         public String getName() {
             return "Timer Trigger Slicer";
         }
@@ -24,8 +28,9 @@ public class TimerSliceStringSlicer extends UnorderedStringSlicer<AbstractProjec
         }
 
         @SuppressWarnings("unchecked")
-		protected Trigger newTrigger(String spec) throws ANTLRException {
+		public Trigger newTrigger(String spec) throws ANTLRException {
         	return new TimerTrigger(spec);
         }
+        
     }
 }

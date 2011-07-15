@@ -2,7 +2,6 @@ package configurationslicing.timer;
 
 import hudson.model.AbstractProject;
 import hudson.model.Hudson;
-import hudson.triggers.TimerTrigger;
 import hudson.triggers.Trigger;
 
 import java.io.IOException;
@@ -14,21 +13,31 @@ import java.util.Set;
 import antlr.ANTLRException;
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 
+@SuppressWarnings("unchecked")
 public abstract class AbstractTimerSliceSpec implements
 		UnorderedStringSlicerSpec<AbstractProject<?, ?>> {
 
 	static final String DISABLED = "(Disabled)";
 
+	private Class triggerClass;
+	
+	protected AbstractTimerSliceSpec(Class triggerClass) {
+		this.triggerClass = triggerClass;
+	}
+	
+	public Class getTriggerClass() {
+		return triggerClass;
+	}
+	
 	public String getName(AbstractProject<?, ?> item) {
 		return item.getName();
 	}
 
 	public List<String> getValues(AbstractProject<?, ?> item) {
-		TimerTrigger trigger = item.getTrigger(TimerTrigger.class);
+		Trigger trigger = item.getTrigger(triggerClass);
 		return getValues(trigger);
 	}
 
-	@SuppressWarnings("unchecked")
 	public static List<String> getValues(Trigger trigger) {
 		if (trigger == null) {
 			return Collections.singletonList(DISABLED);
@@ -37,15 +46,12 @@ public abstract class AbstractTimerSliceSpec implements
 		return splitChronSpec(spec);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<AbstractProject<?, ?>> getWorkDomain() {
 		return (List) Hudson.getInstance().getItems(AbstractProject.class);
 	}
 
-	@SuppressWarnings("unchecked")
-	protected abstract Trigger newTrigger(String spec) throws ANTLRException;
-
-	@SuppressWarnings("unchecked")
+	public abstract Trigger newTrigger(String spec) throws ANTLRException;
+	
 	public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {
 		if (set.isEmpty())
 			return false;
@@ -53,7 +59,7 @@ public abstract class AbstractTimerSliceSpec implements
 		List<String> list = new ArrayList<String>(set);
 		String spec = joinChronSpec(list);
 
-		TimerTrigger trigger = item.getTrigger(TimerTrigger.class);
+		Trigger oldTrigger = item.getTrigger(triggerClass);
 		boolean disabled = DISABLED.equals(spec);
 
 		// now do the transformation
@@ -62,8 +68,8 @@ public abstract class AbstractTimerSliceSpec implements
 			if (!disabled) {
 				newtrigger = newTrigger(spec);
 			}
-			if (trigger != null) {
-				item.removeTrigger(trigger.getDescriptor());
+			if (oldTrigger != null) {
+				item.removeTrigger(oldTrigger.getDescriptor());
 			}
 			if (newtrigger != null) {
 				item.addTrigger(newtrigger);

@@ -15,6 +15,10 @@ public class SCMTimerSliceStringSlicer extends UnorderedStringSlicer<AbstractPro
     }
     public static class SCMTimerSliceSpec extends AbstractTimerSliceSpec {
 
+    	public SCMTimerSliceSpec() {
+			super(SCMTrigger.class);
+		}
+    	
         public String getName() {
             return "SCM Timer Trigger Slicer";
         }
@@ -24,8 +28,9 @@ public class SCMTimerSliceStringSlicer extends UnorderedStringSlicer<AbstractPro
         }
         
         @SuppressWarnings("unchecked")
-		protected Trigger newTrigger(String spec) throws ANTLRException {
+		public Trigger newTrigger(String spec) throws ANTLRException {
         	return new SCMTrigger(spec);
         }
+        
     }
 }
