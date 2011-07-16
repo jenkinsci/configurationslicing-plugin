@@ -73,6 +73,9 @@ public abstract class AbstractTimerSliceSpec implements
 			}
 			if (newtrigger != null) {
 				item.addTrigger(newtrigger);
+				// this is necessary, otherwise the trigger has a null job
+				// this method as currently implemented in Trigger does nothing more than save the job
+				newtrigger.start(item, true);
 			}
 			return true;
 		} catch (ANTLRException e) {
