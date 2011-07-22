@@ -92,17 +92,36 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
             if(disabled) days = -1;
             
             LogRotator newlogrotator = new LogRotator(days,builds);
-            item.setLogRotator(newlogrotator);
-            try {
-                item.save();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
+            
+            if (!LogRotationSlicer.equals(newlogrotator, logrotator)) {
+	            item.setLogRotator(newlogrotator);
+	            try {
+	                item.save();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	                return false;
+	            }
+	            return true;
+            } else {
+            	return false;
             }
-            return true;
         }
     }
-    
+    public static boolean equals(LogRotator r1, LogRotator r2) {
+    	if (r1 == r2) {
+    		return true;
+    	}
+    	if (r1 == null || r2 == null) {
+    		return false;
+    	}
+    	if (r1.getDaysToKeep() != r2.getDaysToKeep()) {
+    		return false;
+    	}
+    	if (r1.getNumToKeep() != r2.getNumToKeep()) {
+    		return false;
+    	}
+    	return true;
+    }
     public static class LogRotationBuildsSliceSpec implements UnorderedStringSlicerSpec<AbstractProject<?,?>> {
 
         private static final String DISABLED = "(Disabled)";
@@ -166,14 +185,18 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
             if(disabled) builds = -1;
             
             LogRotator newlogrotator = new LogRotator(days,builds);
-            item.setLogRotator(newlogrotator);
-            try {
-                item.save();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
+            if (!LogRotationSlicer.equals(newlogrotator, logrotator)) {
+	            item.setLogRotator(newlogrotator);
+	            try {
+	                item.save();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	                return false;
+	            }
+	            return true;
+            } else {
+            	return false;
             }
-            return true;
         }
     }
 }

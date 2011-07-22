@@ -45,6 +45,7 @@ public class ConfigurationSlicing extends ManagementLink {
     }
 
     public ExtensionList<Slicer> getAxes() {
+    	// TODO alphabetize
         return Hudson.getInstance().getExtensionList(Slicer.class);
     }
     

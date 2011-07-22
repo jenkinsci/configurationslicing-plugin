@@ -58,9 +58,17 @@ public abstract class AbstractTimerSliceSpec implements
 
 		List<String> list = new ArrayList<String>(set);
 		String spec = joinChronSpec(list);
+		boolean disabled = DISABLED.equals(spec);
 
 		Trigger oldTrigger = item.getTrigger(triggerClass);
-		boolean disabled = DISABLED.equals(spec);
+		
+		// see if there are any changes
+		if (oldTrigger != null) {
+			String oldSpec = oldTrigger.getSpec();
+			if (oldSpec.equals(spec)) {
+				return false;
+			}
+		}
 
 		// now do the transformation
 		try {

@@ -1,16 +1,19 @@
 package configurationslicing.jdk;
 
+import hudson.Extension;
+import hudson.model.AbstractProject;
+import hudson.model.Hudson;
+import hudson.model.JDK;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import hudson.Extension;
-import hudson.model.AbstractProject;
-import hudson.model.Hudson;
-import hudson.model.JDK;
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
+
 import configurationslicing.UnorderedStringSlicer;
-import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 
 @Extension
 public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
@@ -54,13 +57,33 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
                 jdk = hudson.getJDK(val);
                 if(jdk!=null) break;
             }
-            try {
-                item.setJDK(jdk);
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
+            JDK oldJdk = item.getJDK();
+            if (!equals(oldJdk, jdk)) {
+	            try {
+	                item.setJDK(jdk);
+	                return true;
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	                return false;
+	            }
+            } else {
+            	return false;
             }
+        }
+        public static boolean equals(JDK j1, JDK j2) {
+        	if (ObjectUtils.equals(j1, j2)) {
+        		return true;
+        	}
+        	if (j1 == null || j2 == null) {
+        		return false;
+        	}
+        	if (!StringUtils.equals(j1.getHome(), j2.getHome())) {
+        		return false;
+        	}
+        	if (!StringUtils.equals(j1.getName(), j2.getName())) {
+        		return false;
+        	}
+        	return true;
         }
         
     }

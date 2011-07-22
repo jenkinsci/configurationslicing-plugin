@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 import configurationslicing.UnorderedStringSlicer;
 
 /**
@@ -70,7 +72,11 @@ public class CustomWorkspaceStringSlicer extends UnorderedStringSlicer<AbstractP
 	        		if (DISABLED.equals(ws)) {
 	        			ws = null;
 	        		}
-        			project.setCustomWorkspace(ws);
+	        		String old = project.getCustomWorkspace();
+	        		// check for equal - we don't want to trigger a change for no reason
+	        		if (!StringUtils.equals(ws, old)) {
+	        			project.setCustomWorkspace(ws);
+	        		}
 	        	}
 	        	return true;
         	} catch (IOException ioe) {
