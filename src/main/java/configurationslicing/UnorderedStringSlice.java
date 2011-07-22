@@ -82,10 +82,9 @@ public class UnorderedStringSlice<I> extends Slice {
     	List<String> list = getItemNames(configurationString);
     	StringBuilder buf = new StringBuilder();
     	for (String job: list) {
-    		if (buf.length() > 0) {
-    			buf.append("\n");
-    		}
     		buf.append(job);
+    		// add it afterwards so we have an extra linefeed in the gui to make cut and paste easier
+			buf.append("\n");
     	}
     	return buf.toString();
     }

@@ -1,26 +1,20 @@
 package configurationslicing;
 
-import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
+import hudson.Extension;
+import hudson.ExtensionList;
+import hudson.model.Hudson;
+import hudson.model.ManagementLink;
+import hudson.model.Descriptor.FormException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
 
-import net.sf.json.JSONObject;
-
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
-
-import hudson.Extension;
-import hudson.ExtensionList;
-import hudson.ExtensionPoint;
-import hudson.model.Descriptor;
-import hudson.model.Hudson;
-import hudson.model.ManagementLink;
-import hudson.model.Descriptor.FormException;
-import hudson.tasks.Builder;
 
 @Extension
 public class ConfigurationSlicing extends ManagementLink {
@@ -44,9 +38,12 @@ public class ConfigurationSlicing extends ManagementLink {
         return "Configuration Slicing";
     }
 
-    public ExtensionList<Slicer> getAxes() {
-    	// TODO alphabetize
-        return Hudson.getInstance().getExtensionList(Slicer.class);
+    @SuppressWarnings("unchecked")
+	public List<Slicer> getAxes() {
+    	ExtensionList<Slicer> elist = Hudson.getInstance().getExtensionList(Slicer.class);
+    	List<Slicer> list = new ArrayList<Slicer>(elist);
+    	Collections.sort(list);
+    	return list;
     }
     
     public Object getDynamic(String token, StaplerRequest req, StaplerResponse rsp) {

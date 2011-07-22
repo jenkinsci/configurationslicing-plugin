@@ -3,8 +3,6 @@ package configurationslicing;
 import java.util.List;
 import java.util.Set;
 
-import configurationslicing.BooleanSlicer.BooleanSlicerSpec;
-
 public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>, I>{
     public static interface UnorderedStringSlicerSpec<I> {
         public abstract String getName();
@@ -48,5 +46,9 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
 
     public List<I> getWorkDomain() {
         return spec.getWorkDomain();
+    }
+
+    public int compareTo(Slicer<UnorderedStringSlice<I>, I> o) {
+    	return getName().compareTo(o.getName());
     }
 }

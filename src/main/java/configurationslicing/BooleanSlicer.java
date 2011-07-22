@@ -44,4 +44,8 @@ public class BooleanSlicer<I> implements Slicer<BooleanSlice<I>, I>{
     public List<I> getWorkDomain() {
         return spec.getWorkDomain();
     }
+    
+    public int compareTo(Slicer<BooleanSlice<I>, I> o) {
+    	return getName().compareTo(o.getName());
+    }
 }

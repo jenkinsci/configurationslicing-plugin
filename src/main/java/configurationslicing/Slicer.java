@@ -4,7 +4,7 @@ import java.util.List;
 
 import hudson.ExtensionPoint;
 
-public interface Slicer<T, I> extends ExtensionPoint {
+public interface Slicer<T, I> extends ExtensionPoint, Comparable<Slicer<T, I>> {
     public String getName();
     public String getUrl();
     public List<I> getWorkDomain();
