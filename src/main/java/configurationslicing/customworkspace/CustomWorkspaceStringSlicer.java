@@ -23,10 +23,14 @@ public class CustomWorkspaceStringSlicer extends UnorderedStringSlicer<AbstractP
     public CustomWorkspaceStringSlicer() {
         super(new CustomWorkspaceStringSliceSpec());
     }
+
     public static class CustomWorkspaceStringSliceSpec implements UnorderedStringSlicerSpec<AbstractProject<?,?>> {
 
         private static final String DISABLED = "(Disabled)";
 
+        public String getDefaultValueString() {
+        	return DISABLED;
+        }
         public String getName() {
             return "Custom Workspace Slicer";
         }

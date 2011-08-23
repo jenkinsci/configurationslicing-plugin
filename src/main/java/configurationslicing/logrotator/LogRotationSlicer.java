@@ -32,6 +32,9 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
     protected abstract static class AbstractLogRotationSliceSpec implements UnorderedStringSlicerSpec<AbstractProject<?,?>> {
         private static final String DISABLED = "(Disabled)";
 
+        public String getDefaultValueString() {
+        	return DISABLED;
+        }
         public String getName(AbstractProject<?, ?> item) {
             return item.getName();
         }

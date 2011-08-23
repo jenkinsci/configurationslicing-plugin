@@ -25,6 +25,9 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
     public static class JdkSlicerSpec implements UnorderedStringSlicerSpec<AbstractProject<?,?>> {
         private static final String DEFAULT = "(Default)";
 
+        public String getDefaultValueString() {
+        	return DEFAULT;
+        }
         public String getName() {
             return "JDK per project";
         }
@@ -45,8 +48,9 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
             return ret;
         }
 
-        public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List)Hudson.getInstance().getItems(AbstractProject.class);
+        @SuppressWarnings("unchecked")
+		public List<AbstractProject<?, ?>> getWorkDomain() {
+            return (List) Hudson.getInstance().getItems(AbstractProject.class);
         }
 
         public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {

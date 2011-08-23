@@ -11,6 +11,7 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
         public abstract List<String> getValues(I item);
         public abstract String getName(I item);
         public abstract boolean setValues(I item, Set<String> set);
+        public abstract String getDefaultValueString();
     }
 
     private UnorderedStringSlicerSpec<I> spec;

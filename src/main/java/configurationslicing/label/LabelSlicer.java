@@ -22,6 +22,9 @@ public class LabelSlicer extends UnorderedStringSlicer<AbstractProject<?,?>>{
 
         private static final String ROAMING = "(Roaming)";
 
+        public String getDefaultValueString() {
+        	return ROAMING;
+        }
         public String getName() {
             return "Tied Label Slicer";
         }
@@ -40,8 +43,9 @@ public class LabelSlicer extends UnorderedStringSlicer<AbstractProject<?,?>>{
             return Collections.singletonList(labelName);
         }
 
-        public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List)Hudson.getInstance().getItems(AbstractProject.class);
+        @SuppressWarnings("unchecked")
+		public List<AbstractProject<?, ?>> getWorkDomain() {
+            return (List) Hudson.getInstance().getItems(AbstractProject.class);
         }
 
         public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {

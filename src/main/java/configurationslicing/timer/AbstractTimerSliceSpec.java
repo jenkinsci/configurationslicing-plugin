@@ -17,13 +17,16 @@ import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 public abstract class AbstractTimerSliceSpec implements
 		UnorderedStringSlicerSpec<AbstractProject<?, ?>> {
 
-	static final String DISABLED = "(Disabled)";
+	public static final String DISABLED = "(Disabled)";
 
 	private Class triggerClass;
 	
 	protected AbstractTimerSliceSpec(Class triggerClass) {
 		this.triggerClass = triggerClass;
 	}
+    public String getDefaultValueString() {
+    	return DISABLED;
+    }
 	
 	public Class getTriggerClass() {
 		return triggerClass;

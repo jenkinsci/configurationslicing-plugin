@@ -70,8 +70,17 @@ public class UnorderedStringSlice<I> extends Slice {
         return spec;
     }
     public List<String> getConfiguredValues() {
+    	String defaultValueString = spec.getDefaultValueString();
     	List<String> list = new ArrayList<String>(valueToNames.keySet());
+    	if (list.contains(defaultValueString)) {
+    		list.remove(defaultValueString);
+    	}
     	Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
+    	
+    	// add the default as second to last
+    	if (defaultValueString != null) {
+    		list.add(defaultValueString);
+    	}
     	// we need this so you can add new items
     	if (!list.contains("")) {
     		list.add("");

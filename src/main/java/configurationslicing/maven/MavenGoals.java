@@ -21,6 +21,10 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
     public static class MavenGoalsSlicerSpec implements UnorderedStringSlicerSpec<MavenModuleSet> {
         private static final String DEFAULT = "(Default)";
 
+        public String getDefaultValueString() {
+        	return DEFAULT;
+        }
+
         public String getName() {
             return "Goals and Options per Maven project";
         }
@@ -40,8 +44,9 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
             return ret;
         }
 
-        public List<MavenModuleSet> getWorkDomain() {
-            return (List)Hudson.getInstance().getItems(MavenModuleSet.class);
+        @SuppressWarnings("unchecked")
+		public List<MavenModuleSet> getWorkDomain() {
+            return (List) Hudson.getInstance().getItems(MavenModuleSet.class);
         }
 
         public boolean setValues(MavenModuleSet item, Set<String> set) {
