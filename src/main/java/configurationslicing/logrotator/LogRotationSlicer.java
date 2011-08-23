@@ -29,69 +29,64 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
         }
     }
 
-    public static class LogRotationDaysSliceSpec implements UnorderedStringSlicerSpec<AbstractProject<?,?>> {
-
+    protected abstract static class AbstractLogRotationSliceSpec implements UnorderedStringSlicerSpec<AbstractProject<?,?>> {
         private static final String DISABLED = "(Disabled)";
-
-        public String getName() {
-            return "Discard Old Builds Slicer - Days";
-        }
 
         public String getName(AbstractProject<?, ?> item) {
             return item.getName();
         }
 
-        public String getUrl() {
-            return "logrotationdays";
-        }
-
         public List<String> getValues(AbstractProject<?, ?> item) {
             String retString = null;
             LogRotator logrotator = item.getLogRotator();
-            if(logrotator == null) {
-                retString=DISABLED;
+            if (logrotator == null) {
+                retString = DISABLED;
             } else {
-                String daysToKeepStr = logrotator.getDaysToKeepStr();
-                if(daysToKeepStr.length() == 0) {
-                    retString=DISABLED;
-                } else {
-                    retString=daysToKeepStr;
+            	retString = getValue(logrotator);
+                if (retString.length() == 0) {
+                    retString = DISABLED;
                 }
             }
             List<String> ret = new ArrayList<String>();
             ret.add(retString);
             return ret;
         }
+        abstract protected String getValue(LogRotator rotator);
 
-        public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List)Hudson.getInstance().getItems(AbstractProject.class);
+        @SuppressWarnings("unchecked")
+		public List<AbstractProject<?, ?>> getWorkDomain() {
+            return (List) Hudson.getInstance().getItems(AbstractProject.class);
         }
 
         public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {
-            if(set.isEmpty()) return false;
+            if (set.isEmpty()) return false;
 
             LogRotator logrotator = item.getLogRotator();
-            int days = -1,builds = -1;
+            int days = -1;
+            int builds = -1;
+    	    int artifactDaysToKeep = -1;
+    	    int artifactNumToKeep = -1;
             
-            if(logrotator!= null) {
-                days=logrotator.getDaysToKeep();
-                builds=logrotator.getNumToKeep();
+            if (logrotator != null) {
+                days = logrotator.getDaysToKeep();
+                builds = logrotator.getNumToKeep();
+                artifactDaysToKeep = logrotator.getArtifactDaysToKeep();
+                artifactNumToKeep = logrotator.getArtifactNumToKeep();
             }
-            boolean disabled = false;
-            for(String line : set) {
-                if(line.length() == 0 || line.equals(DISABLED)) {
-                    disabled = true;
-                } else {
-                    int val = Integer.parseInt(line);
-                    if(val > days) {
-                        days = val;
-                    }
-                }
-            }
-
-            if(disabled) days = -1;
             
-            LogRotator newlogrotator = new LogRotator(days,builds);
+            int newInt = -1;
+            String newString = null;
+            for(String line: set) {
+            	newString = line;
+            	break;
+            }
+            if (!DISABLED.equals(newString)) {
+                newInt = Integer.parseInt(newString);
+            }
+            days = getNewDays(days, newInt);
+            builds = getNewBuilds(builds, newInt);
+    	    
+            LogRotator newlogrotator = new LogRotator(days, builds, artifactDaysToKeep, artifactNumToKeep);
             
             if (!LogRotationSlicer.equals(newlogrotator, logrotator)) {
 	            item.setLogRotator(newlogrotator);
@@ -105,6 +100,45 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
             } else {
             	return false;
             }
+        }
+        protected int getNewDays(int oldDays, int newValue) {
+       		return oldDays;
+        }
+        protected int getNewBuilds(int oldBuilds, int newValue) {
+       		return oldBuilds;
+        }
+    }
+    
+    public static class LogRotationDaysSliceSpec extends AbstractLogRotationSliceSpec {
+        public String getName() {
+            return "Discard Old Builds Slicer - Days";
+        }
+        public String getUrl() {
+            return "logrotationdays";
+        }
+        @Override
+        protected String getValue(LogRotator rotator) {
+        	return rotator.getDaysToKeepStr();
+        }
+        @Override
+        protected int getNewDays(int oldDays, int newValue) {
+        	return newValue;
+        }
+    }
+    public static class LogRotationBuildsSliceSpec extends AbstractLogRotationSliceSpec {
+        public String getName() {
+            return "Discard Old Builds Slicer - Builds";
+        }
+        public String getUrl() {
+            return "logrotationbuilds";
+        }
+        @Override
+        protected String getValue(LogRotator rotator) {
+        	return rotator.getNumToKeepStr();
+        }
+        @Override
+        protected int getNewBuilds(int oldBuilds, int newValue) {
+        	return newValue;
         }
     }
     public static boolean equals(LogRotator r1, LogRotator r2) {
@@ -121,82 +155,5 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
     		return false;
     	}
     	return true;
-    }
-    public static class LogRotationBuildsSliceSpec implements UnorderedStringSlicerSpec<AbstractProject<?,?>> {
-
-        private static final String DISABLED = "(Disabled)";
-
-        public String getName() {
-            return "Discard Old Builds Slicer - Builds";
-        }
-
-        public String getName(AbstractProject<?, ?> item) {
-            return item.getName();
-        }
-
-        public String getUrl() {
-            return "logrotationbuilds";
-        }
-
-        public List<String> getValues(AbstractProject<?, ?> item) {
-            String retString = null;
-            LogRotator logrotator = item.getLogRotator();
-            if(logrotator == null) {
-                retString=DISABLED;
-            } else {
-                String numToKeepStr = logrotator.getNumToKeepStr();
-                if(numToKeepStr.length() == 0) {
-                    retString=DISABLED;
-                } else {
-                    retString=numToKeepStr;
-                }
-            }
-            List<String> ret = new ArrayList<String>();
-            ret.add(retString);
-            return ret;
-        }
-
-        public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List)Hudson.getInstance().getItems(AbstractProject.class);
-        }
-
-        public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {
-            if(set.isEmpty()) return false;
-
-            LogRotator logrotator = item.getLogRotator();
-            int days = -1,builds = -1;
-            
-            if(logrotator!= null) {
-                days=logrotator.getDaysToKeep();
-                builds=logrotator.getNumToKeep();
-            }
-            boolean disabled = false;
-            for(String line : set) {
-                if(line.length() == 0 || line.equals(DISABLED)) {
-                    disabled = true;
-                } else {
-                    int val = Integer.parseInt(line);
-                    if(val > builds) {
-                        builds = val;
-                    }
-                }
-            }
-
-            if(disabled) builds = -1;
-            
-            LogRotator newlogrotator = new LogRotator(days,builds);
-            if (!LogRotationSlicer.equals(newlogrotator, logrotator)) {
-	            item.setLogRotator(newlogrotator);
-	            try {
-	                item.save();
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	                return false;
-	            }
-	            return true;
-            } else {
-            	return false;
-            }
-        }
     }
 }
