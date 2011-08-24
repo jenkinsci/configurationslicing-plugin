@@ -14,6 +14,14 @@
 	<description>Allows configuration of a single property across a group of projects</description>
 	<url>http://wiki.jenkins-ci.org/display/JENKINS/Configuration+Slicing+Plugin</url>
 
+	<developers>
+		<developer>
+			<id>jacob_robertson</id>
+			<name>Jacob Robertson</name>
+			<email>jacob.robertson.work@gmail.com</email>
+		</developer>
+	</developers>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.jvnet.hudson.main</groupId>
