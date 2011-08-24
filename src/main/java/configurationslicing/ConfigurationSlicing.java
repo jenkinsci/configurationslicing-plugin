@@ -106,7 +106,9 @@ public class ConfigurationSlicing extends ManagementLink {
                 T newslice = (T)slice.newInstance(req, req.getSubmittedForm());
                 transform(newslice);
                 this.slice = newslice;
-                rsp.forward(this, "changesummary", req);
+                // since we're not actually accumulating changes, let's not forward here anymore
+//                rsp.forward(this, "changesummary", req);
+                rsp.sendRedirect2("..");
             } catch (FormException e) {
                 e.printStackTrace();
             }
