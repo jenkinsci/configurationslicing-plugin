@@ -42,6 +42,10 @@ public class EmailSlicerTest extends HudsonTestCase {
 	@SuppressWarnings("unchecked")
 	private void doTestSetValues(String expected, String valuesString, boolean maven, boolean core) throws Exception {
 		
+		if (!core) {
+			expected = expected.replaceAll(" ", ",");
+		}
+		
 		AbstractProject project;
 		if (maven) {
 			project = createMavenProject();
