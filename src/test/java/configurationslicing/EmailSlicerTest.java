@@ -1,5 +1,6 @@
 package configurationslicing;
 
+
 import hudson.model.AbstractProject;
 
 import java.util.HashSet;
@@ -8,7 +9,9 @@ import java.util.Set;
 
 import org.jvnet.hudson.test.HudsonTestCase;
 
-import configurationslicing.email.CoreEmailSlicer;
+import configurationslicing.email.AbstractEmailSliceSpec;
+import configurationslicing.email.CoreEmailSlicer.CoreEmailSliceSpec;
+import configurationslicing.email.ExtEmailSlicer.ExtEmailSliceSpec;
 
 public class EmailSlicerTest extends HudsonTestCase {
 
@@ -19,7 +22,7 @@ public class EmailSlicerTest extends HudsonTestCase {
 		doTestNormalize(null, null);
 	}
 	private void doTestNormalize(String email, String expect) {
-		String normalized = new CoreEmailSlicer.CoreEmailSliceSpec().normalize(email, " ");
+		String normalized = new CoreEmailSliceSpec().normalize(email, " ");
 		assertEquals(expect, normalized);
 	}
 
@@ -31,11 +34,13 @@ public class EmailSlicerTest extends HudsonTestCase {
 	}
 
 	private void doTestSetValues(String expected, String valuesString) throws Exception {
-		doTestSetValues(expected, valuesString, false);
-		doTestSetValues(expected, valuesString, true);
+		doTestSetValues(expected, valuesString, false, true);
+		doTestSetValues(expected, valuesString, true, true);
+		doTestSetValues(expected, valuesString, false, false);
+		doTestSetValues(expected, valuesString, true, false);
 	}
 	@SuppressWarnings("unchecked")
-	private void doTestSetValues(String expected, String valuesString, boolean maven) throws Exception {
+	private void doTestSetValues(String expected, String valuesString, boolean maven, boolean core) throws Exception {
 		
 		AbstractProject project;
 		if (maven) {
@@ -43,7 +48,12 @@ public class EmailSlicerTest extends HudsonTestCase {
 		} else {
 			project = createFreeStyleProject();
 		}
-		CoreEmailSlicer.CoreEmailSliceSpec spec = new CoreEmailSlicer.CoreEmailSliceSpec();
+		AbstractEmailSliceSpec spec;
+		if (core) {
+			spec = new CoreEmailSliceSpec();
+		} else {
+			spec = new ExtEmailSliceSpec();
+		}
 		
 		Set<String> values = new HashSet<String>();
 		values.add(valuesString);
