@@ -24,7 +24,7 @@ public class CustomWorkspaceStringSlicer extends UnorderedStringSlicer<AbstractP
         super(new CustomWorkspaceStringSliceSpec());
     }
 
-    public static class CustomWorkspaceStringSliceSpec implements UnorderedStringSlicerSpec<AbstractProject<?,?>> {
+    public static class CustomWorkspaceStringSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?,?>> {
 
         private static final String DISABLED = "(Disabled)";
 

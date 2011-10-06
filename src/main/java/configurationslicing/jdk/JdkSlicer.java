@@ -22,7 +22,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
         super(new JdkSlicerSpec());
     }
     
-    public static class JdkSlicerSpec implements UnorderedStringSlicerSpec<AbstractProject<?,?>> {
+    public static class JdkSlicerSpec extends UnorderedStringSlicerSpec<AbstractProject<?,?>> {
         private static final String DEFAULT = "(Default)";
 
         public String getDefaultValueString() {

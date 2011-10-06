@@ -15,7 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 
 @SuppressWarnings("unchecked")
-public abstract class AbstractEmailSliceSpec implements UnorderedStringSlicerSpec<AbstractProject<?, ?>> {
+public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?, ?>> {
 
 	public static final String DISABLED = "(Disabled)";
 
@@ -28,7 +28,6 @@ public abstract class AbstractEmailSliceSpec implements UnorderedStringSlicerSpe
 		this.name = name;
 		this.url = url;
 	}
-	
 	
 	public List<String> getValues(AbstractProject<?, ?> project) {
 		ProjectHandler handler = getProjectHandler(project);
@@ -79,6 +78,10 @@ public abstract class AbstractEmailSliceSpec implements UnorderedStringSlicerSpe
 		value = StringUtils.trimToNull(value);
 		if (value == null) {
 			return null;
+		}
+		// don't lowercase the templates
+		if (value.startsWith("$")) {
+			return value;
 		}
 		String[] split = value.split("[;,\\s]");
 		Arrays.sort(split, String.CASE_INSENSITIVE_ORDER);

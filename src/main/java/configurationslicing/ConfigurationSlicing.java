@@ -41,7 +41,12 @@ public class ConfigurationSlicing extends ManagementLink {
     @SuppressWarnings("unchecked")
 	public List<Slicer> getAxes() {
     	ExtensionList<Slicer> elist = Hudson.getInstance().getExtensionList(Slicer.class);
-    	List<Slicer> list = new ArrayList<Slicer>(elist);
+    	List<Slicer> list = new ArrayList<Slicer>();
+    	for (Slicer slicer: elist) {
+    		if (slicer.isLoaded()) {
+    			list.add(slicer);
+    		}
+    	}
     	Collections.sort(list);
     	return list;
     }

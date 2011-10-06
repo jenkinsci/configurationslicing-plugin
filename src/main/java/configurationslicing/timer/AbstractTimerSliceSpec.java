@@ -14,7 +14,7 @@ import antlr.ANTLRException;
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 
 @SuppressWarnings("unchecked")
-public abstract class AbstractTimerSliceSpec implements
+public abstract class AbstractTimerSliceSpec extends
 		UnorderedStringSlicerSpec<AbstractProject<?, ?>> {
 
 	public static final String DISABLED = "(Disabled)";

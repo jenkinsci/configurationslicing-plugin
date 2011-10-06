@@ -1,10 +1,13 @@
 package configurationslicing.email;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
 import hudson.Extension;
+import hudson.plugins.emailext.EmailType;
 import hudson.plugins.emailext.ExtendedEmailPublisher;
 import hudson.plugins.emailext.plugins.trigger.FailureTrigger;
 import hudson.model.AbstractProject;
@@ -20,7 +23,15 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 	public ExtEmailSlicer() {
 		super(new ExtEmailSliceSpec());
 	}
-	
+    public boolean isLoaded() {
+    	try {
+    		new EmailType();
+    		return true;
+    	} catch (Throwable t) {
+    		return false;
+    	}
+    }
+
 	@SuppressWarnings("unchecked")
 	public static class ExtEmailSliceSpec extends AbstractEmailSliceSpec implements ProjectHandler {
 
@@ -32,7 +43,12 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 		protected ProjectHandler getProjectHandler(AbstractProject project) {
 			return this;
 		}
-
+		@Override
+		public List<String> getCommonValueStrings() {
+			List<String> values = new ArrayList<String>();
+			values.add("$DEFAULT_RECIPIENTS");
+			return values;
+		}
 		public String getRecipients(AbstractProject project) {
 			ExtendedEmailPublisher mailer = getMailer(project);
 			if (mailer != null) {
@@ -62,6 +78,10 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 				DescribableList<Publisher,Descriptor<Publisher>> publishers = project.getPublishersList();
 				ExtendedEmailPublisher publisher = new ExtendedEmailPublisher();
 				FailureTrigger trigger = new FailureTrigger();
+				EmailType email = new EmailType();
+				email.setSendToDevelopers(true);
+				email.setSendToRecipientList(true);
+				trigger.setEmail(email);
 				publisher.getConfiguredTriggers().add(trigger);
 				publishers.add(publisher);
 				return true;

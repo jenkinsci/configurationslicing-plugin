@@ -20,6 +20,9 @@ public class BooleanSlicer<I> implements Slicer<BooleanSlice<I>, I>{
     public BooleanSlicer(BooleanSlicerSpec<I> spec) {
         this.spec=spec;
     }
+    public boolean isLoaded() {
+    	return true;
+    }
     public BooleanSlice<I> getInitialAccumulator() {
         return new BooleanSlice<I>(spec);
     }

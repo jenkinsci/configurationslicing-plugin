@@ -77,6 +77,16 @@ public class UnorderedStringSlice<I> extends Slice {
     	}
     	Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
     	
+    	// add any common values
+    	List<String> commonValues = spec.getCommonValueStrings();
+    	if (commonValues != null) {
+    		for (String commonValue: commonValues) {
+    			if (!list.contains(commonValue)) {
+    				list.add(commonValue);
+    			}
+    		}
+    	}
+    	
     	// add the default as second to last
     	if (defaultValueString != null) {
     		list.add(defaultValueString);

@@ -18,7 +18,7 @@ public class LabelSlicer extends UnorderedStringSlicer<AbstractProject<?,?>>{
     public LabelSlicer() {
         super(new LabelSliceSpec());
     }
-    public static class LabelSliceSpec implements UnorderedStringSlicerSpec<AbstractProject<?,?>> {
+    public static class LabelSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?,?>> {
 
         private static final String ROAMING = "(Roaming)";
 

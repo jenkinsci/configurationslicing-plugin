@@ -3,6 +3,7 @@ package configurationslicing;
 
 import hudson.model.AbstractProject;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
 import org.jvnet.hudson.test.HudsonTestCase;
 
 import configurationslicing.email.AbstractEmailSliceSpec;
+import configurationslicing.email.ExtEmailSlicer;
 import configurationslicing.email.CoreEmailSlicer.CoreEmailSliceSpec;
 import configurationslicing.email.ExtEmailSlicer.ExtEmailSliceSpec;
 
@@ -67,6 +69,19 @@ public class EmailSlicerTest extends HudsonTestCase {
 		String got = spec.join(gotList);
 		
 		assertEquals(expected, got);
+	}
+	@SuppressWarnings("unchecked")
+	public void testCommonValues() {
+		UnorderedStringSlice slice = new UnorderedStringSlice(new ExtEmailSlicer.ExtEmailSliceSpec());
+		List<String> values = slice.getConfiguredValues();
+		assertEquals(3, values.size());
+		assertTrue(values.contains(""));
+		assertTrue(values.contains(ExtEmailSlicer.ExtEmailSliceSpec.DISABLED));
+		assertTrue(values.contains("$DEFAULT_RECIPIENTS"));
+		
+		slice.add("test", Collections.singleton("value"));
+		values = slice.getConfiguredValues();
+		assertEquals(4, values.size());
 	}
 	
 }

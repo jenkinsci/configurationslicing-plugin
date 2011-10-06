@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>, I>{
-    public static interface UnorderedStringSlicerSpec<I> {
+    public static abstract class UnorderedStringSlicerSpec<I> {
         public abstract String getName();
         public abstract String getUrl();
         public abstract List<I> getWorkDomain();
@@ -12,6 +12,12 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
         public abstract String getName(I item);
         public abstract boolean setValues(I item, Set<String> set);
         public abstract String getDefaultValueString();
+        /**
+         * Useful when there are common configurations we want to always be available.
+         */
+        public List<String> getCommonValueStrings() {
+        	return null;
+        }
     }
 
     private UnorderedStringSlicerSpec<I> spec;
@@ -21,6 +27,9 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
     }
     public UnorderedStringSlice<I> getInitialAccumulator() {
         return new UnorderedStringSlice<I>(spec);
+    }
+    public boolean isLoaded() {
+    	return true;
     }
 
     public UnorderedStringSlice<I> accumulate(UnorderedStringSlice<I> t, I i) {

@@ -18,7 +18,7 @@ public class MavenOptsSlicer extends UnorderedStringSlicer<MavenModuleSet> {
         super(new MavenOptsSlicerSpec());
     }
     
-    public static class MavenOptsSlicerSpec implements UnorderedStringSlicerSpec<MavenModuleSet> {
+    public static class MavenOptsSlicerSpec extends UnorderedStringSlicerSpec<MavenModuleSet> {
 
         public String getDefaultValueString() {
         	return null;
