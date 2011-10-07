@@ -26,7 +26,7 @@ public class ConfigurationSlicing extends ManagementLink {
 
     @Override
     public String getIconFileName() {
-        return "orange-square.gif";
+        return "orange-square.png";
     }
 
     @Override
