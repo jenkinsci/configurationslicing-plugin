@@ -3,10 +3,9 @@
  */
 package configurationslicing;
 
-import hudson.Extension;
-import hudson.model.Descriptor;
 import hudson.model.Descriptor.FormException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,10 +43,21 @@ public class BooleanSlice<I> extends Slice {
         return spec;
     }
     
+    public List<I> getConfiguredItems() {
+    	List<I> items = new ArrayList<I>();
+    	List<I> all = spec.getWorkDomain();
+    	for (I i: all) {
+    		String name = spec.getName(i);
+    		if (nameToValue.containsKey(name)) {
+    			items.add(i);
+    		}
+    	}
+    	return items;
+    }
+    
     @Override
     public Slice newInstance(StaplerRequest req, JSONObject formData)
            throws FormException {
-        System.out.println(formData);
         return new BooleanSlice<I>(BooleanSlice.this.spec, req.bindJSONToList(ItemState.class, formData.get("itemstate")));
     }
     

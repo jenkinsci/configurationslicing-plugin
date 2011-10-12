@@ -1,0 +1,16 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+  <l:header />
+  <l:side-panel>
+    <l:tasks>
+     <l:task icon="images/24x24/up.gif" href="${rootURL}/" title="${%Back to Dashboard}" />
+     <l:isAdmin>
+       <l:task icon="images/24x24/setting.gif" href="${rootURL}/manage" title="${%Manage Jenkins}" />
+	   <l:task icon="images/24x24/orange-square.gif" href="${rootURL}/${it.parent.urlName}" title="${it.parent.displayName}" />
+	   <l:task icon="images/24x24/orange-square.gif" href="${rootURL}/${it.parent.urlName}/${it.slicer.url}" title="${it.slicer.name}" />
+	   <j:forEach var="view" items="${it.parent.views}">
+	   		<l:task icon="images/24x24/folder.gif" href="${rootURL}/${it.parent.urlName}/${it.slicer.url}/view?view=${view}" title="${view}" />
+	   </j:forEach>
+     </l:isAdmin>
+    </l:tasks>
+  </l:side-panel>
+</j:jelly>
