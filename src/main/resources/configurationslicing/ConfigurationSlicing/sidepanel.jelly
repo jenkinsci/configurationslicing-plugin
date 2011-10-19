@@ -2,10 +2,10 @@
   <l:header />
   <l:side-panel>
     <l:tasks>
-     <l:task icon="images/24x24/up.gif" href="${rootURL}/" title="${%Back to Dashboard}" />
+     <l:task icon="images/24x24/up.png" href="${rootURL}/" title="${%Back to Dashboard}" />
      <l:isAdmin>
-       <l:task icon="images/24x24/setting.gif" href="${rootURL}/manage" title="${%Manage Jenkins}" />
-	   <l:task icon="images/24x24/orange-square.gif" href="${rootURL}/${it.urlName}" title="${it.displayName}" />
+       <l:task icon="images/24x24/setting.png" href="${rootURL}/manage" title="${%Manage Jenkins}" />
+	   <l:task icon="images/24x24/orange-square.png" href="${rootURL}/${it.urlName}" title="${it.displayName}" />
      </l:isAdmin>
     </l:tasks>
   </l:side-panel>
