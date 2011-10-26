@@ -1,19 +1,16 @@
 package configurationslicing.executeshell;
 
-import configurationslicing.ExecuteShellSlice;
-import configurationslicing.UnorderedStringSlice;
 import hudson.Extension;
-import hudson.tasks.Shell;
-import hudson.tasks.Builder;
+import hudson.model.Descriptor;
 import hudson.model.Hudson;
 import hudson.model.Project;
-import hudson.model.Descriptor;
+import hudson.tasks.Builder;
+import hudson.tasks.Shell;
 import hudson.util.DescribableList;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.ArrayList;
 
 import configurationslicing.UnorderedStringSlicer;
 
@@ -85,13 +82,25 @@ public class ExecuteShellSlicer extends UnorderedStringSlicer<Project<?,?>>{
                     }
                 }
             } else {
-                shell = new Shell(command);
-                try {
-                    buildersList.replace(shell);
-                } catch(java.io.IOException e) {
-                    System.err.println("IOException Thrown replacing shell value");
-                    return false;
-                }
+            	boolean replace = true;
+            	// check to see if we need to replace the shell command.  This prevents persisting
+            	// an empty change, which is important for keeping audit trails clean.
+            	Shell oldShell = buildersList.get(Shell.class);
+            	if (oldShell != null) {
+            		String oldCommand = oldShell.getCommand();
+            		if (command.equals(oldCommand)) {
+            			replace = false;
+            		}
+            	}
+            	if (replace) {
+	                shell = new Shell(command);
+	                try {
+	                    buildersList.replace(shell);
+	                } catch(java.io.IOException e) {
+	                    System.err.println("IOException Thrown replacing shell value");
+	                    return false;
+	                }
+            	}
             }
             return true;
         }

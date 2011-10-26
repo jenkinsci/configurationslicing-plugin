@@ -97,12 +97,14 @@ public class ConfigurationSlicing extends ManagementLink {
         List<I> worklist;
         List<I> changed;
         T slice;
+        View view;
         public SliceExecutor(Slicer<T, I> s, View view) {
             this.slicer = s;
-            execute(view);
+            this.view = view;
+            execute();
         }
         
-        private void execute(View view) {
+        private void execute() {
             T accumulator = slicer.getInitialAccumulator();
             worklist = slicer.getWorkDomain();
             Collection<TopLevelItem> items = null;
@@ -142,7 +144,21 @@ public class ConfigurationSlicing extends ManagementLink {
         public List<I> getChanged() {
             return changed;
         }
-        
+        public String getViewDisplayPart() {
+        	if (view == null) {
+        		return "";
+        	} else {
+        		String part = view.getDisplayName();
+        		ViewGroup owner = view.getOwner();
+        		while (owner instanceof View) {
+        			View parentView = (View) owner;
+        			part = parentView.getDisplayName() + " / " + part;
+        			owner = parentView.getOwner();
+        		}
+        		part = " > " + part;
+        		return part;
+        	}
+        }
         public List<I> getWorklist() {
             return worklist;
         }

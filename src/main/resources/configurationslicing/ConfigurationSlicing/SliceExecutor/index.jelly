@@ -4,7 +4,8 @@
     <l:main-panel>
       <f:form method="post" name="sliceconfig" action="sliceconfigSubmit">
         <f:block>
-          <j:set var="worklist" value="${it.worklist}"/> 
+          <j:set var="worklist" value="${it.worklist}"/>
+          <j:set var="viewDisplayPart" value="${it.viewDisplayPart}"/>
           <st:include page="sliceconfig.jelly" it="${it.slice}"/>
         </f:block>
         <f:block>
