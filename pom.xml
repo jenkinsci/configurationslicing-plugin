@@ -9,7 +9,7 @@
 
 	<artifactId>configurationslicing</artifactId>
 	<packaging>hpi</packaging>
-	<version>1.26-SNAPSHOT</version>
+	<version>1.26</version>
 	<name>Configuration Slicing plugin</name>
 	<description>Allows configuration of a single property across a group of projects</description>
 	<url>http://wiki.jenkins-ci.org/display/JENKINS/Configuration+Slicing+Plugin</url>
@@ -38,9 +38,9 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/configurationslicing</connection>
-		<developerConnection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/configurationslicing</developerConnection>
-		<url>https://svn.jenkins-ci.org/trunk/hudson/plugins/configurationslicing</url>
+		<connection>scm:svn:https://svn.jenkins-ci.org/tags/configurationslicing-1.26</connection>
+		<developerConnection>scm:svn:https://svn.jenkins-ci.org/tags/configurationslicing-1.26</developerConnection>
+		<url>https://svn.jenkins-ci.org/tags/configurationslicing-1.26</url>
 	</scm>
 
 	<build>
