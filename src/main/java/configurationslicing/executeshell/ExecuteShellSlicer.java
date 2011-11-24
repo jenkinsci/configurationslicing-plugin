@@ -1,7 +1,9 @@
 package configurationslicing.executeshell;
 
 import hudson.Extension;
+import hudson.matrix.MatrixProject;
 import hudson.model.Descriptor;
+import hudson.model.AbstractProject;
 import hudson.model.Hudson;
 import hudson.model.Project;
 import hudson.tasks.Builder;
@@ -20,13 +22,13 @@ import configurationslicing.UnorderedStringSlicer;
  * @author Victor Garcia <bravejolie@gmail.com> <victor@tuenti.com>
  */
 @Extension
-public class ExecuteShellSlicer extends UnorderedStringSlicer<Project<?,?>>{
+public class ExecuteShellSlicer extends UnorderedStringSlicer<AbstractProject<?,?>>{
 
     public ExecuteShellSlicer() {
         super(new ExecuteShellSliceSpec());
     }
 
-    public static class ExecuteShellSliceSpec extends UnorderedStringSlicerSpec<Project<?,?>> {
+    public static class ExecuteShellSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?,?>> {
 
         private static final String NOTHING = "(nothing)";
 
@@ -38,7 +40,7 @@ public class ExecuteShellSlicer extends UnorderedStringSlicer<Project<?,?>>{
             return "Execute shell slicer";
         }
 
-        public String getName(Project<?, ?> item) {
+        public String getName(AbstractProject<?, ?> item) {
             return item.getName();
         }
 
@@ -46,9 +48,9 @@ public class ExecuteShellSlicer extends UnorderedStringSlicer<Project<?,?>>{
             return "executeshellslicestring";
         }
 
-        public List<String> getValues(Project<?, ?> item) {
+        public List<String> getValues(AbstractProject<?, ?> item) {
             List<String> shellContent = new ArrayList<String>();
-            DescribableList<Builder,Descriptor<Builder>> buildersList = item.getBuildersList();
+            DescribableList<Builder,Descriptor<Builder>> buildersList = getBuildersList(item);
 
             Shell shell = (Shell)buildersList.get(Shell.class);
             if(shell != null) {
@@ -61,12 +63,31 @@ public class ExecuteShellSlicer extends UnorderedStringSlicer<Project<?,?>>{
         }
 
         @SuppressWarnings("unchecked")
-        public List<Project<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getItems(Project.class);
+        public List<AbstractProject<?, ?>> getWorkDomain() {
+        	List<AbstractProject<?, ?>> list = new ArrayList<AbstractProject<?, ?>>();
+        	List<AbstractProject> temp = Hudson.getInstance().getItems(AbstractProject.class);
+        	for (AbstractProject p: temp) {
+        		if (p instanceof Project || p instanceof MatrixProject) {
+        			list.add(p);
+        		}
+        	}
+        	return list;
+        }
+        
+        @SuppressWarnings("unchecked")
+		private DescribableList<Builder,Descriptor<Builder>> getBuildersList(AbstractProject<?, ?> item) {
+        	if (item instanceof Project) {
+        		return ((Project) item).getBuildersList();
+        	} else if (item instanceof MatrixProject) {
+        		return ((MatrixProject) item).getBuildersList();
+        	} else {
+        		return null;
+        	}
+            
         }
 
-        public boolean setValues(Project<?, ?> item, Set<String> set) {
-            DescribableList<Builder,Descriptor<Builder>> buildersList = item.getBuildersList();
+        public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {
+            DescribableList<Builder,Descriptor<Builder>> buildersList = getBuildersList(item);
             Shell shell = null;
             String command = set.iterator().next();
             
