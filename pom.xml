@@ -35,6 +35,13 @@
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.jvnet.hudson.plugins</groupId>
+			<artifactId>build-timeout</artifactId>
+			<version>1.6</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 	<scm>

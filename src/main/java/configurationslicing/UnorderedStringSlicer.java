@@ -18,6 +18,9 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
         public List<String> getCommonValueStrings() {
         	return null;
         }
+        public String getConfiguredValueDescription() {
+        	return "Configured Value";
+        }
     }
 
     private UnorderedStringSlicerSpec<I> spec;
