@@ -37,7 +37,16 @@ public class UnorderedStringSlice<I> extends Slice {
             for(String itemName : namesSplit) {
             	itemName = itemName.trim();
             	if (itemName.length() > 0) {
-            		addLine(nameToValues, itemName, value.trim());
+                	int index = 0;
+            		if (spec.isMultipleItemsAllowed()) {
+	                	int bracket = itemName.indexOf('[');
+	                	if (bracket > 0) {
+	                		String indexString = itemName.substring(bracket + 1, itemName.length() - 1);
+	                		index = Integer.parseInt(indexString);
+	                		itemName = itemName.substring(0, bracket);
+	                	}
+            		}
+            		addLine(nameToValues, itemName, value.trim(), index);
             	}
             }
         }
@@ -61,14 +70,19 @@ public class UnorderedStringSlice<I> extends Slice {
         Set<String> list= map.get(s);
         list.add(name);
     }
-    private static void addLine(Map<String, List<String>> map, String s, String name) {
+    private static void addLine(Map<String, List<String>> map, String s, String name, int index) {
         if(!map.containsKey(s)) {
             map.put(s, new ArrayList<String>());
         }
-        List<String> list= map.get(s);
-        list.add(name);
+        List<String> list = map.get(s);
+        while (list.size() < index + 1) {
+        	// add a blank - this could happen if one of the indexed names was simply removed
+        	list.add("");
+        }
+        
+        list.set(index, name);
     }
-
+    
     public List<String> get(String name) {
         return nameToValues.get(name);
     }

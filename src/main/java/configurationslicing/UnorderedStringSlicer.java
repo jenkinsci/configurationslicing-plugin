@@ -1,5 +1,6 @@
 package configurationslicing;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>, I>{
@@ -20,6 +21,12 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
         public String getConfiguredValueDescription() {
         	return "Configured Value";
         }
+        /**
+         * Allows you to use "MyJob[0]" to indicate separate values
+         */
+        public boolean isMultipleItemsAllowed() {
+        	return false;
+        }
     }
 
     private UnorderedStringSlicerSpec<I> spec;
@@ -34,8 +41,19 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
     	return true;
     }
 
-    public UnorderedStringSlice<I> accumulate(UnorderedStringSlice<I> t, I i) {
-        t.add(spec.getName(i), spec.getValues(i));
+    public UnorderedStringSlice<I> accumulate(UnorderedStringSlice<I> t, I item) {
+    	String name = spec.getName(item);
+    	List<String> values = spec.getValues(item);
+    	if (values.size() > 1 && spec.isMultipleItemsAllowed()) {
+	    	for (int i = 0; i < values.size(); i++) {
+	    		List<String> oneValueList = new ArrayList<String>();
+	    		oneValueList.add(values.get(i));
+	    		String oneName = name + "[" + i + "]";
+	    		t.add(oneName, oneValueList);
+	    	}
+    	} else {
+    		t.add(spec.getName(item), values);
+    	}
         return t;
     }
 

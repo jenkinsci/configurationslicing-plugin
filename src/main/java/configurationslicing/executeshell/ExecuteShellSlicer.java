@@ -30,7 +30,7 @@ public class ExecuteShellSlicer extends UnorderedStringSlicer<AbstractProject<?,
 
     public static class ExecuteShellSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?,?>> {
 
-        private static final String NOTHING = "(nothing)";
+        public static final String NOTHING = "(nothing)";
 
         public String getDefaultValueString() {
             return NOTHING;
@@ -48,15 +48,21 @@ public class ExecuteShellSlicer extends UnorderedStringSlicer<AbstractProject<?,
             return "executeshellslicestring";
         }
 
+        @Override
+        public boolean isMultipleItemsAllowed() {
+        	return true;
+        }
+        
         public List<String> getValues(AbstractProject<?, ?> item) {
             List<String> shellContent = new ArrayList<String>();
             DescribableList<Builder,Descriptor<Builder>> buildersList = getBuildersList(item);
 
-            Shell shell = (Shell)buildersList.get(Shell.class);
-            if(shell != null) {
+            List<Shell> shells = buildersList.getAll(Shell.class);
+            for (Shell shell: shells) {
                 shellContent.add(shell.getCommand());
-            } else {
-                shellContent.add(NOTHING);
+            }
+            if (shellContent.isEmpty()) {
+            	shellContent.add(NOTHING);
             }
 
             return shellContent;
@@ -83,46 +89,66 @@ public class ExecuteShellSlicer extends UnorderedStringSlicer<AbstractProject<?,
         	} else {
         		return null;
         	}
-            
         }
 
-        public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
+        public boolean setValues(AbstractProject<?, ?> item, List<String> list) {
             DescribableList<Builder,Descriptor<Builder>> buildersList = getBuildersList(item);
-            String command = set.iterator().next();
+            List<Shell> shells = buildersList.getAll(Shell.class);
             
-            // if the command is empty or NOTHING, remove the shell builder from the job
-            if(command.equals(NOTHING) || command.equals("")) {
-                Shell shell = (Shell) buildersList.get(Shell.class);
-                if(shell != null) {
-                    try {
-                    	// the remove command will persist the project
-                        buildersList.remove(shell.getDescriptor());
-                    } catch(java.io.IOException e) {
-                        System.err.println("IOException Thrown removing shell value");
-                        return false;
-                    }
-                }
-            } else {
-        		Shell newShell = new Shell(command);
-            	// check to see if we need to replace the shell command.  This prevents persisting
-            	// an empty change, which is important for keeping audit trails clean.
-            	Shell currentShell = buildersList.get(Shell.class);
-            	if (currentShell != null) {
-            		String oldCommand = currentShell.getCommand();
-            		if (!command.equals(oldCommand)) {
-            			return replaceBuilder(buildersList, currentShell, newShell);
-            		}
-            	} else {
+            int maxLen = Math.max(list.size(), shells.size());
+            Shell[] oldShells = new Shell[maxLen];
+            Shell[] newShells = new Shell[maxLen];
+
+            for (int i = 0; i < shells.size(); i++) {
+	            oldShells[i] = shells.get(i);
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+	            String command = list.get(i);
+	            if(!command.equals(NOTHING) && !command.equals("")) {
+	            	if (oldShells[i] != null && oldShells[i].getCommand().equals(command)) {
+	            		newShells[i] = oldShells[i];
+	            	} else {
+	            		newShells[i] = new Shell(command);
+	            	}
+	            }
+            }
+            
+            // perform any replacements
+            for (int i = 0; i < maxLen; i++) {
+				if (oldShells[i] != null && newShells[i] != null && oldShells[i] != newShells[i]) {
+					replaceBuilder(buildersList, oldShells[i], newShells[i]);
+				}
+			}
+            
+            // add any new ones (should always add to the end, but might not if the original command was empty)
+            for (int i = 0; i < maxLen; i++) {
+				if (oldShells[i] == null && newShells[i] != null) {
 	                try {
-	                    buildersList.add(newShell);
+	                    buildersList.add(newShells[i]);
 	                } catch(java.io.IOException e) {
-	                    System.err.println("IOException Thrown add shell value");
+	                    System.err.println("IOException Thrown add builder value");
 	                    return false;
 	                }
-            	}
-            }
-			return true;
+				}
+			}
+            
+            // delete any old ones
+            for (int i = 0; i < maxLen; i++) {
+				if (oldShells[i] != null && newShells[i] == null) {
+                    try {
+	                	// the remove command will persist the project
+	                    buildersList.remove(oldShells[i]);
+	                } catch(java.io.IOException e) {
+	                    System.err.println("IOException Thrown removing shell value");
+	                    return false;
+	                }
+				}
+			}
+            
+            return true;
         }
+
         /**
          * If we do other builders, publishers, etc - this should be the pattern to use.
          * @throws IOException 
