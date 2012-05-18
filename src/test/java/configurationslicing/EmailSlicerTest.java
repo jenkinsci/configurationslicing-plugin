@@ -3,10 +3,9 @@ package configurationslicing;
 
 import hudson.model.AbstractProject;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.jvnet.hudson.test.HudsonTestCase;
 
@@ -61,7 +60,7 @@ public class EmailSlicerTest extends HudsonTestCase {
 			spec = new ExtEmailSliceSpec();
 		}
 		
-		Set<String> values = new HashSet<String>();
+		List<String> values = new ArrayList<String>();
 		values.add(valuesString);
 		spec.setValues(project, values);
 		

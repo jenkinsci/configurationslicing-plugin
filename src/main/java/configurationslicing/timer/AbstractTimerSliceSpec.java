@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import antlr.ANTLRException;
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
@@ -55,7 +54,7 @@ public abstract class AbstractTimerSliceSpec extends
 
 	public abstract Trigger newTrigger(String spec) throws ANTLRException;
 	
-	public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {
+	public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
 		if (set.isEmpty())
 			return false;
 

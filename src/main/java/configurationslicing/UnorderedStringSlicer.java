@@ -1,7 +1,6 @@
 package configurationslicing;
 
 import java.util.List;
-import java.util.Set;
 
 public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>, I>{
     public static abstract class UnorderedStringSlicerSpec<I> {
@@ -10,7 +9,7 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
         public abstract List<I> getWorkDomain();
         public abstract List<String> getValues(I item);
         public abstract String getName(I item);
-        public abstract boolean setValues(I item, Set<String> set);
+        public abstract boolean setValues(I item, List<String> set);
         public abstract String getDefaultValueString();
         /**
          * Useful when there are common configurations we want to always be available.
@@ -41,7 +40,7 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
     }
 
     public boolean transform(UnorderedStringSlice<I> t, I i) {
-    	Set<String> set = t.get(spec.getName(i));
+    	List<String> set = t.get(spec.getName(i));
     	if (set == null) {
     		return false;
     	} else {

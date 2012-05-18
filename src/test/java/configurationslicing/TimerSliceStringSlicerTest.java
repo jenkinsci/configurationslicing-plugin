@@ -3,9 +3,8 @@ package configurationslicing;
 import hudson.model.AbstractProject;
 import hudson.triggers.Trigger;
 
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.jvnet.hudson.test.HudsonTestCase;
 
@@ -54,7 +53,7 @@ public class TimerSliceStringSlicerTest extends HudsonTestCase {
 		assertEquals(2, getRealValues(slice).size());
 		
 		assertEquals(1, project.getTriggers().size());
-		Set<String> set = new LinkedHashSet<String>(getRealValues(slice));
+		List<String> set = new ArrayList<String>(getRealValues(slice));
 		spec.setValues(project, set);
 		assertEquals(1, project.getTriggers().size());
 		Trigger timer = project.getTrigger(spec.getTriggerClass());

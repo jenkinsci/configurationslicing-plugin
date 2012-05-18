@@ -1,14 +1,14 @@
 package configurationslicing.logrotator;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import hudson.Extension;
 import hudson.model.AbstractProject;
 import hudson.model.Hudson;
 import hudson.tasks.LogRotator;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import configurationslicing.UnorderedStringSlicer;
 
 public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractProject<?,?>> {
@@ -87,7 +87,7 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
             return (List) Hudson.getInstance().getItems(AbstractProject.class);
         }
 
-        public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {
+        public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
             if (set.isEmpty()) return false;
 
             LogRotator logrotator = item.getLogRotator();

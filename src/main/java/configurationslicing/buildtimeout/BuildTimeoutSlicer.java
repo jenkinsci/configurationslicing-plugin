@@ -1,8 +1,8 @@
 package configurationslicing.buildtimeout;
 
 import hudson.Extension;
-import hudson.model.BuildableItemWithBuildWrappers;
 import hudson.model.AbstractProject;
+import hudson.model.BuildableItemWithBuildWrappers;
 import hudson.model.Descriptor;
 import hudson.model.Hudson;
 import hudson.plugins.build_timeout.BuildTimeoutWrapper;
@@ -12,7 +12,6 @@ import hudson.util.DescribableList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -73,7 +72,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 		}
 
 		@Override
-		public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {
+		public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
 			BuildableItemWithBuildWrappers bi = (BuildableItemWithBuildWrappers) item;
 			DescribableList<BuildWrapper,Descriptor<BuildWrapper>> wrappers = bi.getBuildWrappersList();
 			boolean changed = false;

@@ -2,8 +2,8 @@ package configurationslicing.executeshell;
 
 import hudson.Extension;
 import hudson.matrix.MatrixProject;
-import hudson.model.Descriptor;
 import hudson.model.AbstractProject;
+import hudson.model.Descriptor;
 import hudson.model.Hudson;
 import hudson.model.Project;
 import hudson.tasks.Builder;
@@ -13,7 +13,6 @@ import hudson.util.DescribableList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import configurationslicing.UnorderedStringSlicer;
 
@@ -87,7 +86,7 @@ public class ExecuteShellSlicer extends UnorderedStringSlicer<AbstractProject<?,
             
         }
 
-        public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {
+        public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
             DescribableList<Builder,Descriptor<Builder>> buildersList = getBuildersList(item);
             String command = set.iterator().next();
             

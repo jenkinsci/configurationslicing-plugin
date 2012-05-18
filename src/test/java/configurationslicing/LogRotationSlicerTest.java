@@ -1,12 +1,13 @@
 package configurationslicing;
 
-import java.util.HashSet;
-import java.util.Set;
+import hudson.model.AbstractProject;
+import hudson.tasks.LogRotator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jvnet.hudson.test.HudsonTestCase;
 
-import hudson.model.AbstractProject;
-import hudson.tasks.LogRotator;
 import configurationslicing.logrotator.LogRotationSlicer;
 import configurationslicing.logrotator.LogRotationSlicer.LogRotationBuildsSliceSpec;
 import configurationslicing.logrotator.LogRotationSlicer.LogRotationDaysSliceSpec;
@@ -29,7 +30,7 @@ public class LogRotationSlicerTest extends HudsonTestCase {
 		assertEquals(item.getLogRotator(), daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep);
 		
 		numToKeep = 12345;
-		Set<String> set = new HashSet<String>();
+		List<String> set = new ArrayList<String>();
 		set.add(String.valueOf(numToKeep));
 		
 		LogRotationBuildsSliceSpec buildsSpec = new LogRotationBuildsSliceSpec();
@@ -38,7 +39,7 @@ public class LogRotationSlicerTest extends HudsonTestCase {
 
 		
 		daysToKeep = 54321;
-		set = new HashSet<String>();
+		set = new ArrayList<String>();
 		set.add(String.valueOf(daysToKeep));
 		
 		LogRotationDaysSliceSpec daysSpec = new LogRotationDaysSliceSpec();

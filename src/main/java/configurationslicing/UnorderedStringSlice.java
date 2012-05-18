@@ -22,14 +22,14 @@ import org.kohsuke.stapler.StaplerRequest;
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 
 public class UnorderedStringSlice<I> extends Slice {
-    private Map<String, Set<String>> nameToValues;
+    private Map<String, List<String>> nameToValues;
     private Map<String, Set<String>> valueToNames;
     private UnorderedStringSlicer.UnorderedStringSlicerSpec<I> spec;
     
     // reconstruct our datastructure after the user has made changes
     public UnorderedStringSlice(UnorderedStringSlicerSpec<I> spec, List<String> configurationValues, List<String> itemNames) {
         this(spec);
-        nameToValues = new HashMap<String, Set<String>>();
+        nameToValues = new HashMap<String, List<String>>();
         for (int i = 0; i < configurationValues.size(); i++) {
         	String value = configurationValues.get(i);
         	String namesString = itemNames.get(i);
@@ -50,19 +50,26 @@ public class UnorderedStringSlice<I> extends Slice {
     
     public void add(String name, Collection<String> values) {
         for(String value : values) {
-            addLine(valueToNames, value, name);
+        	addLineWithSets(valueToNames, value, name);
         }
     }
 
-    private static void addLine(Map<String, Set<String>> map, String s, String name) {
+    private static void addLineWithSets(Map<String, Set<String>> map, String s, String name) {
         if(!map.containsKey(s)) {
             map.put(s, new HashSet<String>());
         }
         Set<String> list= map.get(s);
         list.add(name);
     }
+    private static void addLine(Map<String, List<String>> map, String s, String name) {
+        if(!map.containsKey(s)) {
+            map.put(s, new ArrayList<String>());
+        }
+        List<String> list= map.get(s);
+        list.add(name);
+    }
 
-    public Set<String> get(String name) {
+    public List<String> get(String name) {
         return nameToValues.get(name);
     }
     
