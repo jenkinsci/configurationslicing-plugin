@@ -49,6 +49,6 @@ public class BooleanSlicer<I> implements Slicer<BooleanSlice<I>, I>{
     }
     
     public int compareTo(Slicer<BooleanSlice<I>, I> o) {
-    	return getName().compareTo(o.getName());
+    	return getName().compareToIgnoreCase(o.getName());
     }
 }

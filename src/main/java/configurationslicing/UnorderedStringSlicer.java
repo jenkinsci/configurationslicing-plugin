@@ -79,6 +79,6 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
     }
 
     public int compareTo(Slicer<UnorderedStringSlice<I>, I> o) {
-    	return getName().compareTo(o.getName());
+    	return getName().compareToIgnoreCase(o.getName());
     }
 }
