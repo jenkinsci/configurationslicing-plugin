@@ -30,7 +30,7 @@ public class ExecuteWindowsBatchSlicer extends AbstractBuildCommandSlicer<BatchF
             return "windowsbatchslice";
         }
         @Override
-        public BatchFile createBuilder(String command) {
+        public BatchFile createBuilder(String command, List<BatchFile> existingBuilders, BatchFile oldBuilder) {
         	return new BatchFile(command);
         }
         @Override

@@ -56,6 +56,8 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         }
         public abstract List<B> getConcreteBuildersList(DescribableList<Builder,Descriptor<Builder>> buildersList);
         public abstract String getCommand(B builder);
+        public abstract B[] createBuilderArray(int len);
+        public abstract B createBuilder(String command, List<B> existingBuilders, B oldBuilder);
 
         @SuppressWarnings("unchecked")
         public List<AbstractProject<?, ?>> getWorkDomain() {
@@ -79,8 +81,6 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         		return null;
         	}
         }
-        public abstract B[] createBuilderArray(int len);
-        public abstract B createBuilder(String command);
         
         public boolean setValues(AbstractProject<?, ?> item, List<String> list) {
             DescribableList<Builder,Descriptor<Builder>> buildersList = getBuildersList(item);
@@ -100,7 +100,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
 	            	if (oldBuilders[i] != null && getCommand(oldBuilders[i]).equals(command)) {
 	            		newBuilders[i] = oldBuilders[i];
 	            	} else {
-	            		newBuilders[i] = createBuilder(command);
+	            		newBuilders[i] = createBuilder(command, builders, oldBuilders[i]);
 	            	}
 	            }
             }

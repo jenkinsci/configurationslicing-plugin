@@ -25,7 +25,7 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
         }
 
         public String getName() {
-            return "Goals and Options per Maven project";
+            return "Maven Goals and Options (Maven project)";
         }
 
         public String getName(MavenModuleSet item) {

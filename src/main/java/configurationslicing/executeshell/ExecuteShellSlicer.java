@@ -30,7 +30,7 @@ public class ExecuteShellSlicer extends AbstractBuildCommandSlicer<Shell> {
             return "executeshellslicestring";
         }
         @Override
-        public Shell createBuilder(String command) {
+        public Shell createBuilder(String command, List<Shell> existingBuilders, Shell oldBuilder) {
         	return new Shell(command);
         }
         @Override
