@@ -72,7 +72,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         }
         
         @SuppressWarnings("unchecked")
-		private DescribableList<Builder,Descriptor<Builder>> getBuildersList(AbstractProject<?, ?> item) {
+		public static DescribableList<Builder,Descriptor<Builder>> getBuildersList(AbstractProject<?, ?> item) {
         	if (item instanceof Project) {
         		return ((Project) item).getBuildersList();
         	} else if (item instanceof MatrixProject) {
@@ -144,7 +144,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
          * If we do other builders, publishers, etc - this should be the pattern to use.
          * @throws IOException 
          */
-        private boolean replaceBuilder(DescribableList<Builder,Descriptor<Builder>> builders, Builder oldBuilder, Builder newBuilder) {
+        public static boolean replaceBuilder(DescribableList<Builder,Descriptor<Builder>> builders, Builder oldBuilder, Builder newBuilder) {
         	List<Builder> newList = new ArrayList<Builder>(builders.toList());
         	for (int i = 0; i < newList.size(); i++) {
     			Builder b = newList.get(i);
