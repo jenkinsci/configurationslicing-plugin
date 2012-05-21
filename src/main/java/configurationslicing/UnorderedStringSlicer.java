@@ -44,11 +44,13 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
     public UnorderedStringSlice<I> accumulate(UnorderedStringSlice<I> t, I item) {
     	String name = spec.getName(item);
     	List<String> values = spec.getValues(item);
+    	// TODO This pattern doesn't work for parameters
     	if (values.size() > 1 && spec.isMultipleItemsAllowed()) {
 	    	for (int i = 0; i < values.size(); i++) {
 	    		List<String> oneValueList = new ArrayList<String>();
 	    		oneValueList.add(values.get(i));
-	    		String oneName = name + "[" + i + "]";
+	    		String valueIndex = getValueIndex(item, i);
+	    		String oneName = name + "[" + valueIndex + "]";
 	    		t.add(oneName, oneValueList);
 	    	}
     	} else {
@@ -56,7 +58,9 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
     	}
         return t;
     }
-
+    protected String getValueIndex(I item, int index) {
+    	return String.valueOf(index);
+    }
     public boolean transform(UnorderedStringSlice<I> t, I i) {
     	List<String> set = t.get(spec.getName(i));
     	if (set == null) {
