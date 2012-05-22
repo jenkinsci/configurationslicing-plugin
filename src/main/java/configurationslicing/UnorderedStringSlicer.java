@@ -27,6 +27,12 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
         public boolean isMultipleItemsAllowed() {
         	return false;
         }
+        public String getValueIndex(I item, int index) {
+        	return String.valueOf(index);
+        }
+        public int getValueIndex(I item, String indexName) {
+        	return Integer.parseInt(indexName);
+        }
     }
 
     private UnorderedStringSlicerSpec<I> spec;
@@ -44,12 +50,11 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
     public UnorderedStringSlice<I> accumulate(UnorderedStringSlice<I> t, I item) {
     	String name = spec.getName(item);
     	List<String> values = spec.getValues(item);
-    	// TODO This pattern doesn't work for parameters
     	if (values.size() > 1 && spec.isMultipleItemsAllowed()) {
 	    	for (int i = 0; i < values.size(); i++) {
 	    		List<String> oneValueList = new ArrayList<String>();
 	    		oneValueList.add(values.get(i));
-	    		String valueIndex = getValueIndex(item, i);
+	    		String valueIndex = spec.getValueIndex(item, i);
 	    		String oneName = name + "[" + valueIndex + "]";
 	    		t.add(oneName, oneValueList);
 	    	}
@@ -57,9 +62,6 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
     		t.add(spec.getName(item), values);
     	}
         return t;
-    }
-    protected String getValueIndex(I item, int index) {
-    	return String.valueOf(index);
     }
     public boolean transform(UnorderedStringSlice<I> t, I i) {
     	List<String> set = t.get(spec.getName(i));

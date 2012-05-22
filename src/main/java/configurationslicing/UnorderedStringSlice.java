@@ -34,6 +34,7 @@ public class UnorderedStringSlice<I> extends Slice {
         	String value = configurationValues.get(i);
         	String namesString = itemNames.get(i);
         	String[] namesSplit = namesString.split("\\n");
+        	List<I> workDomain = spec.getWorkDomain();
             for(String itemName : namesSplit) {
             	itemName = itemName.trim();
             	if (itemName.length() > 0) {
@@ -42,14 +43,23 @@ public class UnorderedStringSlice<I> extends Slice {
 	                	int bracket = itemName.indexOf('[');
 	                	if (bracket > 0) {
 	                		String indexString = itemName.substring(bracket + 1, itemName.length() - 1);
-	                		index = Integer.parseInt(indexString);
 	                		itemName = itemName.substring(0, bracket);
+	                		I item = getItem(itemName, workDomain);
+	                		index = spec.getValueIndex(item, indexString);
 	                	}
             		}
             		addLine(nameToValues, itemName, value.trim(), index);
             	}
             }
         }
+    }
+    public I getItem(String name, List<I> workDomain) {
+    	for (I item: workDomain) {
+    		if (name.equals(spec.getName(item))) {
+    			return item;
+    		}
+    	}
+    	throw new IllegalArgumentException(name);
     }
     
     public UnorderedStringSlice(UnorderedStringSlicerSpec<I> spec) {
