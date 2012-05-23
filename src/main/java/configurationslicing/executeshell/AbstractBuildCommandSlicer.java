@@ -36,8 +36,8 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         }
 
         @Override
-        public boolean isMultipleItemsAllowed() {
-        	return true;
+        public boolean isIndexUsed(int count) {
+        	return count > 1;
         }
         
         public List<String> getValues(AbstractProject<?, ?> item) {

@@ -24,7 +24,7 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
         /**
          * Allows you to use "MyJob[0]" to indicate separate values
          */
-        public boolean isMultipleItemsAllowed() {
+        public boolean isIndexUsed(int count) {
         	return false;
         }
         public String getValueIndex(I item, int index) {
@@ -50,7 +50,7 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
     public UnorderedStringSlice<I> accumulate(UnorderedStringSlice<I> t, I item) {
     	String name = spec.getName(item);
     	List<String> values = spec.getValues(item);
-    	if (values.size() > 1 && spec.isMultipleItemsAllowed()) {
+    	if (spec.isIndexUsed(values.size())) {
 	    	for (int i = 0; i < values.size(); i++) {
 	    		List<String> oneValueList = new ArrayList<String>();
 	    		oneValueList.add(values.get(i));

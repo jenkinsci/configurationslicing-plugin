@@ -4,6 +4,7 @@ import hudson.Extension;
 import hudson.model.ParameterValue;
 import hudson.model.BooleanParameterDefinition;
 import hudson.model.BooleanParameterValue;
+import hudson.model.ChoiceParameterDefinition;
 import hudson.model.Hudson;
 import hudson.model.Job;
 import hudson.model.ParameterDefinition;
@@ -49,9 +50,8 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         public String getName(Job item) {
             return item.getName();
         }
-
         @Override
-        public boolean isMultipleItemsAllowed() {
+        public boolean isIndexUsed(int count) {
         	return true;
         }
         @Override
@@ -82,15 +82,15 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         public boolean setValues(Job item, List<String> list) {
             ParametersDefinitionProperty prop = (ParametersDefinitionProperty) item.getProperty(ParametersDefinitionProperty.class);
             List<ParameterDefinition> defs = prop.getParameterDefinitions();
-        	List<ParameterItem> pitems = getParameterItems(item);
     		if (prop != null) {
+            	List<ParameterItem> pitems = getParameterItems(item);
     			boolean changes = false;
     			for (int i = 0; i < list.size(); i++) {
     				ParameterItem pitem = pitems.get(i);
     				String newValue = list.get(i);
 					String oldValue = pitem.value;
 					if (!newValue.equals(oldValue)) {
-						replace(pitem, defs);
+						replace(pitem, newValue, defs);
 						changes = true;
 					}
 				}
@@ -104,22 +104,22 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
     		}
         	return true;
         }
-        private void replace(ParameterItem item, List<ParameterDefinition> defs) {
+        private void replace(ParameterItem item, String newValue, List<ParameterDefinition> defs) {
         	for (int i = 0; i < defs.size(); i++) {
         		ParameterDefinition def = defs.get(i);
         		if (def.getName().equals(item.name)) {
-        			ParameterDefinition newDef = newParameterDefinition(item, def);
+        			ParameterDefinition newDef = newParameterDefinition(newValue, def);
         			defs.set(i, newDef);
         		}
 			}
         }
-        private ParameterDefinition newParameterDefinition(ParameterItem item, ParameterDefinition old) {
+        private ParameterDefinition newParameterDefinition(String newValue, ParameterDefinition old) {
         	if (old instanceof StringParameterDefinition) {
-        		return new StringParameterDefinition(item.name, item.value, old.getDescription());
+        		return new StringParameterDefinition(old.getName(), newValue, old.getDescription());
         	} else if (old instanceof BooleanParameterDefinition) {
-        		return new BooleanParameterDefinition(item.name, Boolean.parseBoolean(item.value), old.getDescription());
-//        	} else if (old instanceof ChoiceParameterDefinition) {
-//        		return new ChoiceParameterDefinition(item.name, choices, old.getDescription());
+        		return new BooleanParameterDefinition(old.getName(), Boolean.parseBoolean(newValue), old.getDescription());
+        	} else if (old instanceof ChoiceParameterDefinition) {
+        		return new ChoiceParameterDefinition(old.getName(), newValue, old.getDescription());
         	}
         	return null;
         }
@@ -131,7 +131,7 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         		for (ParameterDefinition def: prop.getParameterDefinitions()) {
         			if (isSliceableProperty(def)) {
         				ParameterValue value = def.getDefaultParameterValue();
-        				String stringValue = toStringValue(value);
+        				String stringValue = toStringValue(value, def);
         				ParameterItem pitem = new ParameterItem();
         				pitem.index = count++;
         				pitem.value = stringValue;
@@ -152,9 +152,20 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         	return jobs;
         }
         
-        public String toStringValue(ParameterValue value) {
+        public String toStringValue(ParameterValue value, ParameterDefinition def) {
         	if (value instanceof BooleanParameterValue) {
         		return String.valueOf(((BooleanParameterValue) value).value);
+        	} else if (def instanceof ChoiceParameterDefinition) {
+        		ChoiceParameterDefinition cdef = (ChoiceParameterDefinition) def;
+        		List<String> choices = cdef.getChoices();
+        		StringBuilder buf = new StringBuilder();
+        		for (String choice: choices) {
+        			if (buf.length() > 0) {
+        				buf.append("\n");
+        			}
+        			buf.append(choice);
+        		}
+        		return buf.toString();
         	} else if (value instanceof StringParameterValue) {
         		return ((StringParameterValue) value).value;
         	} else {
@@ -165,7 +176,7 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         public boolean isSliceableProperty(ParameterDefinition def) {
         	return (def instanceof BooleanParameterDefinition
         			|| def instanceof StringParameterDefinition
-//        			|| def instanceof ChoiceParameterDefinition
+        			|| def instanceof ChoiceParameterDefinition
         			);
         }
         

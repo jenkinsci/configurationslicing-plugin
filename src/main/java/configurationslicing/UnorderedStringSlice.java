@@ -39,15 +39,13 @@ public class UnorderedStringSlice<I> extends Slice {
             	itemName = itemName.trim();
             	if (itemName.length() > 0) {
                 	int index = 0;
-            		if (spec.isMultipleItemsAllowed()) {
-	                	int bracket = itemName.indexOf('[');
-	                	if (bracket > 0) {
-	                		String indexString = itemName.substring(bracket + 1, itemName.length() - 1);
-	                		itemName = itemName.substring(0, bracket);
-	                		I item = getItem(itemName, workDomain);
-	                		index = spec.getValueIndex(item, indexString);
-	                	}
-            		}
+                	int bracket = itemName.indexOf('[');
+                	if (bracket > 0) {
+                		String indexString = itemName.substring(bracket + 1, itemName.length() - 1);
+                		itemName = itemName.substring(0, bracket);
+                		I item = getItem(itemName, workDomain);
+                		index = spec.getValueIndex(item, indexString);
+                	}
             		addLine(nameToValues, itemName, value.trim(), index);
             	}
             }
