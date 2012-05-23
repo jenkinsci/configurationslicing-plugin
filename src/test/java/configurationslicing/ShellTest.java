@@ -100,7 +100,12 @@ public class ShellTest extends HudsonTestCase {
 		assertEquals(v1, values.get(0));
 	}
 	@SuppressWarnings("unchecked")
-	public void testBracketNames() {
+	public void testBracketNames() throws Exception {
+		
+		createFreeStyleProject("a");
+		createFreeStyleProject("b");
+		createFreeStyleProject("c");
+		
 		ExecuteShellSlicer.ExecuteShellSliceSpec spec = new ExecuteShellSlicer.ExecuteShellSliceSpec();
 		
 		String v1 = "v1";
