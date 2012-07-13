@@ -1,20 +1,21 @@
 package configurationslicing.email;
 
+import hudson.Extension;
+import hudson.model.AbstractProject;
+import hudson.model.Descriptor;
+import hudson.model.Hudson;
+import hudson.plugins.emailext.EmailType;
+import hudson.plugins.emailext.ExtendedEmailPublisher;
+import hudson.plugins.emailext.plugins.trigger.FailureTrigger;
+import hudson.tasks.Publisher;
+import hudson.util.DescribableList;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-import hudson.Extension;
-import hudson.plugins.emailext.EmailType;
-import hudson.plugins.emailext.ExtendedEmailPublisher;
-import hudson.plugins.emailext.plugins.trigger.FailureTrigger;
-import hudson.model.AbstractProject;
-import hudson.model.Descriptor;
-import hudson.model.Hudson;
-import hudson.tasks.Publisher;
-import hudson.util.DescribableList;
 import configurationslicing.UnorderedStringSlicer;
 
 @Extension
@@ -83,6 +84,11 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 				email.setSendToRecipientList(true);
 				trigger.setEmail(email);
 				publisher.getConfiguredTriggers().add(trigger);
+				
+				// there is no way to get this text from the plugin itself
+				publisher.defaultContent = "$DEFAULT_CONTENT";
+				publisher.defaultSubject = "$DEFAULT_SUBJECT";
+				
 				publishers.add(publisher);
 				return true;
 			} else {
