@@ -33,6 +33,9 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
         public int getValueIndex(I item, String indexName) {
         	return Integer.parseInt(indexName);
         }
+        public boolean isBlankNeededForValues() {
+        	return true;
+        }
     }
 
     private UnorderedStringSlicerSpec<I> spec;

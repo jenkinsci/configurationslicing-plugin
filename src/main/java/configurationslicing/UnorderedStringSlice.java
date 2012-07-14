@@ -121,7 +121,7 @@ public class UnorderedStringSlice<I> extends Slice {
     		list.add(defaultValueString);
     	}
     	// we need this so you can add new items
-    	if (!list.contains("")) {
+    	if (spec.isBlankNeededForValues() && !list.contains("")) {
     		list.add("");
     	}
     	return list;
