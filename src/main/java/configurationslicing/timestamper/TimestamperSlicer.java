@@ -45,7 +45,10 @@ public class TimestamperSlicer extends UnorderedStringSlicer<AbstractProject<?,?
         public String getUrl() {
             return "timestamper";
         }
-
+        @Override
+        public boolean isBlankNeededForValues() {
+        	return false;
+        }
 		public List<String> getValues(AbstractProject<?, ?> item) {
         	BuildableItemWithBuildWrappers project = (BuildableItemWithBuildWrappers) item;
         	
