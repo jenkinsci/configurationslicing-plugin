@@ -46,9 +46,23 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
     public UnorderedStringSlice<I> getInitialAccumulator() {
         return new UnorderedStringSlice<I>(spec);
     }
+    /**
+     * Override this with different behavior if needed.
+     */
     public boolean isLoaded() {
-    	return true;
+    	try {
+    		loadPluginDependencyClass();
+    		return true;
+    	} catch (Throwable t) {
+    		return false;
+    	}
     }
+    
+    /**
+     * Override this with the right class if you want to use the default isLoaded behavior.
+     */
+	public void loadPluginDependencyClass() {
+	}
 
     public UnorderedStringSlice<I> accumulate(UnorderedStringSlice<I> t, I item) {
     	String name = spec.getName(item);
