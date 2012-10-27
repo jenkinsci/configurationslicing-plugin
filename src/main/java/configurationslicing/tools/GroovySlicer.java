@@ -1,6 +1,5 @@
 package configurationslicing.tools;
 
-import hudson.Extension;
 import hudson.plugins.groovy.Groovy;
 import hudson.tasks.Builder;
 import hudson.tools.ToolInstallation;
@@ -8,7 +7,6 @@ import hudson.tools.ToolInstallation;
 /**
  * @author Maarten Dirkse
  */
-@Extension
 public class GroovySlicer extends AbstractToolSlicer {
 
   public GroovySlicer() {

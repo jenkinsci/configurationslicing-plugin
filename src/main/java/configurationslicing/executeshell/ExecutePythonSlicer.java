@@ -1,6 +1,5 @@
 package configurationslicing.executeshell;
 
-import hudson.Extension;
 import hudson.model.Descriptor;
 import hudson.model.Descriptor.FormException;
 import hudson.plugins.python.Python;
@@ -20,7 +19,6 @@ import org.kohsuke.stapler.StaplerRequest;
  *
  * @author Jacob Robertson
  */
-@Extension
 public class ExecutePythonSlicer extends AbstractBuildCommandSlicer<Python> {
 
     public ExecutePythonSlicer() {
@@ -42,7 +40,7 @@ public class ExecutePythonSlicer extends AbstractBuildCommandSlicer<Python> {
         public String getUrl() {
             return "executepythonslice";
         }
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "rawtypes" })
 		@Override
         public Python createBuilder(String command, List<Python> existingBuilders, Python oldBuilder) {
         	Python python = null;

@@ -2,18 +2,19 @@ package configurationslicing;
 
 import hudson.Extension;
 import hudson.ExtensionList;
-import hudson.model.Hudson;
 import hudson.model.ManagementLink;
 import hudson.model.TopLevelItem;
-import hudson.model.View;
 import hudson.model.ViewGroup;
 import hudson.model.Descriptor.FormException;
+import hudson.model.Hudson;
+import hudson.model.View;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
@@ -23,6 +24,8 @@ import org.kohsuke.stapler.StaplerResponse;
 @Extension
 public class ConfigurationSlicing extends ManagementLink {
 
+	private static final Logger LOGGER = Logger.getLogger(ConfigurationSlicing.class.getName());
+	
     @Override
     public String getDescription() {
         return "Configure a single aspect across a group of items, in contrast to the traditional configuration of all aspects of a single item";
@@ -48,7 +51,13 @@ public class ConfigurationSlicing extends ManagementLink {
     	List<Slicer> list = new ArrayList<Slicer>();
     	for (Slicer slicer: elist) {
     		if (slicer.isLoaded()) {
+    			if (slicer instanceof SlicerLoader) {
+    				slicer = ((SlicerLoader) slicer).getDelegate();
+    			}
     			list.add(slicer);
+    			LOGGER.info("Loaded: " + slicer.getClass());
+    		} else {
+    			LOGGER.info("NOT Loaded: " + slicer.getClass());
     		}
     	}
     	Collections.sort(list);

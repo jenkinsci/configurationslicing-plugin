@@ -1,6 +1,5 @@
 package configurationslicing.executeshell;
 
-import hudson.Extension;
 import hudson.model.Descriptor;
 import hudson.tasks.Builder;
 import hudson.util.DescribableList;
@@ -17,7 +16,6 @@ import org.kohsuke.stapler.StaplerRequest;
  *
  * @author Jacob Robertson
  */
-@Extension
 public class ExecuteJythonSlicer extends AbstractBuildCommandSlicer<Jython> {
 
     public ExecuteJythonSlicer() {

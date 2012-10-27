@@ -46,6 +46,9 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
     public UnorderedStringSlice<I> getInitialAccumulator() {
         return new UnorderedStringSlice<I>(spec);
     }
+    public UnorderedStringSlicerSpec<I> getSpec() {
+    	return spec;
+    }
     /**
      * Override this with different behavior if needed.
      */

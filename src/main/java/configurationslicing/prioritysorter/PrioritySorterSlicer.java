@@ -1,9 +1,8 @@
 package configurationslicing.prioritysorter;
 
-import hudson.Extension;
+import hudson.model.JobProperty;
 import hudson.model.Hudson;
 import hudson.model.Job;
-import hudson.model.JobProperty;
 import hudson.queueSorter.PrioritySorterJobProperty;
 
 import java.io.IOException;
@@ -15,7 +14,6 @@ import configurationslicing.UnorderedStringSlicer;
 /**
  * @author jacob_robertson
  */
-@Extension
 public class PrioritySorterSlicer extends UnorderedStringSlicer<Job<?,?>>{
 
     public PrioritySorterSlicer() {
