@@ -1,8 +1,8 @@
 package configurationslicing.buildtimeout;
 
 import hudson.Extension;
-import hudson.model.AbstractProject;
 import hudson.model.BuildableItemWithBuildWrappers;
+import hudson.model.AbstractProject;
 import hudson.model.Descriptor;
 import hudson.model.Hudson;
 import hudson.plugins.build_timeout.BuildTimeoutWrapper;
@@ -10,6 +10,7 @@ import hudson.tasks.BuildWrapper;
 import hudson.util.DescribableList;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 	@Override
     public boolean isLoaded() {
     	try {
-    		new BuildTimeoutWrapper(0, false);
+    		BuildTimeoutSliceSpec.newBuildTimeoutWrapper(0, false);
     		return true;
     	} catch (Throwable t) {
     		return false;
@@ -111,7 +112,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 				}
 			} else if (changed) {
 				try {
-					wrapper = new BuildTimeoutWrapper(newTimeout, newFail);
+					wrapper = newBuildTimeoutWrapper(newTimeout, newFail);
 					wrappers.replace(wrapper);
 				} catch (IOException e) {
 					System.err.println("IOException Thrown replacing wrapper value");
@@ -133,6 +134,39 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 		@Override
 		public String getConfiguredValueDescription() {
 			return "Timeout,Fail<br/><i>(e.g. 180,false)</i>";
+		}
+		public static BuildTimeoutWrapper newBuildTimeoutWrapper(int timeoutMinutes, boolean failBuild) {
+			//	(int timeoutMinutes, boolean failBuild)
+			//	(int timeoutMinutes, boolean failBuild, boolean writingDescription, int timeoutPercentage, int timeoutMinutesElasticDefault, String timeoutType)
+			
+			Class<BuildTimeoutWrapper> cls = BuildTimeoutWrapper.class;
+			Class<?>[] types1 = new Class<?>[] { Integer.TYPE, Boolean.TYPE };
+			Constructor<BuildTimeoutWrapper> cons;
+			try {
+				cons = cls.getDeclaredConstructor(types1);
+			} catch (Exception e) {
+				cons = null;
+			}
+			
+			Object[] args;
+			if (cons != null) {
+				args = new Object[] { timeoutMinutes, failBuild };
+			} else {
+				try {
+					Class<?>[] types2 = new Class<?>[] { Integer.TYPE, Boolean.TYPE, Boolean.TYPE, Integer.TYPE, Integer.TYPE, String.class };
+					cons = cls.getDeclaredConstructor(types2);
+					args = new Object[] { timeoutMinutes, failBuild, false, 0, 0, "absolute" };
+				} catch (Exception e) {
+					throw new UnsupportedClassVersionError("Cannot find a version of BuildTimeoutWrapper constructor that can be used:" + e.getMessage());
+				}
+			}
+			BuildTimeoutWrapper wrapper;
+			try {
+				wrapper = (BuildTimeoutWrapper) cons.newInstance(args);
+			} catch (Exception e) {
+				throw new UnsupportedClassVersionError("Cannot find a version of BuildTimeoutWrapper constructor that can be used:" + e.getMessage());
+			}
+			return wrapper;
 		}
 		
     }
