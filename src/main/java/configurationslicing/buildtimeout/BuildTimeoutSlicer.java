@@ -11,6 +11,7 @@ import hudson.util.DescribableList;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,8 @@ import configurationslicing.UnorderedStringSlicer;
 @Extension
 public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,?>>{
 
+	private static final String DEFAULT_TYPE = "absolute";
+	
     public BuildTimeoutSlicer() {
         super(new BuildTimeoutSliceSpec());
     }
@@ -28,7 +31,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 	@Override
     public boolean isLoaded() {
     	try {
-    		BuildTimeoutSliceSpec.newBuildTimeoutWrapper(0, false);
+    		BuildTimeoutSliceSpec.newBuildTimeoutWrapper(0, false, DEFAULT_TYPE);
     		return true;
     	} catch (Throwable t) {
     		return false;
@@ -50,7 +53,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 			return "buildtimeout";
 		}
 
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public List<AbstractProject<?, ?>> getWorkDomain() {
             return (List) Hudson.getInstance().getItems(BuildableItemWithBuildWrappers.class);
@@ -81,6 +84,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 
 			boolean delete = false;
 			boolean newFail = false;
+			String oldType = DEFAULT_TYPE;
 			int newTimeout = 0;
 			String line = set.iterator().next();
 			if (DISABLED.equals(line) || StringUtils.isEmpty(line)) {
@@ -94,6 +98,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 			if (wrapper != null) {
 				boolean oldFail = wrapper.failBuild;
 				int oldTimeout = wrapper.timeoutMinutes;
+				oldType = getType(wrapper);
 				if (newFail != oldFail || newTimeout != oldTimeout) {
 					changed = true;
 				}
@@ -112,7 +117,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 				}
 			} else if (changed) {
 				try {
-					wrapper = newBuildTimeoutWrapper(newTimeout, newFail);
+					wrapper = newBuildTimeoutWrapper(newTimeout, newFail, oldType);
 					wrappers.replace(wrapper);
 				} catch (IOException e) {
 					System.err.println("IOException Thrown replacing wrapper value");
@@ -135,7 +140,16 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 		public String getConfiguredValueDescription() {
 			return "Timeout,Fail<br/><i>(e.g. 180,false)</i>";
 		}
-		public static BuildTimeoutWrapper newBuildTimeoutWrapper(int timeoutMinutes, boolean failBuild) {
+		public static String getType(BuildTimeoutWrapper wrapper) {
+			try {
+				Field field = BuildTimeoutWrapper.class.getDeclaredField("timeoutType");
+				String value = (String) field.get(wrapper);
+				return value;
+			} catch (Exception e) {
+				return DEFAULT_TYPE;
+			}
+		}
+		public static BuildTimeoutWrapper newBuildTimeoutWrapper(int timeoutMinutes, boolean failBuild, String type) {
 			//	(int timeoutMinutes, boolean failBuild)
 			//	(int timeoutMinutes, boolean failBuild, boolean writingDescription, int timeoutPercentage, int timeoutMinutesElasticDefault, String timeoutType)
 			
@@ -155,7 +169,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 				try {
 					Class<?>[] types2 = new Class<?>[] { Integer.TYPE, Boolean.TYPE, Boolean.TYPE, Integer.TYPE, Integer.TYPE, String.class };
 					cons = cls.getDeclaredConstructor(types2);
-					args = new Object[] { timeoutMinutes, failBuild, false, 0, 0, "absolute" };
+					args = new Object[] { timeoutMinutes, failBuild, false, 0, 0, type };
 				} catch (Exception e) {
 					throw new UnsupportedClassVersionError("Cannot find a version of BuildTimeoutWrapper constructor that can be used:" + e.getMessage());
 				}
