@@ -129,6 +129,30 @@ public abstract class AbstractWsCleanupSliceSpec extends UnorderedStringSlicerSp
 		public List<Pattern> patterns = new ArrayList<Pattern>();
 		public boolean appliesToDirectories = false;
 		public boolean skipWhenFailed = false;
+		
+		public boolean equals(Object o) {
+			CleanupInfo that = (CleanupInfo) o;
+			if (this.appliesToDirectories != that.appliesToDirectories) {
+				return false;
+			}
+			if (this.skipWhenFailed != that.skipWhenFailed) {
+				return false;
+			}
+			if (this.patterns.size() != that.patterns.size()) {
+				return false;
+			}
+			for (int i = 0; i < this.patterns.size(); i++) {
+				Pattern thisPattern = this.patterns.get(0);
+				Pattern thatPattern = that.patterns.get(0);
+				if (thisPattern.getType() != thatPattern.getType()) {
+					return false;
+				}
+				if (!thisPattern.getPattern().equals(thatPattern.getPattern())) {
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 
 }
