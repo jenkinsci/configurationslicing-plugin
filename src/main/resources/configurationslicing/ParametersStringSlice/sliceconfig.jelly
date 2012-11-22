@@ -1,0 +1,24 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+	<span style="font-weight: bold; font-style: italic">${it.spec.name}${viewDisplayPart}</span>
+	<table width="100%">
+		<tr><th colspan="1"><b>
+		${it.spec.configuredValueDescription}
+		</b></th>
+		<th><b>Item Names</b></th></tr>
+		<j:forEach var="configuredValue" items="${it.configuredValues}">
+		<tr>
+			<td width="50%">
+			<table border="0">
+			<j:forEach var="paramName" items="${it.spec.paramNames}">
+				<tr>
+				<td style="white-space:nowrap;">${paramName}</td>
+				<td width="100%"><f:textbox name="paramValue" value="${it.spec.getParamValue(paramName, configuredValue)}"/></td>
+				</tr>
+			</j:forEach>
+			</table>
+			</td>
+			<td width="50%"><f:textarea name="itemNames" value="${it.getItemNamesString(configuredValue)}"/></td>
+		</tr>
+		</j:forEach>
+	</table>
+</j:jelly>

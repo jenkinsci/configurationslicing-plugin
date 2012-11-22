@@ -31,7 +31,7 @@ public class UnorderedStringSlice<I> extends Slice {
         this(spec);
         nameToValues = new HashMap<String, List<String>>();
         for (int i = 0; i < configurationValues.size(); i++) {
-        	String value = configurationValues.get(i);
+        	String value = configurationValues.get(i).trim();
         	String namesString = itemNames.get(i);
         	String[] namesSplit = namesString.split("\\n");
         	List<I> workDomain = spec.getWorkDomain();
@@ -46,7 +46,7 @@ public class UnorderedStringSlice<I> extends Slice {
                 		I item = getItem(itemName, workDomain);
                 		index = spec.getValueIndex(item, indexString);
                 	}
-            		addLine(nameToValues, itemName, value.trim(), index);
+            		addLine(nameToValues, itemName, value, index);
             	}
             }
         }
@@ -155,7 +155,7 @@ public class UnorderedStringSlice<I> extends Slice {
         		getStringList(formData, "itemNames")
         		);
     }
-    private List<String> getStringList(JSONObject formData, String key) {
+    List<String> getStringList(JSONObject formData, String key) {
     	JSONArray array = formData.getJSONArray(key);
     	List<String> list = new ArrayList<String>();
     	for (Object o: array) {
