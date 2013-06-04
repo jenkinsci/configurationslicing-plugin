@@ -37,11 +37,11 @@
 		</dependency>
 	</dependencies>
 
-	<scm>
-		<connection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/configurationslicing</connection>
-		<developerConnection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/configurationslicing</developerConnection>
-		<url>https://svn.jenkins-ci.org/trunk/hudson/plugins/configurationslicing</url>
-	</scm>
+    <scm>
+        <connection>scm:git:git@github.com:jenkinsci/configurationslicing-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:jenkinsci/configurationslicing-plugin.git</developerConnection>
+        <url>https://github.com/jenkinsci/configurationslicing-plugin</url>
+    </scm>
 
 	<build>
 		<plugins>
