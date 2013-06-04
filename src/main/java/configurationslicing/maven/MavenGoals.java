@@ -7,7 +7,6 @@ import hudson.model.Hudson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import configurationslicing.UnorderedStringSlicer;
 
@@ -26,7 +25,7 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
         }
 
         public String getName() {
-            return "Goals and Options per Maven project";
+            return "Maven Goals and Options (Maven project)";
         }
 
         public String getName(MavenModuleSet item) {
@@ -49,7 +48,7 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
             return (List) Hudson.getInstance().getAllItems(MavenModuleSet.class);
         }
 
-        public boolean setValues(MavenModuleSet item, Set<String> set) {
+        public boolean setValues(MavenModuleSet item, List<String> set) {
             if(set.isEmpty()) return false;
             String value = set.iterator().next();
             if(DEFAULT.equalsIgnoreCase(value)) {

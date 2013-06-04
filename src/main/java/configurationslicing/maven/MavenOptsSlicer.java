@@ -48,7 +48,7 @@ public class MavenOptsSlicer extends UnorderedStringSlicer<MavenModuleSet> {
             return (List) Hudson.getInstance().getAllItems(MavenModuleSet.class);
         }
 
-        public boolean setValues(MavenModuleSet item, Set<String> set) {
+        public boolean setValues(MavenModuleSet item, List<String> set) {
             if(set.isEmpty()) return false;
             String value = set.iterator().next();
             if(value.equals(MavenModuleSet.DESCRIPTOR.getGlobalMavenOpts())) {

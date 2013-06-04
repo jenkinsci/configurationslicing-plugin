@@ -8,7 +8,6 @@ import hudson.model.JDK;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
@@ -53,7 +52,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
             return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
         }
 
-        public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {
+        public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
             if(set.size() == 0) return false;
             Hudson hudson = Hudson.getInstance();
             JDK jdk=null;

@@ -8,7 +8,6 @@ import hudson.model.Label;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import configurationslicing.UnorderedStringSlicer;
 
@@ -48,7 +47,7 @@ public class LabelSlicer extends UnorderedStringSlicer<AbstractProject<?,?>>{
             return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
         }
 
-        public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {
+        public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
             // can only have one label at a time.  do nothing if a node has zero
             // or multiple labels
             if(set.isEmpty() || set.size() > 1) return false;

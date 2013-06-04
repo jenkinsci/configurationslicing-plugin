@@ -8,7 +8,6 @@ import hudson.model.Hudson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -63,7 +62,7 @@ public class CustomWorkspaceStringSlicer extends UnorderedStringSlicer<AbstractP
             return (List) Hudson.getInstance().getAllItems(FreeStyleProject.class);
         }
 
-        public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {
+        public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
         	try {
 	        	if (item instanceof FreeStyleProject) {
 	        		FreeStyleProject project = (FreeStyleProject) item;

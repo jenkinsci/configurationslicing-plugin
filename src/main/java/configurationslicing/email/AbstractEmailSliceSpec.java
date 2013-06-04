@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -40,7 +39,7 @@ public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<A
 		values.add(recipients);
 		return values;
 	}
-	public boolean setValues(AbstractProject<?, ?> project, Set<String> set) {
+	public boolean setValues(AbstractProject<?, ?> project, List<String> set) {
 		String newEmail = join(set);
 		
 		// if no email is present, we're going to assume that's the same as disabled

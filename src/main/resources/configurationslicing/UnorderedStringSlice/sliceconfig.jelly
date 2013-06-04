@@ -1,7 +1,10 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-	<span style="font-weight: bold; font-style: italic">${it.spec.name}</span>
+	<span style="font-weight: bold; font-style: italic">${it.spec.name}${viewDisplayPart}</span>
 	<table width="100%">
-		<tr><th><b>Configured Value</b></th><th><b>Item Names</b></th></tr>
+		<tr><th><b>
+		${it.spec.configuredValueDescription}
+		</b></th>
+		<th><b>Item Names</b></th></tr>
 		<j:forEach var="configuredValue" items="${it.configuredValues}">
 		<tr>
 			<td width="50%"><f:textarea name="configValue" value="${configuredValue}"/></td>

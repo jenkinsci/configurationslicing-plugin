@@ -22,25 +22,42 @@ import org.kohsuke.stapler.StaplerRequest;
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 
 public class UnorderedStringSlice<I> extends Slice {
-    private Map<String, Set<String>> nameToValues;
+    private Map<String, List<String>> nameToValues;
     private Map<String, Set<String>> valueToNames;
     private UnorderedStringSlicer.UnorderedStringSlicerSpec<I> spec;
     
     // reconstruct our datastructure after the user has made changes
     public UnorderedStringSlice(UnorderedStringSlicerSpec<I> spec, List<String> configurationValues, List<String> itemNames) {
         this(spec);
-        nameToValues = new HashMap<String, Set<String>>();
+        nameToValues = new HashMap<String, List<String>>();
         for (int i = 0; i < configurationValues.size(); i++) {
-        	String value = configurationValues.get(i);
+        	String value = configurationValues.get(i).trim();
         	String namesString = itemNames.get(i);
         	String[] namesSplit = namesString.split("\\n");
+        	List<I> workDomain = spec.getWorkDomain();
             for(String itemName : namesSplit) {
             	itemName = itemName.trim();
             	if (itemName.length() > 0) {
-            		addLine(nameToValues, itemName, value.trim());
+                	int index = 0;
+                	int bracket = itemName.indexOf('[');
+                	if (bracket > 0) {
+                		String indexString = itemName.substring(bracket + 1, itemName.length() - 1);
+                		itemName = itemName.substring(0, bracket);
+                		I item = getItem(itemName, workDomain);
+                		index = spec.getValueIndex(item, indexString);
+                	}
+            		addLine(nameToValues, itemName, value, index);
             	}
             }
         }
+    }
+    public I getItem(String name, List<I> workDomain) {
+    	for (I item: workDomain) {
+    		if (name.equals(spec.getName(item))) {
+    			return item;
+    		}
+    	}
+    	throw new IllegalArgumentException(name);
     }
     
     public UnorderedStringSlice(UnorderedStringSlicerSpec<I> spec) {
@@ -50,19 +67,31 @@ public class UnorderedStringSlice<I> extends Slice {
     
     public void add(String name, Collection<String> values) {
         for(String value : values) {
-            addLine(valueToNames, value, name);
+        	addLineWithSets(valueToNames, value, name);
         }
     }
 
-    private static void addLine(Map<String, Set<String>> map, String s, String name) {
+    private static void addLineWithSets(Map<String, Set<String>> map, String s, String name) {
         if(!map.containsKey(s)) {
             map.put(s, new HashSet<String>());
         }
         Set<String> list= map.get(s);
         list.add(name);
     }
-
-    public Set<String> get(String name) {
+    private static void addLine(Map<String, List<String>> map, String s, String name, int index) {
+        if(!map.containsKey(s)) {
+            map.put(s, new ArrayList<String>());
+        }
+        List<String> list = map.get(s);
+        while (list.size() < index + 1) {
+        	// add a blank - this could happen if one of the indexed names was simply removed
+        	list.add("");
+        }
+        
+        list.set(index, name);
+    }
+    
+    public List<String> get(String name) {
         return nameToValues.get(name);
     }
     
@@ -92,7 +121,7 @@ public class UnorderedStringSlice<I> extends Slice {
     		list.add(defaultValueString);
     	}
     	// we need this so you can add new items
-    	if (!list.contains("")) {
+    	if (spec.isBlankNeededForValues() && !list.contains("")) {
     		list.add("");
     	}
     	return list;
@@ -126,7 +155,7 @@ public class UnorderedStringSlice<I> extends Slice {
         		getStringList(formData, "itemNames")
         		);
     }
-    private List<String> getStringList(JSONObject formData, String key) {
+    List<String> getStringList(JSONObject formData, String key) {
     	JSONArray array = formData.getJSONArray(key);
     	List<String> list = new ArrayList<String>();
     	for (Object o: array) {
