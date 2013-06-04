@@ -34,7 +34,7 @@ public class PrioritySorterSlicer extends UnorderedStringSlicer<Job<?,?>>{
         }
 
         public String getName(Job<?, ?> item) {
-            return item.getName();
+            return item.getFullName();
         }
 
         public String getUrl() {
@@ -54,7 +54,7 @@ public class PrioritySorterSlicer extends UnorderedStringSlicer<Job<?,?>>{
 
         @SuppressWarnings({ "unchecked" })
 		public List<Job<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getItems(Job.class);
+            return (List) Hudson.getInstance().getAllItems(Job.class);
         }
 
 		@SuppressWarnings("unchecked")

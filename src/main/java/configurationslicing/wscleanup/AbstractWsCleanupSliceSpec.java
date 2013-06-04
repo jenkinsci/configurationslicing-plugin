@@ -36,7 +36,7 @@ public abstract class AbstractWsCleanupSliceSpec extends UnorderedStringSlicerSp
 
 	@Override
 	public String getName(AbstractProject<?, ?> item) {
-		return item.getName();
+		return item.getFullName();
 	}
 
 	@Override

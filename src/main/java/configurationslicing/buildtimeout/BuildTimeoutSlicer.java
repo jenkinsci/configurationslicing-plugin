@@ -56,7 +56,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getItems(BuildableItemWithBuildWrappers.class);
+            return (List) Hudson.getInstance().getAllItems(BuildableItemWithBuildWrappers.class);
 		}
 
 		@Override
@@ -130,7 +130,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 
 		@Override
 		public String getName(AbstractProject<?, ?> item) {
-            return item.getName();
+            return item.getFullName();
 		}
 		@Override
 		public String getDefaultValueString() {

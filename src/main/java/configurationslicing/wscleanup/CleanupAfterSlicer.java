@@ -89,7 +89,7 @@ public class CleanupAfterSlicer extends UnorderedStringSlicer<AbstractProject<?,
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		@Override
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getItems(AbstractProject.class);
+            return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
 		}
 	
 	}

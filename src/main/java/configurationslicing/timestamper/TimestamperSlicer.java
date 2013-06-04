@@ -39,7 +39,7 @@ public class TimestamperSlicer extends UnorderedStringSlicer<AbstractProject<?,?
         }
 
         public String getName(AbstractProject<?, ?> item) {
-            return item.getName();
+            return item.getFullName();
         }
 
         public String getUrl() {
@@ -67,7 +67,7 @@ public class TimestamperSlicer extends UnorderedStringSlicer<AbstractProject<?,?
 
         @SuppressWarnings({ "unchecked" })
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getItems(BuildableItemWithBuildWrappers.class);
+            return (List) Hudson.getInstance().getAllItems(BuildableItemWithBuildWrappers.class);
         }
 
 		public boolean setValues(AbstractProject<?, ?> item, List<String> set) {

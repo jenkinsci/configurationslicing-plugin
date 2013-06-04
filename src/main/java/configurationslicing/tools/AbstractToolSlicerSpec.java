@@ -36,13 +36,13 @@ public abstract class AbstractToolSlicerSpec extends UnorderedStringSlicerSpec<A
 
   @Override
   public String getName(AbstractProject< ? , ? > item) {
-    return item.getName();
+    return item.getFullName();
   }
 
   @Override
   @SuppressWarnings("unchecked")
   public List<AbstractProject< ? , ? >> getWorkDomain() {
-    return (List) Hudson.getInstance().getItems(AbstractProject.class);
+    return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
   }
 
   @Override

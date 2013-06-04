@@ -32,7 +32,7 @@ public class JobDisabledBoolSlicer extends BooleanSlicer<AbstractProject<?,?>> {
         }
 
         public List<AbstractProject<?,?>> getWorkDomain() {
-            return (List)Hudson.getInstance().getItems(AbstractProject.class);
+            return (List)Hudson.getInstance().getAllItems(AbstractProject.class);
         }
 
         public boolean setValue(AbstractProject<?,?> item, boolean value) {

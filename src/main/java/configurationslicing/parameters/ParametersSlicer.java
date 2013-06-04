@@ -48,7 +48,7 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         }
 
         public String getName(Job item) {
-            return item.getName();
+            return item.getFullName();
         }
         @Override
         public boolean isIndexUsed(int count) {
@@ -148,7 +148,7 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         	int index;
         }
         public List<Job> getWorkDomain() {
-        	List<Job> jobs = Hudson.getInstance().getItems(Job.class);
+        	List<Job> jobs = Hudson.getInstance().getAllItems(Job.class);
         	return jobs;
         }
         

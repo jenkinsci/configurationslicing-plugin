@@ -56,7 +56,7 @@ public class BuildTimeoutSlicer2 extends ParametersStringSlicer<AbstractProject<
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getItems(BuildableItemWithBuildWrappers.class);
+            return (List) Hudson.getInstance().getAllItems(BuildableItemWithBuildWrappers.class);
 		}
 		
 		@Override
@@ -139,7 +139,7 @@ public class BuildTimeoutSlicer2 extends ParametersStringSlicer<AbstractProject<
 
 		@Override
 		public String getName(AbstractProject<?, ?> item) {
-            return item.getName();
+            return item.getFullName();
 		}
 		@Override
 		public String doGetDefaultValueString() {

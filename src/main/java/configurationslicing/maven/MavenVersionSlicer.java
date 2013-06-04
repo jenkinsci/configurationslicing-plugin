@@ -41,7 +41,7 @@ public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
 		}
 
 		public String getName(AbstractProject item) {
-			return item.getName();
+			return item.getFullName();
 		}
 
 		public String getUrl() {
@@ -96,8 +96,8 @@ public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
 
 		public List<AbstractProject> getWorkDomain() {
 			List<AbstractProject> list = new ArrayList<AbstractProject>();
-			list.addAll(Hudson.getInstance().getItems(AbstractProject.class));
-			list.addAll(Hudson.getInstance().getItems(MavenModuleSet.class));
+			list.addAll(Hudson.getInstance().getAllItems(AbstractProject.class));
+			list.addAll(Hudson.getInstance().getAllItems(MavenModuleSet.class));
 			return list;
 		}
 

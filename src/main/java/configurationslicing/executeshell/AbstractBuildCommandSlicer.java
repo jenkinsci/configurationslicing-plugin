@@ -32,7 +32,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         }
 
         public String getName(AbstractProject<?, ?> item) {
-            return item.getName();
+            return item.getFullName();
         }
 
         @Override
@@ -62,7 +62,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         @SuppressWarnings("unchecked")
         public List<AbstractProject<?, ?>> getWorkDomain() {
         	List<AbstractProject<?, ?>> list = new ArrayList<AbstractProject<?, ?>>();
-        	List<AbstractProject> temp = Hudson.getInstance().getItems(AbstractProject.class);
+        	List<AbstractProject> temp = Hudson.getInstance().getAllItems(AbstractProject.class);
         	for (AbstractProject p: temp) {
         		if (p instanceof Project || p instanceof MatrixProject) {
         			list.add(p);
