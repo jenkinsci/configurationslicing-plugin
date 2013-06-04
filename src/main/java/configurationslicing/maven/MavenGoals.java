@@ -30,7 +30,7 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
         }
 
         public String getName(MavenModuleSet item) {
-            return item.getName();
+            return item.getFullName();
         }
 
         public String getUrl() {
@@ -46,7 +46,7 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
 
         @SuppressWarnings("unchecked")
 		public List<MavenModuleSet> getWorkDomain() {
-            return (List) Hudson.getInstance().getItems(MavenModuleSet.class);
+            return (List) Hudson.getInstance().getAllItems(MavenModuleSet.class);
         }
 
         public boolean setValues(MavenModuleSet item, Set<String> set) {

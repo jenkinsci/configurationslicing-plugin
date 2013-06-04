@@ -33,7 +33,7 @@ public abstract class AbstractTimerSliceSpec extends
 	}
 	
 	public String getName(AbstractProject<?, ?> item) {
-		return item.getName();
+		return item.getFullName();
 	}
 
 	public List<String> getValues(AbstractProject<?, ?> item) {
@@ -50,7 +50,7 @@ public abstract class AbstractTimerSliceSpec extends
 	}
 
 	public List<AbstractProject<?, ?>> getWorkDomain() {
-		return (List) Hudson.getInstance().getItems(AbstractProject.class);
+		return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
 	}
 
 	public abstract Trigger newTrigger(String spec) throws ANTLRException;

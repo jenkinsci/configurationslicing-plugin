@@ -20,7 +20,7 @@ public class JobDisabledBoolSlicer extends BooleanSlicer<AbstractProject<?,?>> {
         }
 
         public String getName(AbstractProject<?,?> item) {
-            return item.getName();
+            return item.getFullName();
         }
 
         public String getUrl() {

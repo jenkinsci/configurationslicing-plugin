@@ -36,7 +36,7 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
         	return DISABLED;
         }
         public String getName(AbstractProject<?, ?> item) {
-            return item.getName();
+            return item.getFullName();
         }
 
         public List<String> getValues(AbstractProject<?, ?> item) {
@@ -58,7 +58,7 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
 
         @SuppressWarnings("unchecked")
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getItems(AbstractProject.class);
+            return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
         }
 
         public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {

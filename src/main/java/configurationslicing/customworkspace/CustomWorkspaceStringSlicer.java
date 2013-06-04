@@ -36,7 +36,7 @@ public class CustomWorkspaceStringSlicer extends UnorderedStringSlicer<AbstractP
         }
 
         public String getName(AbstractProject<?, ?> item) {
-            return item.getName();
+            return item.getFullName();
         }
 
         public String getUrl() {
@@ -60,7 +60,7 @@ public class CustomWorkspaceStringSlicer extends UnorderedStringSlicer<AbstractP
 
         @SuppressWarnings({ "unchecked" })
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getItems(FreeStyleProject.class);
+            return (List) Hudson.getInstance().getAllItems(FreeStyleProject.class);
         }
 
         public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {

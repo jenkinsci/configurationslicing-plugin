@@ -109,7 +109,7 @@ public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<A
 		return value;
 	}
 	public List<AbstractProject<?, ?>> getWorkDomain() {
-		return (List) Hudson.getInstance().getItems(AbstractProject.class);
+		return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
 	}
 
 	protected abstract ProjectHandler getProjectHandler(AbstractProject project);
@@ -121,7 +121,7 @@ public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<A
 		return name;
 	}
 	public String getName(AbstractProject<?, ?> item) {
-		return item.getName();
+		return item.getFullName();
 	}
 
 	public String getUrl() {

@@ -33,7 +33,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
         }
 
         public String getName(AbstractProject<?, ?> item) {
-            return item.getName();
+            return item.getFullName();
         }
 
         public String getUrl() {
@@ -50,7 +50,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
 
         @SuppressWarnings("unchecked")
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getItems(AbstractProject.class);
+            return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
         }
 
         public boolean setValues(AbstractProject<?, ?> item, Set<String> set) {
