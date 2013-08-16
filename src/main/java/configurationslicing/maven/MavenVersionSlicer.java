@@ -1,10 +1,12 @@
 package configurationslicing.maven;
 
 import hudson.Extension;
+import hudson.maven.MavenModule;
 import hudson.maven.MavenModuleSet;
 import hudson.model.AbstractProject;
 import hudson.model.Descriptor;
 import hudson.model.Hudson;
+import hudson.model.TopLevelItem;
 import hudson.tasks.Builder;
 import hudson.tasks.Maven;
 import hudson.tasks.Maven.MavenInstallation;
@@ -18,6 +20,8 @@ import java.util.Set;
 
 import configurationslicing.UnorderedStringSlicer;
 import configurationslicing.executeshell.AbstractBuildCommandSlicer.AbstractBuildCommandSliceSpec;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 @SuppressWarnings("unchecked")
 @Extension
@@ -96,8 +100,16 @@ public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
 
 		public List<AbstractProject> getWorkDomain() {
 			List<AbstractProject> list = new ArrayList<AbstractProject>();
-			list.addAll(Hudson.getInstance().getAllItems(AbstractProject.class));
-			list.addAll(Hudson.getInstance().getAllItems(MavenModuleSet.class));
+
+            // AbstractProject includes both FreeStyle/Matrix to have Maven build step and MavenModuleSet projects
+            list.addAll(Hudson.getInstance().getAllItems(AbstractProject.class));
+
+            CollectionUtils.filter(list, new Predicate() {
+                public boolean evaluate(Object object) {
+                    // exclude MatrixConfiguration, MavenModule, etc
+                    return object instanceof TopLevelItem;
+                }
+            });
 			return list;
 		}
 
