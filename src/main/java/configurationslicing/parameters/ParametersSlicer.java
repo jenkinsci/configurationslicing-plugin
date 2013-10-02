@@ -54,6 +54,12 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         public boolean isIndexUsed(int count) {
         	return true;
         }
+        
+        @Override
+        public boolean isValueTrimmed() {
+        	return false;
+        }
+        
         @Override
         public String getValueIndex(Job item, int index) {
         	List<ParameterItem> pitems = getParameterItems(item);
