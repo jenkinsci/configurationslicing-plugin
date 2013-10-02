@@ -54,7 +54,7 @@ public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
 			} else {
 				List<String> ret = new ArrayList<String>();
 				List<Maven> builders = getBuilders(item);
-				if (builders.isEmpty()) {
+				if (builders == null || builders.isEmpty()) {
 					return ret;
 				}
 				String last = null;
@@ -75,6 +75,10 @@ public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
 		}
 		private List<Maven> getBuilders(AbstractProject item) {
 			DescribableList<Builder,Descriptor<Builder>> buildersList = AbstractBuildCommandSliceSpec.getBuildersList(item);
+			// JENKINS-18794 - couldn't reproduce, but this is the problematic line
+			if (buildersList == null) {
+				return null;
+			}
 			List<Maven> builders = buildersList.getAll(Maven.class);
 			return builders;
 		}

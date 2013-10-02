@@ -4,11 +4,13 @@
 		<tr><th><b>
 		${it.spec.configuredValueDescription}
 		</b></th>
+		<th><st:nbsp /></th>
 		<th><b>Item Names</b></th></tr>
 		<j:forEach var="configuredValue" items="${it.configuredValues}">
 		<tr>
 			<td width="50%"><f:textarea name="configValue" value="${configuredValue}"/></td>
-			<td width="50%"><f:textarea name="itemNames" value="${it.getItemNamesString(configuredValue)}"/></td>
+			<td width="1%"><st:nbsp /></td>
+			<td width="49%"><f:textarea name="itemNames" value="${it.getItemNamesString(configuredValue)}"/></td>
 		</tr>
 		</j:forEach>
 	</table>
