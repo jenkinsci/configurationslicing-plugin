@@ -31,7 +31,10 @@ public class UnorderedStringSlice<I> extends Slice {
         this(spec);
         nameToValues = new HashMap<String, List<String>>();
         for (int i = 0; i < configurationValues.size(); i++) {
-        	String value = configurationValues.get(i).trim();
+        	String value = configurationValues.get(i);
+        	if (spec.isValueTrimmed()) {
+        		value = value.trim();
+        	}
         	String namesString = itemNames.get(i);
         	String[] namesSplit = namesString.split("\\n");
         	List<I> workDomain = spec.getWorkDomain();
