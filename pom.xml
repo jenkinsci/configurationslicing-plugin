@@ -6,7 +6,6 @@
 		<version>1.395</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-
 	<artifactId>configurationslicing</artifactId>
 	<packaging>hpi</packaging>
 	<version>1.38-SNAPSHOT</version>
