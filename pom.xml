@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>configurationslicing</artifactId>
 	<packaging>hpi</packaging>
-	<version>1.38-SNAPSHOT</version>
+	<version>1.38.3</version>
 	<name>Configuration Slicing plugin</name>
 	<description>Allows configuration of a single property across a group of projects</description>
 	<url>http://wiki.jenkins-ci.org/display/JENKINS/Configuration+Slicing+Plugin</url>
@@ -99,7 +99,8 @@
         <connection>scm:git:git@github.com:jenkinsci/configurationslicing-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:jenkinsci/configurationslicing-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/configurationslicing-plugin</url>
-    </scm>
+      <tag>configurationslicing-1.38.3</tag>
+  </scm>
 
 	<build>
 		<plugins>
