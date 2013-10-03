@@ -36,7 +36,11 @@ public class BooleanSlice<I> extends Slice {
     }
 
     public boolean get(String name) {
-        return nameToValue.get(name);
+        Boolean object = nameToValue.get(name);
+        if (object == null) {
+        	return false;
+        }
+        return object.booleanValue();
     }
     
     public BooleanSlicerSpec<I> getSpec() {
@@ -58,7 +62,7 @@ public class BooleanSlice<I> extends Slice {
     @Override
     public Slice newInstance(StaplerRequest req, JSONObject formData)
            throws FormException {
-        return new BooleanSlice<I>(BooleanSlice.this.spec, req.bindJSONToList(ItemState.class, formData.get("itemstate")));
+    	return new BooleanSlice<I>(BooleanSlice.this.spec, req.bindJSONToList(ItemState.class, formData.get("itemstate")));
     }
     
     public static class ItemState {
