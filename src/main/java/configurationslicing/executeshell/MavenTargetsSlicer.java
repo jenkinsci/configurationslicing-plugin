@@ -22,7 +22,7 @@ public class MavenTargetsSlicer extends AbstractBuildCommandSlicer<Maven> {
     public static class MavenTargetsSliceSpec extends AbstractBuildCommandSliceSpec<Maven> {
 
     	private static final String DEFAULT_MAVEN = "(Default)";
-    	
+
         public String getName() {
             return "Maven top-level targets";
         }
@@ -32,7 +32,7 @@ public class MavenTargetsSlicer extends AbstractBuildCommandSlicer<Maven> {
         }
         @Override
         public Maven createBuilder(String command, List<Maven> existingBuilders, Maven oldBuilder) {
-        	if (oldBuilder != null) {
+          if (oldBuilder != null && oldBuilder.getMaven() != null) {
         		String mavenName = oldBuilder.getMaven().getName();
             	return new Maven(command, mavenName, oldBuilder.pom, oldBuilder.properties, oldBuilder.jvmOptions, oldBuilder.usePrivateRepository);
         	} else {
