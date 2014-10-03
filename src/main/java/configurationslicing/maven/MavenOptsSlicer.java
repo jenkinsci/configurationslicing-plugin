@@ -7,7 +7,6 @@ import hudson.model.Hudson;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import configurationslicing.UnorderedStringSlicer;
 
@@ -16,6 +15,12 @@ public class MavenOptsSlicer extends UnorderedStringSlicer<MavenModuleSet> {
 
     public MavenOptsSlicer() {
         super(new MavenOptsSlicerSpec());
+    }
+    
+    @Override
+    public void loadPluginDependencyClass() {
+        // this is just to demonstrate that the Maven plugin is loaded
+        MavenModuleSet.class.getClass();
     }
     
     public static class MavenOptsSlicerSpec extends UnorderedStringSlicerSpec<MavenModuleSet> {

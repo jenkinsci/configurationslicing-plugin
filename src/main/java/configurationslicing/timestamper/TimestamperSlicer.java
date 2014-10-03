@@ -22,6 +22,12 @@ public class TimestamperSlicer extends UnorderedStringSlicer<AbstractProject<?,?
         super(new TimestamperSliceSpec());
     }
 
+    @Override
+    public void loadPluginDependencyClass() {
+        // this is just to demonstrate that the Timestamper plugin is loaded
+        TimestamperBuildWrapper.class.getClass();
+    }
+    
     public static class TimestamperSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?,?>> {
 
         private static final String DISABLED = Boolean.FALSE.toString();
