@@ -19,6 +19,12 @@ public class PrioritySorterSlicer extends UnorderedStringSlicer<Job<?,?>>{
     public PrioritySorterSlicer() {
         super(new PrioritySorterSliceSpec());
     }
+    
+    @Override
+    public void loadPluginDependencyClass() {
+        // this is just to demonstrate that the PrioritySorter plugin is loaded
+        PrioritySorterJobProperty.class.getClass();
+    }
 
     public static class PrioritySorterSliceSpec extends UnorderedStringSlicerSpec<Job<?,?>> {
 

@@ -17,6 +17,12 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
         super(new MavenGoalsSlicerSpec());
     }
     
+    @Override
+    public void loadPluginDependencyClass() {
+        // this is just to demonstrate that the Maven plugin is loaded
+        MavenModuleSet.class.getClass();
+    }
+    
     public static class MavenGoalsSlicerSpec extends UnorderedStringSlicerSpec<MavenModuleSet> {
         private static final String DEFAULT = "(Default)";
 
