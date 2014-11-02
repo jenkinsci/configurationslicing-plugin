@@ -1,7 +1,6 @@
 package configurationslicing.email;
 
 import hudson.model.AbstractProject;
-import hudson.model.Hudson;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,9 +10,9 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 
-@SuppressWarnings("unchecked")
 public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?, ?>> {
 
 	public static final String DISABLED = "(Disabled)";
@@ -108,10 +107,10 @@ public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<A
 		return value;
 	}
 	public List<AbstractProject<?, ?>> getWorkDomain() {
-		return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
+		return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
 	}
 
-	protected abstract ProjectHandler getProjectHandler(AbstractProject project);
+	protected abstract ProjectHandler getProjectHandler(AbstractProject<?, ?>  project);
 	
 	public String getDefaultValueString() {
 		return DISABLED;

@@ -2,13 +2,13 @@ package configurationslicing.logrotator;
 
 import hudson.Extension;
 import hudson.model.AbstractProject;
-import hudson.model.Hudson;
 import hudson.tasks.LogRotator;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 
 public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractProject<?,?>> {
@@ -82,9 +82,8 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
         }
         abstract protected String getValue(LogRotator rotator);
 
-        @SuppressWarnings("unchecked")
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
+            return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
         public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
@@ -120,8 +119,8 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
             LogRotator newlogrotator = new LogRotator(days, builds, artifactDaysToKeep, artifactNumToKeep);
             
             if (!LogRotationSlicer.equals(newlogrotator, logrotator)) {
-	            item.setLogRotator(newlogrotator);
-	            try {
+                try {
+                    item.setLogRotator(newlogrotator);
 	                item.save();
 	            } catch (IOException e) {
 	                e.printStackTrace();

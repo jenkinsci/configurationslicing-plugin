@@ -3,7 +3,6 @@ package configurationslicing.claim;
 import hudson.Extension;
 import hudson.model.AbstractProject;
 import hudson.model.Descriptor;
-import hudson.model.Hudson;
 import hudson.plugins.claim.ClaimPublisher;
 import hudson.tasks.Publisher;
 import hudson.util.DescribableList;
@@ -12,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 import configurationslicing.BooleanSlicer;
+import configurationslicing.TopLevelItemSelector;
 
 @Extension
 public class ClaimSlicer extends BooleanSlicer<AbstractProject<?,?>> {
@@ -49,9 +49,8 @@ public class ClaimSlicer extends BooleanSlicer<AbstractProject<?,?>> {
             return claimPublisher != null;
         }
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
         public List<AbstractProject<?,?>> getWorkDomain() {
-            return (List)Hudson.getInstance().getAllItems(AbstractProject.class);
+            return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
         public boolean setValue(AbstractProject<?,?> item, boolean value) {

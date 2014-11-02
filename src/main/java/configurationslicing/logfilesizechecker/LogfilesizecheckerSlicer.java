@@ -4,7 +4,6 @@ import hudson.Extension;
 import hudson.model.BuildableItemWithBuildWrappers;
 import hudson.model.AbstractProject;
 import hudson.model.Descriptor;
-import hudson.model.Hudson;
 import hudson.plugins.logfilesizechecker.LogfilesizecheckerWrapper;
 import hudson.tasks.BuildWrapper;
 import hudson.util.DescribableList;
@@ -15,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+
+import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 
 /**
@@ -52,10 +53,9 @@ public class LogfilesizecheckerSlicer extends UnorderedStringSlicer<AbstractProj
             return "logfilesize";
         }
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
         @Override
         public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getItems(BuildableItemWithBuildWrappers.class);
+            return TopLevelItemSelector.getAllTopLevelItems(BuildableItemWithBuildWrappers.class);
         }
 
         @Override

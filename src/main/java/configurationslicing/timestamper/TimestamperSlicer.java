@@ -1,15 +1,15 @@
 package configurationslicing.timestamper;
 
 import hudson.Extension;
-import hudson.model.AbstractProject;
 import hudson.model.BuildableItemWithBuildWrappers;
-import hudson.model.Hudson;
+import hudson.model.AbstractProject;
 import hudson.plugins.timestamper.TimestamperBuildWrapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 
 /**
@@ -71,9 +71,8 @@ public class TimestamperSlicer extends UnorderedStringSlicer<AbstractProject<?,?
             return booleans;
         }
 
-        @SuppressWarnings({ "unchecked" })
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getAllItems(BuildableItemWithBuildWrappers.class);
+            return TopLevelItemSelector.getAllTopLevelItems(BuildableItemWithBuildWrappers.class);
         }
 
 		public boolean setValues(AbstractProject<?, ?> item, List<String> set) {

@@ -2,12 +2,12 @@ package configurationslicing.jobdisabled;
 
 import hudson.Extension;
 import hudson.model.AbstractProject;
-import hudson.model.Hudson;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 
 /**
@@ -56,9 +56,9 @@ public class JobDisabledStringSlicer extends UnorderedStringSlicer<AbstractProje
             return values;
         }
 
-        @SuppressWarnings({ "unchecked" })
+
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
+            return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
 		public boolean setValues(AbstractProject<?, ?> job, List<String> set) {

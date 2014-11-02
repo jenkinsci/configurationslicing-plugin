@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 
 @Extension
@@ -42,9 +43,8 @@ public class LabelSlicer extends UnorderedStringSlicer<AbstractProject<?,?>>{
             return Collections.singletonList(labelName);
         }
 
-        @SuppressWarnings("unchecked")
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
+            return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
         public boolean setValues(AbstractProject<?, ?> item, List<String> set) {

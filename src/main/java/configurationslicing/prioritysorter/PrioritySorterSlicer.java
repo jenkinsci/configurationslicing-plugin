@@ -1,7 +1,6 @@
 package configurationslicing.prioritysorter;
 
 import hudson.model.JobProperty;
-import hudson.model.Hudson;
 import hudson.model.Job;
 import hudson.queueSorter.PrioritySorterJobProperty;
 
@@ -9,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 
 /**
@@ -58,9 +58,9 @@ public class PrioritySorterSlicer extends UnorderedStringSlicer<Job<?,?>>{
             return values;
         }
 
-        @SuppressWarnings({ "unchecked" })
+        @SuppressWarnings({ "unchecked", "rawtypes" })
 		public List<Job<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getAllItems(Job.class);
+            return (List) TopLevelItemSelector.getAllTopLevelItems(Job.class);
         }
 
 		@SuppressWarnings("unchecked")
