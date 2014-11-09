@@ -12,6 +12,7 @@ import java.util.List;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 
+import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 
 @Extension
@@ -47,9 +48,8 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
             return ret;
         }
 
-        @SuppressWarnings("unchecked")
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
+            return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
         public boolean setValues(AbstractProject<?, ?> item, List<String> set) {

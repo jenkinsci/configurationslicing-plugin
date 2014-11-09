@@ -1,12 +1,13 @@
 package configurationslicing.jobdisabled;
 
+import hudson.Extension;
+import hudson.model.AbstractProject;
+
 import java.io.IOException;
 import java.util.List;
 
 import configurationslicing.BooleanSlicer;
-import hudson.Extension;
-import hudson.model.AbstractProject;
-import hudson.model.Hudson;
+import configurationslicing.TopLevelItemSelector;
 
 @Extension
 public class JobDisabledBoolSlicer extends BooleanSlicer<AbstractProject<?,?>> {
@@ -32,7 +33,7 @@ public class JobDisabledBoolSlicer extends BooleanSlicer<AbstractProject<?,?>> {
         }
 
         public List<AbstractProject<?,?>> getWorkDomain() {
-            return (List)Hudson.getInstance().getAllItems(AbstractProject.class);
+            return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
         public boolean setValue(AbstractProject<?,?> item, boolean value) {

@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 
+import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 
 /**
@@ -40,9 +41,8 @@ public abstract class AbstractToolSlicerSpec extends UnorderedStringSlicerSpec<A
   }
 
   @Override
-  @SuppressWarnings("unchecked")
   public List<AbstractProject< ? , ? >> getWorkDomain() {
-    return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
+    return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
   }
 
   @Override

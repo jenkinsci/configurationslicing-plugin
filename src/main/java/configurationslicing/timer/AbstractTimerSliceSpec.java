@@ -1,7 +1,6 @@
 package configurationslicing.timer;
 
 import hudson.model.AbstractProject;
-import hudson.model.Hudson;
 import hudson.triggers.Trigger;
 
 import java.io.IOException;
@@ -10,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import antlr.ANTLRException;
+import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 
 @SuppressWarnings("unchecked")
@@ -49,7 +49,7 @@ public abstract class AbstractTimerSliceSpec extends
 	}
 
 	public List<AbstractProject<?, ?>> getWorkDomain() {
-		return (List) Hudson.getInstance().getAllItems(AbstractProject.class);
+		return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
 	}
 
 	public abstract Trigger newTrigger(String spec) throws ANTLRException;

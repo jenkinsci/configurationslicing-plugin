@@ -4,7 +4,6 @@ import hudson.Extension;
 import hudson.model.BuildableItemWithBuildWrappers;
 import hudson.model.AbstractProject;
 import hudson.model.Descriptor;
-import hudson.model.Hudson;
 import hudson.plugins.build_timeout.BuildTimeoutWrapper;
 import hudson.tasks.BuildWrapper;
 import hudson.util.DescribableList;
@@ -17,6 +16,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 
 @Extension
@@ -53,10 +53,9 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 			return "buildtimeout";
 		}
 
-		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getAllItems(BuildableItemWithBuildWrappers.class);
+            return TopLevelItemSelector.getAllTopLevelItems(BuildableItemWithBuildWrappers.class);
 		}
 
 		@Override
