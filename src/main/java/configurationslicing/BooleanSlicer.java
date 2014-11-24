@@ -33,7 +33,11 @@ public class BooleanSlicer<I> implements Slicer<BooleanSlice<I>, I>{
     }
 
     public boolean transform(BooleanSlice<I> t, I i) {
+      if (t.exists(spec.getName(i))) {
         return spec.setValue(i, t.get(spec.getName(i)));
+      } else {
+        return false;
+      }
     }
 
     public String getName() {

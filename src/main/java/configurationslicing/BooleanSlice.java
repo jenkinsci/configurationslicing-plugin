@@ -35,6 +35,10 @@ public class BooleanSlice<I> extends Slice {
         nameToValue.put(name, value);
     }
 
+    public boolean exists(String name) {
+      return nameToValue.get(name) != null;
+    }
+
     public boolean get(String name) {
         Boolean object = nameToValue.get(name);
         if (object == null) {
