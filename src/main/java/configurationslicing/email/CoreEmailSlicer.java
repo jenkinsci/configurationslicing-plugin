@@ -86,6 +86,15 @@ public class CoreEmailSlicer extends
 				return false;
 			}
 		}
+		public boolean sendToIndividuals(AbstractProject project) {
+			Mailer mailer = getMailer(project);
+			if (mailer != null) {
+				return mailer.sendToIndividuals;
+			}
+			else {
+				return false;
+			}
+		}
 	}
 	@SuppressWarnings("unchecked")
 	private static class MavenEmailProjectHandler implements ProjectHandler {
@@ -136,6 +145,16 @@ public class CoreEmailSlicer extends
 				return false;
 			}
 		}
+		public boolean sendToIndividuals(AbstractProject project) {
+			MavenMailer mailer = getMailer(project);
+			if (mailer != null) {
+				return mailer.sendToIndividuals;
+			}
+			else {
+				return false;
+			}
+		}
+		
 	}
 	
 }

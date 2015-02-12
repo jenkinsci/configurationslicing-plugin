@@ -105,6 +105,13 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 				return false;
 			}
 		}
+		
+		/**
+		* not yet implemented for ExtendedEmailPublisher
+		*/
+		public boolean sendToIndividuals(AbstractProject project) {
+			return false;
+		}
 	}
 	
 }
