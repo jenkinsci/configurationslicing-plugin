@@ -6,12 +6,15 @@ import hudson.model.Descriptor;
 import hudson.model.Hudson;
 import hudson.plugins.emailext.EmailType;
 import hudson.plugins.emailext.ExtendedEmailPublisher;
+import hudson.plugins.emailext.plugins.EmailTrigger;
+import hudson.plugins.emailext.plugins.EmailTriggerDescriptor;
 import hudson.plugins.emailext.plugins.trigger.FailureTrigger;
 import hudson.tasks.Publisher;
 import hudson.util.DescribableList;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -104,6 +107,23 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 			} else {
 				return false;
 			}
+		}
+		
+		/**
+		* not yet implemented for ExtendedEmailPublisher
+		*/
+		public boolean sendToIndividuals(AbstractProject project) {			
+			boolean result = false;
+			ExtendedEmailPublisher mailer = getMailer(project);
+			if (mailer != null) {
+				for (EmailTrigger trigger : mailer.getConfiguredTriggers()) {
+					if (trigger.getEmail().getSendToDevelopers()) {
+						result = true;
+						break;
+					}
+				}
+			}
+			return result;
 		}
 	}
 	

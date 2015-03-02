@@ -16,6 +16,7 @@ import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?, ?>> {
 
 	public static final String DISABLED = "(Disabled)";
+	private static final String EMPTY = "";
 
 	private String joinString;
 	private String name;
@@ -32,7 +33,12 @@ public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<A
 		String recipients = handler.getRecipients(project);
 		recipients = normalize(recipients, "\n");
 		if (recipients == null) {
-			recipients = DISABLED;
+			if (handler.sendToIndividuals(project)) {
+				recipients = EMPTY;
+			}
+			else {
+				recipients = DISABLED;
+			}
 		}
 		List<String> values = new ArrayList<String>();
 		values.add(recipients);
@@ -41,8 +47,8 @@ public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<A
 	public boolean setValues(AbstractProject<?, ?> project, List<String> set) {
 		String newEmail = join(set);
 		
-		// if no email is present, we're going to assume that's the same as disabled
-		boolean disabled = (DISABLED.equals(newEmail) || newEmail == null);
+		// only regard explicit (disabled) [regardless of case]
+		boolean disabled = (newEmail == null) ? false : (DISABLED.toLowerCase().equals(newEmail.toLowerCase()));		
 		boolean saved = false;
 		ProjectHandler handler = getProjectHandler(project);
 
