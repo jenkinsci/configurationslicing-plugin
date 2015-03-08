@@ -7,14 +7,12 @@ import hudson.model.Hudson;
 import hudson.plugins.emailext.EmailType;
 import hudson.plugins.emailext.ExtendedEmailPublisher;
 import hudson.plugins.emailext.plugins.EmailTrigger;
-import hudson.plugins.emailext.plugins.EmailTriggerDescriptor;
 import hudson.plugins.emailext.plugins.trigger.FailureTrigger;
 import hudson.tasks.Publisher;
 import hudson.util.DescribableList;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -44,7 +42,7 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 		}
 		
 		@Override
-		protected ProjectHandler getProjectHandler(AbstractProject project) {
+		protected ProjectHandler getProjectHandler(AbstractProject<?,?> project) {
 			return this;
 		}
 		@Override
@@ -53,7 +51,7 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 			values.add("$DEFAULT_RECIPIENTS");
 			return values;
 		}
-		public String getRecipients(AbstractProject project) {
+		public String getRecipients(AbstractProject<?,?> project) {
 			ExtendedEmailPublisher mailer = getMailer(project);
 			if (mailer != null) {
 				return mailer.recipientList;
@@ -61,13 +59,13 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 				return null;
 			}
 		}
-		private ExtendedEmailPublisher getMailer(AbstractProject project) {
+		private ExtendedEmailPublisher getMailer(AbstractProject<?,?> project) {
 			DescribableList<Publisher,Descriptor<Publisher>> publishers = project.getPublishersList();
 			Descriptor<Publisher> descriptor = Hudson.getInstance().getDescriptor(ExtendedEmailPublisher.class);
 			Publisher emailPublisher = publishers.get(descriptor);
 			return (ExtendedEmailPublisher) emailPublisher;
 		}
-		public boolean setRecipients(AbstractProject project, String value) {
+		public boolean setRecipients(AbstractProject<?,?> project, String value) {
 			ExtendedEmailPublisher mailer = getMailer(project);
 			if (!StringUtils.equals(value, mailer.recipientList)) {
 				mailer.recipientList = value;
@@ -76,12 +74,12 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 				return false;
 			}
 		}
-		public boolean addMailer(AbstractProject project) throws IOException {
+		public boolean addMailer(AbstractProject<?,?> project) throws IOException {
 			ExtendedEmailPublisher mailer = getMailer(project);
 			if (mailer == null) {
 				DescribableList<Publisher,Descriptor<Publisher>> publishers = project.getPublishersList();
 				ExtendedEmailPublisher publisher = new ExtendedEmailPublisher();
-				FailureTrigger trigger = new FailureTrigger();
+				FailureTrigger trigger = FailureTrigger.createDefault();
 				EmailType email = new EmailType();
 				email.setSendToDevelopers(true);
 				email.setSendToRecipientList(true);
@@ -98,7 +96,7 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 				return false;
 			}
 		}
-		public boolean removeMailer(AbstractProject project) throws IOException {
+		public boolean removeMailer(AbstractProject<?,?> project) throws IOException {
 			ExtendedEmailPublisher mailer = getMailer(project);
 			if (mailer != null) {
 				DescribableList<Publisher,Descriptor<Publisher>> publishers = project.getPublishersList();
@@ -112,7 +110,7 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 		/**
 		* not yet implemented for ExtendedEmailPublisher
 		*/
-		public boolean sendToIndividuals(AbstractProject project) {			
+		public boolean sendToIndividuals(AbstractProject<?,?> project) {			
 			boolean result = false;
 			ExtendedEmailPublisher mailer = getMailer(project);
 			if (mailer != null) {

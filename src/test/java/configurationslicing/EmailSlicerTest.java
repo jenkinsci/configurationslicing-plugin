@@ -73,14 +73,14 @@ public class EmailSlicerTest extends HudsonTestCase {
 		doTestSetValues(expected, valuesString, false, false);
 		doTestSetValues(expected, valuesString, true, false);
 	}
-	@SuppressWarnings("unchecked")
+
 	private void doTestSetValues(String expected, String valuesString, boolean maven, boolean core) throws Exception {
 		
 		if (!core) {
 			expected = expected.replaceAll(" ", ",");
 		}
 		
-		AbstractProject project;
+		AbstractProject<?,?> project;
 		if (maven) {
 			project = createMavenProject();
 		} else {
@@ -102,9 +102,9 @@ public class EmailSlicerTest extends HudsonTestCase {
 		
 		assertEquals(expected, got);
 	}
-	@SuppressWarnings("unchecked")
+
 	public void testCommonValues() {
-		UnorderedStringSlice slice = new UnorderedStringSlice(new ExtEmailSlicer.ExtEmailSliceSpec());
+		UnorderedStringSlice<AbstractProject<?,?>> slice = new UnorderedStringSlice<AbstractProject<?,?>>(new ExtEmailSlicer.ExtEmailSliceSpec());
 		List<String> values = slice.getConfiguredValues();
 		assertEquals(3, values.size());
 		assertTrue(values.contains(""));
@@ -164,7 +164,7 @@ public class EmailSlicerTest extends HudsonTestCase {
 		FreeStyleProject project = createFreeStyleProject();
 		DescribableList<Publisher,Descriptor<Publisher>> publishers = project.getPublishersList();
 		ExtendedEmailPublisher publisher = new ExtendedEmailPublisher();
-		FailureTrigger trigger = new FailureTrigger();
+		FailureTrigger trigger = FailureTrigger.createDefault();
 		EmailType email = new EmailType();
 		email.setSendToDevelopers(true);
 		email.setSendToRecipientList(true);
