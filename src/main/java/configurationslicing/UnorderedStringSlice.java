@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -22,7 +23,10 @@ import org.kohsuke.stapler.StaplerRequest;
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 
 public class UnorderedStringSlice<I> extends Slice {
+    
+    private static final Logger LOGGER = Logger.getLogger(UnorderedStringSlice.class.getName());
     private Map<String, List<String>> nameToValues;
+    
     private Map<String, Set<String>> valueToNames;
     private UnorderedStringSlicer.UnorderedStringSlicerSpec<I> spec;
     
@@ -75,6 +79,11 @@ public class UnorderedStringSlice<I> extends Slice {
     }
 
     private static void addLineWithSets(Map<String, Set<String>> map, String s, String name) {
+        if (null == s) {
+            LOGGER.severe("found illegal line with null value for name: "+name);
+            // do nothing
+            return;
+        }
         if(!map.containsKey(s)) {
             map.put(s, new HashSet<String>());
         }
