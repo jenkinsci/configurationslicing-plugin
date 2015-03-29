@@ -21,7 +21,6 @@ import net.sf.json.JSONObject;
 import org.kohsuke.stapler.StaplerRequest;
 
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
-import configurationslicing.tools.AbstractToolSlicerSpec;
 
 public class UnorderedStringSlice<I> extends Slice {
     
