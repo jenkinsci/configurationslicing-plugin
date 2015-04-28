@@ -11,7 +11,6 @@
 	<name>Configuration Slicing plugin</name>
 	<description>Allows configuration of a single property across a group of projects</description>
 	<url>http://wiki.jenkins-ci.org/display/JENKINS/Configuration+Slicing+Plugin</url>
-
 	<developers>
 		<developer>
 			<id>jacob_robertson</id>
@@ -19,7 +18,6 @@
 			<email>jacob.robertson.work@gmail.com</email>
 		</developer>
 	</developers>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.jenkins-ci.main</groupId>
@@ -92,26 +90,24 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>claim</artifactId>
-            <version>2.3</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>config-file-provider</artifactId>
-            <version>2.7.1</version>
-            <optional>true</optional>
-        </dependency>
+			<groupId>org.jenkins-ci.plugins</groupId>
+			<artifactId>claim</artifactId>
+			<version>2.3</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.jenkins-ci.plugins</groupId>
+			<artifactId>config-file-provider</artifactId>
+			<version>2.7.1</version>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
-
-    <scm>
-        <connection>scm:git:git@github.com:jenkinsci/configurationslicing-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:jenkinsci/configurationslicing-plugin.git</developerConnection>
-        <url>https://github.com/jenkinsci/configurationslicing-plugin</url>
-      <tag>HEAD</tag>
-  </scm>
-
+	<scm>
+		<connection>scm:git:git@github.com:jenkinsci/configurationslicing-plugin.git</connection>
+		<developerConnection>scm:git:git@github.com:jenkinsci/configurationslicing-plugin.git</developerConnection>
+		<url>https://github.com/jenkinsci/configurationslicing-plugin</url>
+		<tag>HEAD</tag>
+	</scm>
 	<build>
 		<plugins>
 			<plugin>
@@ -122,28 +118,22 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<distributionManagement>
 		<repository>
 			<id>maven.jenkins-ci.org</id>
 			<url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
 		</repository>
 	</distributionManagement>
-
-
-    <repositories>
-        <repository>
-            <id>repo.jenkins-ci.org</id>
-            <url>http://repo.jenkins-ci.org/public/</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>repo.jenkins-ci.org</id>
-            <url>http://repo.jenkins-ci.org/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
-</project>  
-  
-
+	<repositories>
+		<repository>
+			<id>repo.jenkins-ci.org</id>
+			<url>http://repo.jenkins-ci.org/public/</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>repo.jenkins-ci.org</id>
+			<url>http://repo.jenkins-ci.org/public/</url>
+		</pluginRepository>
+	</pluginRepositories>
+</project>
