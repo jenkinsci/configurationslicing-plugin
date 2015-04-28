@@ -17,6 +17,7 @@ public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<A
 
 	public static final String DISABLED = "(Disabled)";
 	private static final String EMPTY = "";
+        public static final String WHO_BROKE = "(send_to_individuals_who_broke)";
 
 	private String joinString;
 	private String name;
@@ -34,11 +35,13 @@ public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<A
 		recipients = normalize(recipients, "\n");
 		if (recipients == null) {
 			if (handler.sendToIndividuals(project)) {
-				recipients = EMPTY;
+				recipients = WHO_BROKE;
 			}
 			else {
 				recipients = DISABLED;
 			}
+		} else if (handler.sendToIndividuals(project)) {
+			recipients = recipients + "\n" + WHO_BROKE;
 		}
 		List<String> values = new ArrayList<String>();
 		values.add(recipients);

@@ -59,8 +59,11 @@ public class CoreEmailSlicer extends
 		}
 		public boolean setRecipients(AbstractProject project, String value) {
 			Mailer mailer = getMailer(project);
-			if (!StringUtils.equals(value, mailer.recipients)) {
-				mailer.recipients = value;
+			boolean sentToIndividuals = value.contains(AbstractEmailSliceSpec.WHO_BROKE);
+			value = value.replace(AbstractEmailSliceSpec.WHO_BROKE,"");
+			if (!StringUtils.equals(value, mailer.recipients) || ( sentToIndividuals != mailer.sendToIndividuals )) {
+                                mailer.recipients = value;
+                                mailer.sendToIndividuals = sentToIndividuals;
 				return true;
 			} else {
 				return false;
@@ -116,12 +119,16 @@ public class CoreEmailSlicer extends
 		}
 		public boolean setRecipients(AbstractProject project, String value) {
 			MavenMailer mailer = getMailer(project);
-			if (!StringUtils.equals(value, mailer.recipients)) {
-				mailer.recipients = value;
-				return true;
-			} else {
-				return false;
-			}
+                        boolean sentToIndividuals = value.contains(AbstractEmailSliceSpec.WHO_BROKE);
+                        value = value.replace(AbstractEmailSliceSpec.WHO_BROKE,"");
+                        if (!StringUtils.equals(value, mailer.recipients) || ( sentToIndividuals != mailer.sendToIndividuals )) {
+                                mailer.recipients = value;
+                                mailer.sendToIndividuals = sentToIndividuals;
+                                return true;
+                        } else {
+                                return false;
+                        }
+
 		}
 		public boolean addMailer(AbstractProject project) throws IOException {
 			MavenMailer mailer = getMailer(project);
