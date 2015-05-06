@@ -68,6 +68,9 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 		public boolean setRecipients(AbstractProject<?,?> project, String value) {
 			ExtendedEmailPublisher mailer = getMailer(project);
 			if (!StringUtils.equals(value, mailer.recipientList)) {
+				if ( value != null) {
+					value = value.replace(AbstractEmailSliceSpec.WHO_BROKE,"");  // attribute saving not ipmlemented yet for ExtendedEmailPublisher	
+				}
 				mailer.recipientList = value;
 				return true;
 			} else {

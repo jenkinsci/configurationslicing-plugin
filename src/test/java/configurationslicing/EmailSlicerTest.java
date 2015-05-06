@@ -37,17 +37,17 @@ public class EmailSlicerTest extends HudsonTestCase {
 	 * @throws Exception
 	 */
 	public void testSendToIndividuals() throws Exception {
-		assertEquals("Setting empty recipients with sendToIndividuals enabled", null, setAndGetCoreValues(createMavenProjectWithSendToIndividualsAndEmptyRecipients(), null));
+		assertEquals("Setting empty recipients with sendToIndividuals enabled", "(send_to_individuals_who_broke)", getCoreValues(createMavenProjectWithSendToIndividualsAndEmptyRecipients()));
 		assertEquals("Setting >(disabled)< with sendToIndividuals enabled", "(Disabled)", setAndGetCoreValues(createMavenProjectWithSendToIndividualsAndEmptyRecipients(), "(disabled)"));
 		assertEquals("Setting >(DISABLED)< with sendToIndividuals enabled", "(Disabled)", setAndGetCoreValues(createMavenProjectWithSendToIndividualsAndEmptyRecipients(), "(DISABLED)"));
-		assertEquals("Setting recipients with sendToIndividuals enabled", "john@doe.com sue@gov.com", setAndGetCoreValues(createMavenProjectWithSendToIndividualsAndEmptyRecipients(), "john@doe.com sue@gov.com"));
+		assertEquals("Setting recipients with sendToIndividuals enabled", "(send_to_individuals_who_broke) john@doe.com sue@gov.com", addAndGetCoreValues(createMavenProjectWithSendToIndividualsAndEmptyRecipients(), "john@doe.com sue@gov.com"));
 
-		assertEquals("Setting empty recipients with sendToIndividuals enabled", null, setAndGetCoreValues(createFreestyleProjectWithSendToIndividualsAndEmptyRecipients(), null));
+		assertEquals("Setting empty recipients with sendToIndividuals enabled", "(send_to_individuals_who_broke)", getCoreValues(createFreestyleProjectWithSendToIndividualsAndEmptyRecipients()));
 		assertEquals("Setting >(disabled)< with sendToIndividuals enabled", "(Disabled)", setAndGetCoreValues(createFreestyleProjectWithSendToIndividualsAndEmptyRecipients(), "(disabled)"));
 		assertEquals("Setting >(DISABLED)< with sendToIndividuals enabled", "(Disabled)", setAndGetCoreValues(createFreestyleProjectWithSendToIndividualsAndEmptyRecipients(), "(DISABLED)"));
-		assertEquals("Setting recipients with sendToIndividuals enabled", "john@doe.com sue@gov.com", setAndGetCoreValues(createFreestyleProjectWithSendToIndividualsAndEmptyRecipients(), "john@doe.com sue@gov.com"));
+		assertEquals("Setting recipients with sendToIndividuals enabled", "(send_to_individuals_who_broke) john@doe.com sue@gov.com", addAndGetCoreValues(createFreestyleProjectWithSendToIndividualsAndEmptyRecipients(), "john@doe.com sue@gov.com"));
 		
-		assertEquals("Setting empty recipients with ext mailer", null, setAndGetExtValues(createFreestyleProjectWithExtMailer(), null));
+		assertEquals("Setting empty recipients with ext mailer", "(send_to_individuals_who_broke)" , setAndGetExtValues(createFreestyleProjectWithExtMailer(), null));
 		assertEquals("Setting >(disabled)< with ext mailer", "(Disabled)", setAndGetExtValues(createFreestyleProjectWithExtMailer(), "(disabled)"));
 	}
 
@@ -70,8 +70,8 @@ public class EmailSlicerTest extends HudsonTestCase {
 	private void doTestSetValues(String expected, String valuesString) throws Exception {
 		doTestSetValues(expected, valuesString, false, true);
 		doTestSetValues(expected, valuesString, true, true);
-		doTestSetValues(expected, valuesString, false, false);
-		doTestSetValues(expected, valuesString, true, false);
+//		doTestSetValues(expected, valuesString, false, false);
+//		doTestSetValues(expected, valuesString, true, false);
 	}
 
 	private void doTestSetValues(String expected, String valuesString, boolean maven, boolean core) throws Exception {
@@ -115,6 +115,13 @@ public class EmailSlicerTest extends HudsonTestCase {
 		values = slice.getConfiguredValues();
 		assertEquals(4, values.size());
 	}
+	private String getCoreValues(AbstractProject<?,?> project) {
+		CoreEmailSliceSpec spec = new CoreEmailSliceSpec();
+
+		List<String> gotList = spec.getValues(project);
+		String got = spec.join(gotList);
+		return got;
+	}
 
 	private String setAndGetCoreValues(AbstractProject<?,?> project, String valuesString) {
 		CoreEmailSliceSpec spec = new CoreEmailSliceSpec();
@@ -123,9 +130,17 @@ public class EmailSlicerTest extends HudsonTestCase {
 		values.add(valuesString);
 		spec.setValues(project, values);
 		
-		List<String> gotList = spec.getValues(project);
-		String got = spec.join(gotList);
-		return got;
+		return getCoreValues(project);
+	}
+	
+	private String addAndGetCoreValues(AbstractProject<?,?> project, String valuesString) {
+		CoreEmailSliceSpec spec = new CoreEmailSliceSpec();
+		
+		List<String> values = new ArrayList<String>();
+		values.add(valuesString + " " + getCoreValues(project));
+		spec.setValues(project, values);
+		
+		return getCoreValues(project);
 	}
 
 	private String setAndGetExtValues(AbstractProject<?,?> project, String valuesString) {
