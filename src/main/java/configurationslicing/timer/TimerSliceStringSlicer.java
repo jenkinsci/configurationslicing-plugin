@@ -28,8 +28,8 @@ public class TimerSliceStringSlicer extends UnorderedStringSlicer<AbstractProjec
         }
 
         @SuppressWarnings("unchecked")
-		public Trigger newTrigger(String spec) throws ANTLRException {
-        	return new TimerTrigger(spec);
+		public Trigger newTrigger(String spec, Trigger oldTrigger) throws ANTLRException {
+            return new TimerTrigger(spec);
         }
         
     }

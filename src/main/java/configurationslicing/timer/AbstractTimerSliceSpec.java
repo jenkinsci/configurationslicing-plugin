@@ -52,7 +52,7 @@ public abstract class AbstractTimerSliceSpec extends
 		return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
 	}
 
-	public abstract Trigger newTrigger(String spec) throws ANTLRException;
+	public abstract Trigger newTrigger(String spec, Trigger oldTrigger) throws ANTLRException;
 	
 	public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
 		if (set.isEmpty())
@@ -76,7 +76,7 @@ public abstract class AbstractTimerSliceSpec extends
 		try {
 			Trigger newtrigger = null;
 			if (!disabled) {
-				newtrigger = newTrigger(spec);
+				newtrigger = newTrigger(spec, oldTrigger);
 			}
 			if (oldTrigger != null) {
 				item.removeTrigger(oldTrigger.getDescriptor());

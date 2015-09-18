@@ -28,8 +28,12 @@ public class SCMTimerSliceStringSlicer extends UnorderedStringSlicer<AbstractPro
         }
         
         @SuppressWarnings("unchecked")
-		public Trigger newTrigger(String spec) throws ANTLRException {
-        	return new SCMTrigger(spec);
+        public Trigger newTrigger(String spec, Trigger oldTrigger) throws ANTLRException {
+            boolean ignorePostCommitHooks = false;
+            if(oldTrigger instanceof SCMTrigger) {
+                ignorePostCommitHooks = ((SCMTrigger)oldTrigger).isIgnorePostCommitHooks();
+            }
+            return new SCMTrigger(spec, ignorePostCommitHooks);
         }
         
     }
