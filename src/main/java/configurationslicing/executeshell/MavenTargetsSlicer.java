@@ -32,21 +32,23 @@ public class MavenTargetsSlicer extends AbstractBuildCommandSlicer<Maven> {
         }
         @Override
         public Maven createBuilder(String command, List<Maven> existingBuilders, Maven oldBuilder) {
-          if (oldBuilder != null && oldBuilder.getMaven() != null) {
-        		String mavenName = oldBuilder.getMaven().getName();
-            	return new Maven(command, mavenName, oldBuilder.pom, oldBuilder.properties, oldBuilder.jvmOptions, oldBuilder.usePrivateRepository);
-        	} else {
-        		// if the job already has another maven command, use the right version of maven
-            	String mavenName = DEFAULT_MAVEN;
-	        	for (Maven maven: existingBuilders) {
-	        		MavenInstallation install = maven.getMaven();
-	        		if (install != null) {
-	        			mavenName = install.getName();
-	        			break;
-	        		}
-	        	}
-	        	return new Maven(command, mavenName);
-        	}
+            if (oldBuilder != null) {
+                MavenInstallation mavenInstall = oldBuilder.getMaven();
+                String mavenName = mavenInstall == null ? null : mavenInstall.getName();
+                return new Maven(command, mavenName, oldBuilder.pom, oldBuilder.properties, oldBuilder.jvmOptions,
+                        oldBuilder.usePrivateRepository, oldBuilder.getSettings(), oldBuilder.getGlobalSettings());
+            } else {
+                // if the job already has another maven command, use the right version of maven
+                String mavenName = DEFAULT_MAVEN;
+                for (Maven maven: existingBuilders) {
+                    MavenInstallation install = maven.getMaven();
+                    if (install != null) {
+                        mavenName = install.getName();
+                        break;
+                    }
+                }
+                return new Maven(command, mavenName);
+            }
         }
         @Override
         public Maven[] createBuilderArray(int len) {
