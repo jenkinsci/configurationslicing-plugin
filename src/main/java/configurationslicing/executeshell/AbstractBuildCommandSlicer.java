@@ -7,6 +7,7 @@ import hudson.model.Hudson;
 import hudson.model.Project;
 import hudson.tasks.Builder;
 import hudson.util.DescribableList;
+import jenkins.model.Jenkins;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         @SuppressWarnings("unchecked")
         public List<AbstractProject<?, ?>> getWorkDomain() {
         	List<AbstractProject<?, ?>> list = new ArrayList<AbstractProject<?, ?>>();
-        	List<AbstractProject> temp = Hudson.getInstance().getAllItems(AbstractProject.class);
+        	List<AbstractProject> temp = Jenkins.getInstance().getAllItems(AbstractProject.class);
         	for (AbstractProject p: temp) {
         		if (p instanceof Project || p instanceof MatrixProject) {
         			list.add(p);
