@@ -71,7 +71,7 @@ public class TimerSliceStringSlicerTest extends HudsonTestCase {
 	private AbstractProject accumulate(UnorderedStringSlicer slicer, UnorderedStringSlice slice, AbstractTimerSliceSpec spec,
 			String name, String chron) throws Exception {
 		AbstractProject project = createFreeStyleProject(name);
-		Trigger trigger = spec.newTrigger(chron);
+		Trigger trigger = spec.newTrigger(chron, null);
 		project.addTrigger(trigger);
 		slicer.accumulate(slice, project);
 		return project;
