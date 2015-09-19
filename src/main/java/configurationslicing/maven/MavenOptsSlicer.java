@@ -2,7 +2,10 @@ package configurationslicing.maven;
 
 import hudson.Extension;
 import hudson.maven.MavenModuleSet;
+import hudson.maven.MavenModuleSet.DescriptorImpl;
 import hudson.model.Hudson;
+import hudson.tasks.Maven;
+import jenkins.model.Jenkins;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +59,9 @@ public class MavenOptsSlicer extends UnorderedStringSlicer<MavenModuleSet> {
         public boolean setValues(MavenModuleSet item, List<String> set) {
             if(set.isEmpty()) return false;
             String value = set.iterator().next();
-            if(value.equals(MavenModuleSet.DESCRIPTOR.getGlobalMavenOpts())) {
+            DescriptorImpl descriptor =
+                    Jenkins.getInstance().getDescriptorByType(MavenModuleSet.DescriptorImpl.class);
+            if(value.equals(descriptor.getGlobalMavenOpts())) {
                 item.setMavenOpts(null);
             } else {
                 item.setMavenOpts(value);

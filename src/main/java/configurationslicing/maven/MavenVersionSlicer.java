@@ -9,8 +9,10 @@ import hudson.model.Hudson;
 import hudson.model.TopLevelItem;
 import hudson.tasks.Builder;
 import hudson.tasks.Maven;
+import hudson.tasks.Maven.DescriptorImpl;
 import hudson.tasks.Maven.MavenInstallation;
 import hudson.util.DescribableList;
+import jenkins.model.Jenkins;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -91,8 +93,10 @@ public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
 			MavenInstallation itemMaven = item.getMaven();
 			if (itemMaven != null) {
 				String itemMavenName = itemMaven.getName();
-				for (MavenInstallation maven : MavenModuleSet.DESCRIPTOR
-						.getMavenDescriptor().getInstallations()) {
+				DescriptorImpl descriptorByType =
+				        Jenkins.getInstance().getDescriptorByType(Maven.DescriptorImpl.class);
+				MavenInstallation[] installations = descriptorByType.getInstallations();
+				for (MavenInstallation maven : installations) {
 					String mavenName = maven.getName();
 					if (itemMavenName.equals(mavenName)) {
 						ret.add(itemMavenName);
