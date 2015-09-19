@@ -107,12 +107,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
 			
 			if (delete) {
 				if (wrapper != null) {
-					try {
-						wrappers.remove(wrapper);
-					} catch (IOException e) {
-						System.err.println("IOException Thrown removing wrapper value");
-						return false;
-					}
+				    wrappers.remove(wrapper);
 				}
 			} else if (changed) {
 				try {

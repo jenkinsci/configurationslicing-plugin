@@ -60,19 +60,11 @@ public class ClaimSlicer extends BooleanSlicer<AbstractProject<?,?>> {
             } else if (value==false) { // request to remove the publisher
                 DescribableList<Publisher, Descriptor<Publisher>> publishersList = item.getPublishersList();
                 ClaimPublisher claimPublisher = publishersList.get(ClaimPublisher.class);
-                try {
-                    publishersList.remove(claimPublisher);
-                } catch (IOException e) {
-                    return false;
-                }
+                publishersList.remove(claimPublisher);
                 return true;
             } else { // request to add the publisher
                 DescribableList<Publisher, Descriptor<Publisher>> publishersList = item.getPublishersList();
-                try {
-                    publishersList.add(new ClaimPublisher());
-                } catch (IOException e) {
-                    return false;
-                }
+                publishersList.add(new ClaimPublisher());
                 return true;
             }
         }

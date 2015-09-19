@@ -98,13 +98,8 @@ public abstract class AbstractToolSlicerSpec extends UnorderedStringSlicerSpec<A
       newBuilderList.add(newBuilderList.indexOf(oldBuilder), newBuilder);
       newBuilderList.remove(oldBuilder);
 
-      try {
-        dl.clear();
-        dl.addAll(newBuilderList);
-      } catch (IOException e) {
-        LOGGER.log(Level.SEVERE, "Could not set new gradle builder step!", e);
-        return false;
-      }
+      dl.clear();
+      dl.addAll(newBuilderList);
     }
 
     return true;
