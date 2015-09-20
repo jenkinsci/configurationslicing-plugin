@@ -55,7 +55,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
 
         public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
             if(set.size() == 0) return false;
-            Hudson hudson = Jenkins.getInstance();
+            Jenkins hudson = Jenkins.getInstance();
             JDK jdk=null;
             for(String val : set) {
                 jdk = hudson.getJDK(val);
