@@ -4,6 +4,7 @@ import hudson.Extension;
 import hudson.model.AbstractProject;
 import hudson.model.Hudson;
 import hudson.model.JDK;
+import jenkins.model.Jenkins;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
 
         public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
             if(set.size() == 0) return false;
-            Hudson hudson = Hudson.getInstance();
+            Hudson hudson = Jenkins.getInstance();
             JDK jdk=null;
             for(String val : set) {
                 jdk = hudson.getJDK(val);

@@ -10,6 +10,7 @@ import hudson.plugins.emailext.plugins.EmailTrigger;
 import hudson.plugins.emailext.plugins.trigger.FailureTrigger;
 import hudson.tasks.Publisher;
 import hudson.util.DescribableList;
+import jenkins.model.Jenkins;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 		}
 		private ExtendedEmailPublisher getMailer(AbstractProject<?,?> project) {
 			DescribableList<Publisher,Descriptor<Publisher>> publishers = project.getPublishersList();
-			Descriptor<Publisher> descriptor = Hudson.getInstance().getDescriptor(ExtendedEmailPublisher.class);
+			Descriptor<Publisher> descriptor = Jenkins.getInstance().getDescriptor(ExtendedEmailPublisher.class);
 			Publisher emailPublisher = publishers.get(descriptor);
 			return (ExtendedEmailPublisher) emailPublisher;
 		}

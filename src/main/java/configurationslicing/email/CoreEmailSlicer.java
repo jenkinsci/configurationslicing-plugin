@@ -12,6 +12,7 @@ import hudson.model.Hudson;
 import hudson.tasks.Mailer;
 import hudson.tasks.Publisher;
 import hudson.util.DescribableList;
+import jenkins.model.Jenkins;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -53,7 +54,7 @@ public class CoreEmailSlicer extends
 		}
 		private Mailer getMailer(AbstractProject project) {
 			DescribableList<Publisher,Descriptor<Publisher>> publishers = project.getPublishersList();
-			Descriptor<Publisher> descriptor = Hudson.getInstance().getDescriptor(Mailer.class);
+			Descriptor<Publisher> descriptor = Jenkins.getInstance().getDescriptor(Mailer.class);
 			Publisher emailPublisher = publishers.get(descriptor);
 			return (Mailer) emailPublisher;
 		}
@@ -110,7 +111,7 @@ public class CoreEmailSlicer extends
 		private MavenMailer getMailer(AbstractProject project) {
 			MavenModuleSet mavenProject = (MavenModuleSet) project;
 			DescribableList<MavenReporter,Descriptor<MavenReporter>> reporters = mavenProject.getReporters();
-			Descriptor<MavenReporter> descriptor = Hudson.getInstance().getDescriptor(MavenMailer.class);
+			Descriptor<MavenReporter> descriptor = Jenkins.getInstance().getDescriptor(MavenMailer.class);
 			MavenReporter emailReporter = reporters.get(descriptor);
 			return (MavenMailer) emailReporter;
 		}

@@ -1,6 +1,7 @@
 package configurationslicing;
 
 import hudson.model.TopLevelItem;
+import jenkins.model.Jenkins;
 import hudson.model.AbstractProject;
 import hudson.model.Hudson;
 
@@ -27,7 +28,7 @@ public class TopLevelItemSelector {
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static List<AbstractProject<?,?>> getAllTopLevelItems(Class clazz) {
-        List<AbstractProject<?,?>> list =  (List)Hudson.getInstance().getAllItems(clazz);
+        List<AbstractProject<?,?>> list =  (List)Jenkins.getInstance().getAllItems(clazz);
         CollectionUtils.filter(list, new Predicate() {
             public boolean evaluate(Object object) {
                 // exclude MatrixConfiguration, MavenModule, etc

@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import hudson.model.Item;
+import jenkins.model.Jenkins;
 import hudson.model.AbstractProject;
 import hudson.model.FreeStyleProject;
 import hudson.model.Hudson;
@@ -43,7 +44,7 @@ public abstract class AbstractSimpleProjectSlicer extends UnorderedStringSlicer<
 
         @SuppressWarnings({ "unchecked" })
 		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return (List) Hudson.getInstance().getAllItems(getWorkDomainClass());
+            return (List) Jenkins.getInstance().getAllItems(getWorkDomainClass());
         }
         /**
          * Override if needed.

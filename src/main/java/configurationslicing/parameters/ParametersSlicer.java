@@ -11,6 +11,7 @@ import hudson.model.ParameterDefinition;
 import hudson.model.ParametersDefinitionProperty;
 import hudson.model.StringParameterDefinition;
 import hudson.model.StringParameterValue;
+import jenkins.model.Jenkins;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -154,7 +155,7 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         	int index;
         }
         public List<Job> getWorkDomain() {
-        	List<Job> jobs = Hudson.getInstance().getAllItems(Job.class);
+        	List<Job> jobs = Jenkins.getInstance().getAllItems(Job.class);
         	return jobs;
         }
         

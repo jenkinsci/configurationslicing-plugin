@@ -110,7 +110,7 @@ public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
 			List<AbstractProject> list = new ArrayList<AbstractProject>();
 
             // AbstractProject includes both FreeStyle/Matrix to have Maven build step and MavenModuleSet projects
-            list.addAll(Hudson.getInstance().getAllItems(AbstractProject.class));
+            list.addAll(Jenkins.getInstance().getAllItems(AbstractProject.class));
 
             CollectionUtils.filter(list, new Predicate() {
                 public boolean evaluate(Object object) {

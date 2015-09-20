@@ -6,6 +6,7 @@ import hudson.model.ManagementLink;
 import hudson.model.TopLevelItem;
 import hudson.model.ViewGroup;
 import hudson.model.Descriptor.FormException;
+import jenkins.model.Jenkins;
 import hudson.model.Hudson;
 import hudson.model.View;
 
@@ -47,7 +48,7 @@ public class ConfigurationSlicing extends ManagementLink {
 
     @SuppressWarnings("unchecked")
 	public List<Slicer> getAxes() {
-    	ExtensionList<Slicer> elist = Hudson.getInstance().getExtensionList(Slicer.class);
+    	ExtensionList<Slicer> elist = Jenkins.getInstance().getExtensionList(Slicer.class);
     	List<Slicer> list = new ArrayList<Slicer>();
     	for (Slicer slicer: elist) {
     		if (slicer.isLoaded()) {
@@ -65,7 +66,7 @@ public class ConfigurationSlicing extends ManagementLink {
     }
     
     public Collection<String> getViews() {
-    	Collection<View> views = Hudson.getInstance().getViews();
+    	Collection<View> views = Jenkins.getInstance().getViews();
     	List<String> names = new ArrayList<String>();
     	
     	addViews(null, views, names);
@@ -91,7 +92,7 @@ public class ConfigurationSlicing extends ManagementLink {
     }
 
     public Object getDynamic(String token, StaplerRequest req, StaplerResponse rsp) {
-        Hudson.getInstance().checkPermission(Hudson.ADMINISTER);
+        Jenkins.getInstance().checkPermission(Hudson.ADMINISTER);
         
         for(Slicer s : getAxes()) {
             if(s.getUrl().equals(token)) {
@@ -195,7 +196,7 @@ public class ConfigurationSlicing extends ManagementLink {
         	}
         }
         public Object getDynamic(String token, StaplerRequest req, StaplerResponse rsp) {
-            Hudson.getInstance().checkPermission(Hudson.ADMINISTER);
+            Jenkins.getInstance().checkPermission(Hudson.ADMINISTER);
             String viewName = req.getParameter("view");
             View view = null;
             if (viewName != null) {
@@ -210,7 +211,7 @@ public class ConfigurationSlicing extends ManagementLink {
         		if (view instanceof ViewGroup) {
         			view = ((ViewGroup) view).getView(name);
         		} else {
-        			view = Hudson.getInstance().getView(name);
+        			view = Jenkins.getInstance().getView(name);
         		}
         	}
         	return view;

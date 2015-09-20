@@ -3,6 +3,7 @@ package configurationslicing.maven;
 import hudson.Extension;
 import hudson.maven.MavenModuleSet;
 import hudson.model.Hudson;
+import jenkins.model.Jenkins;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
 
         @SuppressWarnings("unchecked")
 		public List<MavenModuleSet> getWorkDomain() {
-            return (List) Hudson.getInstance().getAllItems(MavenModuleSet.class);
+            return (List) Jenkins.getInstance().getAllItems(MavenModuleSet.class);
         }
 
         public boolean setValues(MavenModuleSet item, List<String> set) {
