@@ -52,9 +52,9 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.hudson.plugins</groupId>
+			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>build-timeout</artifactId>
-			<version>1.6</version>
+			<version>1.8</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
