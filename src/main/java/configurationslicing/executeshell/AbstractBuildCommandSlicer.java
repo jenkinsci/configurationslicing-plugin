@@ -133,7 +133,6 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
 
         /**
          * If we do other builders, publishers, etc - this should be the pattern to use.
-         * @throws IOException 
          */
         public static boolean replaceBuilder(DescribableList<Builder,Descriptor<Builder>> builders, Builder oldBuilder, Builder newBuilder) {
         	List<Builder> newList = new ArrayList<Builder>(builders.toList());

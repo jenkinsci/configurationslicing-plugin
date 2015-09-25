@@ -10,8 +10,6 @@ import java.util.List;
 
 /**
  * Slicer for the shell builder
- *
- * @author Victor Garcia <bravejolie@gmail.com> <victor@tuenti.com>, Jacob Robertson
  */
 @Extension
 public class ExecuteShellSlicer extends AbstractBuildCommandSlicer<Shell> {
