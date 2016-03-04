@@ -56,9 +56,9 @@ public class ConfigurationSlicing extends ManagementLink {
     				slicer = ((SlicerLoader) slicer).getDelegate();
     			}
     			list.add(slicer);
-    			LOGGER.info("Loaded: " + slicer.getClass());
+    			LOGGER.fine("Loaded: " + slicer.getClass());
     		} else {
-    			LOGGER.info("NOT Loaded: " + slicer.getClass());
+    			LOGGER.warning("NOT Loaded: " + slicer.getClass());
     		}
     	}
     	Collections.sort(list);
