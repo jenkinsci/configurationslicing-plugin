@@ -87,6 +87,10 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
             addSimpleAlias(xs, "hudson.plugins.build_timeout.impl.ElasticTimeOutStrategy");
             addSimpleAlias(xs, "hudson.plugins.build_timeout.impl.LikelyStuckTimeOutStrategy");
             addSimpleAlias(xs, "hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy");
+            addSimpleAlias(xs, "hudson.plugins.build_timeout.operations.AbortOperation");
+            addSimpleAlias(xs, "hudson.plugins.build_timeout.operations.BuildStepOperation");
+            addSimpleAlias(xs, "hudson.plugins.build_timeout.operations.FailOperation");
+            addSimpleAlias(xs, "hudson.plugins.build_timeout.operations.WriteDescriptionOperation");
             return xs;
         }
 
