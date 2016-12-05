@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import jenkins.model.Jenkins;
+
 import org.jvnet.hudson.test.HudsonTestCase;
 
 import configurationslicing.email.AbstractEmailSliceSpec;
@@ -82,7 +84,11 @@ public class EmailSlicerTest extends HudsonTestCase {
 		
 		AbstractProject<?,?> project;
 		if (maven) {
-			project = createMavenProject();
+	        String name = createUniqueProjectName();
+	        MavenModuleSet mavenModuleSet = Jenkins.getInstance().createProject(MavenModuleSet.class,name);
+	        mavenModuleSet.setRunHeadless( true );
+
+			project = mavenModuleSet;
 		} else {
 			project = createFreeStyleProject();
 		}
@@ -142,7 +148,11 @@ public class EmailSlicerTest extends HudsonTestCase {
 	
 	private MavenModuleSet createMavenProjectWithSendToIndividualsAndEmptyRecipients()
 			throws IOException {
-		MavenModuleSet mavenProject = createMavenProject();
+        String name = createUniqueProjectName();
+        MavenModuleSet mavenModuleSet = Jenkins.getInstance().createProject(MavenModuleSet.class,name);
+        mavenModuleSet.setRunHeadless( true );
+
+		MavenModuleSet mavenProject = mavenModuleSet;
 		MavenMailer mailer = new MavenMailer();
 		mailer.sendToIndividuals = true;
 		DescribableList<MavenReporter,Descriptor<MavenReporter>> reporters = mavenProject.getReporters();

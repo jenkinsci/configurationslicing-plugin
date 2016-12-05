@@ -1,6 +1,9 @@
 package configurationslicing.claim;
 
+import jenkins.model.Jenkins;
+import hudson.maven.MavenModuleSet;
 import hudson.model.AbstractProject;
+import hudson.tasks.Maven.MavenInstallation;
 
 import org.junit.Test;
 import org.jvnet.hudson.test.HudsonTestCase;
@@ -27,7 +30,11 @@ public class ClaimSlicerTest extends HudsonTestCase {
 
     @Test
     public void testMavenValues() throws Exception {
-        AbstractProject<?,?> item = createMavenProject();
+        String name = createUniqueProjectName();
+        MavenModuleSet mavenModuleSet = Jenkins.getInstance().createProject(MavenModuleSet.class,name);
+        mavenModuleSet.setRunHeadless( true );
+
+        AbstractProject<?,?> item = mavenModuleSet;
         doTestValues(item);
     }
     
