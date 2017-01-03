@@ -3,11 +3,11 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>1.580.1</version>
+		<version>2.5</version>
 	</parent>
 	<artifactId>configurationslicing</artifactId>
 	<packaging>hpi</packaging>
-	<version>1.46-SNAPSHOT</version>
+	<version>1.48-SNAPSHOT</version>
 	<name>Configuration Slicing plugin</name>
 	<description>Allows configuration of a single property across a group of projects</description>
 	<url>http://wiki.jenkins-ci.org/display/JENKINS/Configuration+Slicing+Plugin</url>
@@ -19,8 +19,16 @@
 			<email>jacob.robertson.work@gmail.com</email>
 		</developer>
 	</developers>
-
+    <properties>
+      <findbugs.failOnError>false</findbugs.failOnError>
+    </properties>
 	<dependencies>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>mask-passwords</artifactId>
+      <version>2.8</version>
+      <optional>true</optional>
+    </dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>matrix-project</artifactId>
@@ -30,7 +38,7 @@
 		<dependency>
 			<groupId>org.jenkins-ci.main</groupId>
 			<artifactId>maven-plugin</artifactId>
-			<version>2.12</version>
+			<version>2.14</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -99,6 +107,12 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
+			<groupId>org.jenkins-ci.plugins</groupId>
+			<artifactId>logstash</artifactId>
+			<version>1.2.0</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>claim</artifactId>
             <version>2.3</version>
@@ -113,7 +127,7 @@
         <dependency>
         	<groupId>org.codehaus.plexus</groupId>
         	<artifactId>plexus-utils</artifactId>
-        	<version>2.0.5</version>
+        	<version>3.0.24</version>
         	<scope>test</scope>
         </dependency>
 	</dependencies>
@@ -135,13 +149,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<distributionManagement>
-		<repository>
-			<id>maven.jenkins-ci.org</id>
-			<url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
-		</repository>
-	</distributionManagement>
 
 
     <repositories>
