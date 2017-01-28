@@ -1,12 +1,10 @@
 package configurationslicing;
 
-import hudson.model.TopLevelItem;
-import jenkins.model.Jenkins;
-import hudson.model.AbstractProject;
-import hudson.model.Hudson;
-
 import java.util.List;
 
+import hudson.model.Item;
+import hudson.model.TopLevelItem;
+import jenkins.model.Jenkins;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 /**
@@ -15,20 +13,20 @@ import org.apache.commons.collections.Predicate;
  *
  */
 public class TopLevelItemSelector {
-    
+
     // private constructor since we don't expect this class to be instantiated
     private TopLevelItemSelector() {
-        
+
     }
-    
+
     /**
-     * Provide all top level items configured in Jenkins 
+     * Provide all top level items configured in Jenkins
      * @param clazz the type to search the ItemGroup for
      * @return all items in the Jenkins ItemGroup tree which are of type TopLevelItem
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static List<AbstractProject<?,?>> getAllTopLevelItems(Class clazz) {
-        List<AbstractProject<?,?>> list =  (List)Jenkins.getInstance().getAllItems(clazz);
+    public static <T extends Item> List<T> getAllTopLevelItems(Class<T> clazz) {
+        List<T> list = Jenkins.getInstance().getAllItems(clazz);
         CollectionUtils.filter(list, new Predicate() {
             public boolean evaluate(Object object) {
                 // exclude MatrixConfiguration, MavenModule, etc

@@ -21,12 +21,12 @@ public class QuietPeriodSlicer extends AbstractSimpleProjectSlicer {
             return "quietperiod";
         }
         @Override
-        protected String getValue(AbstractProject<?, ?> project) {
+        protected String getValue(AbstractProject project) {
         	int q = project.getQuietPeriod();
         	return String.valueOf(q);
         }
         @Override
-        protected void setValue(AbstractProject<?, ?> project, String value) throws IOException {
+        protected void setValue(AbstractProject project, String value) throws IOException {
         	Integer q;
         	try {
         		q = Integer.parseInt(value);

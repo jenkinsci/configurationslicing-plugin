@@ -1,6 +1,6 @@
 package configurationslicing.timer;
 
-import hudson.model.AbstractProject;
+import hudson.model.Job;
 import hudson.triggers.Trigger;
 
 import java.io.IOException;
@@ -12,31 +12,33 @@ import antlr.ANTLRException;
 import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 
+import static configurationslicing.AbstractJob.fix;
+
 @SuppressWarnings("unchecked")
 public abstract class AbstractTimerSliceSpec extends
-		UnorderedStringSlicerSpec<AbstractProject<?, ?>> {
+		UnorderedStringSlicerSpec<Job> {
 
 	public static final String DISABLED = "(Disabled)";
 
 	private Class triggerClass;
-	
+
 	protected AbstractTimerSliceSpec(Class triggerClass) {
 		this.triggerClass = triggerClass;
 	}
     public String getDefaultValueString() {
     	return DISABLED;
     }
-	
+
 	public Class getTriggerClass() {
 		return triggerClass;
 	}
-	
-	public String getName(AbstractProject<?, ?> item) {
+
+	public String getName(Job item) {
 		return item.getFullName();
 	}
 
-	public List<String> getValues(AbstractProject<?, ?> item) {
-		Trigger trigger = item.getTrigger(triggerClass);
+	public List<String> getValues(Job item) {
+		Trigger trigger = fix(item).getTrigger(triggerClass);
 		return getValues(trigger);
 	}
 
@@ -48,13 +50,13 @@ public abstract class AbstractTimerSliceSpec extends
 		return splitChronSpec(spec);
 	}
 
-	public List<AbstractProject<?, ?>> getWorkDomain() {
-		return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
+	public List<Job> getWorkDomain() {
+		return TopLevelItemSelector.getAllTopLevelItems(Job.class);
 	}
 
 	public abstract Trigger newTrigger(String spec, Trigger oldTrigger) throws ANTLRException;
-	
-	public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
+
+	public boolean setValues(Job item, List<String> set) {
 		if (set.isEmpty())
 			return false;
 
@@ -62,7 +64,7 @@ public abstract class AbstractTimerSliceSpec extends
 		String spec = joinChronSpec(list);
 		boolean disabled = DISABLED.equals(spec);
 
-		Trigger oldTrigger = item.getTrigger(triggerClass);
+		Trigger oldTrigger = fix(item).getTrigger(triggerClass);
 		
 		// see if there are any changes
 		if (oldTrigger != null) {
@@ -79,10 +81,10 @@ public abstract class AbstractTimerSliceSpec extends
 				newtrigger = newTrigger(spec, oldTrigger);
 			}
 			if (oldTrigger != null) {
-				item.removeTrigger(oldTrigger.getDescriptor());
+				fix(item).removeTrigger(oldTrigger.getDescriptor());
 			}
 			if (newtrigger != null) {
-				item.addTrigger(newtrigger);
+				fix(item).addTrigger(newtrigger);
 				// this is necessary, otherwise the trigger has a null job
 				// this method as currently implemented in Trigger does nothing more than save the job
 				newtrigger.start(item, true);

@@ -14,13 +14,13 @@ import configurationslicing.UnorderedStringSlicer;
  * @author jacob_robertson
  */
 @Extension
-public class JobDisabledStringSlicer extends UnorderedStringSlicer<AbstractProject<?,?>>{
+public class JobDisabledStringSlicer extends UnorderedStringSlicer<AbstractProject>{
 
     public JobDisabledStringSlicer() {
         super(new JobDisabledStringSliceSpec());
     }
 
-    public static class JobDisabledStringSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?,?>> {
+    public static class JobDisabledStringSliceSpec extends UnorderedStringSlicerSpec<AbstractProject> {
 
         public String getDefaultValueString() {
         	return null;
@@ -29,7 +29,7 @@ public class JobDisabledStringSlicer extends UnorderedStringSlicer<AbstractProje
             return "Job Disabled Build Slicer (String)";
         }
 
-        public String getName(AbstractProject<?, ?> item) {
+        public String getName(AbstractProject item) {
             return item.getFullName();
         }
 
@@ -49,7 +49,7 @@ public class JobDisabledStringSlicer extends UnorderedStringSlicer<AbstractProje
             return values;
         }
 
-		public List<String> getValues(AbstractProject<?, ?> job) {
+		public List<String> getValues(AbstractProject job) {
         	List<String> values = new ArrayList<String>();
         	boolean isDisabled = job.isDisabled();
         	values.add(String.valueOf(isDisabled));
@@ -57,11 +57,11 @@ public class JobDisabledStringSlicer extends UnorderedStringSlicer<AbstractProje
         }
 
 
-		public List<AbstractProject<?, ?>> getWorkDomain() {
+		public List<AbstractProject> getWorkDomain() {
             return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
-		public boolean setValues(AbstractProject<?, ?> job, List<String> set) {
+		public boolean setValues(AbstractProject job, List<String> set) {
 			String value = set.iterator().next();
 			
 			boolean oldDisabled = job.isDisabled();

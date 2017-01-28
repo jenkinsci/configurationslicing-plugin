@@ -21,7 +21,7 @@ import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 /**
  * @author Maarten Dirkse
  */
-public abstract class AbstractToolSlicerSpec extends UnorderedStringSlicerSpec<AbstractProject< ? , ? >> {
+public abstract class AbstractToolSlicerSpec extends UnorderedStringSlicerSpec<AbstractProject> {
   private static final Logger LOGGER = Logger.getLogger(AbstractToolSlicerSpec.class.getName());
 
   @Override
@@ -36,17 +36,17 @@ public abstract class AbstractToolSlicerSpec extends UnorderedStringSlicerSpec<A
   protected abstract Builder getNewBuilder(Builder oldBuilder, String toolInstallationName);
 
   @Override
-  public String getName(AbstractProject< ? , ? > item) {
+  public String getName(AbstractProject item) {
     return item.getFullName();
   }
 
   @Override
-  public List<AbstractProject< ? , ? >> getWorkDomain() {
+  public List<AbstractProject> getWorkDomain() {
     return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
   }
 
   @Override
-  public List<String> getValues(AbstractProject< ? , ? > item) {
+  public List<String> getValues(AbstractProject item) {
     List<String> ret = new ArrayList<String>();
     if (!(item instanceof Project)) {
       return ret;
@@ -61,7 +61,7 @@ public abstract class AbstractToolSlicerSpec extends UnorderedStringSlicerSpec<A
   }
 
   @Override
-  public boolean setValues(AbstractProject< ? , ? > item, List<String> set) {
+  public boolean setValues(AbstractProject item, List<String> set) {
     if (!(item instanceof Project) || set.size() == 0)
       return false;
 

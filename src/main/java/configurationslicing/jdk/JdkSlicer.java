@@ -17,13 +17,13 @@ import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 
 @Extension
-public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
+public class JdkSlicer extends UnorderedStringSlicer<AbstractProject> {
 
     public JdkSlicer() {
         super(new JdkSlicerSpec());
     }
     
-    public static class JdkSlicerSpec extends UnorderedStringSlicerSpec<AbstractProject<?,?>> {
+    public static class JdkSlicerSpec extends UnorderedStringSlicerSpec<AbstractProject> {
         private static final String DEFAULT = "(Default)";
 
         public String getDefaultValueString() {
@@ -33,7 +33,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
             return "JDK per project";
         }
 
-        public String getName(AbstractProject<?, ?> item) {
+        public String getName(AbstractProject item) {
             return item.getFullName();
         }
 
@@ -41,7 +41,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
             return "projectjdk";
         }
 
-        public List<String> getValues(AbstractProject<?, ?> item) {
+        public List<String> getValues(AbstractProject item) {
             List<String> ret = new ArrayList<String>();
             JDK jdk = item.getJDK();
             String name = jdk == null ? DEFAULT : jdk.getName();
@@ -49,11 +49,11 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
             return ret;
         }
 
-		public List<AbstractProject<?, ?>> getWorkDomain() {
+		public List<AbstractProject> getWorkDomain() {
             return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
-        public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
+        public boolean setValues(AbstractProject item, List<String> set) {
             if(set.size() == 0) return false;
             Jenkins hudson = Jenkins.getInstance();
             JDK jdk=null;

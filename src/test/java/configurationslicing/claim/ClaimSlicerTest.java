@@ -20,7 +20,7 @@ public class ClaimSlicerTest extends HudsonTestCase {
      */
     @Test
     public void testFreeStyleValues() throws Exception {
-        AbstractProject<?,?> item = createFreeStyleProject();
+        AbstractProject item = createFreeStyleProject();
         doTestValues(item);
     }
 
@@ -34,7 +34,7 @@ public class ClaimSlicerTest extends HudsonTestCase {
         MavenModuleSet mavenModuleSet = Jenkins.getInstance().createProject(MavenModuleSet.class,name);
         mavenModuleSet.setRunHeadless( true );
 
-        AbstractProject<?,?> item = mavenModuleSet;
+        AbstractProject item = mavenModuleSet;
         doTestValues(item);
     }
     
@@ -50,7 +50,7 @@ public class ClaimSlicerTest extends HudsonTestCase {
     }
 
     
-    private void doTestValues(AbstractProject<?,?> item) {
+    private void doTestValues(AbstractProject item) {
         ClaimSpec spec = new ClaimSpec();
         boolean claimsEnabled = spec.getValue(item);
         assertFalse("Claims should be disabled on a new project",claimsEnabled);
