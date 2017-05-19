@@ -7,7 +7,7 @@ import jenkins.model.Jenkins;
 
 import java.util.List;
 
-@Extension
+@Extension(optional=true)
 public class MavenDisableFingerprinting extends BooleanSlicer<MavenModuleSet> {
 
     public MavenDisableFingerprinting() {
@@ -29,20 +29,20 @@ public class MavenDisableFingerprinting extends BooleanSlicer<MavenModuleSet> {
         }
 
         @SuppressWarnings("unchecked")
-		public List<MavenModuleSet> getWorkDomain() {
+        public List<MavenModuleSet> getWorkDomain() {
             return (List) Jenkins.getInstance().getAllItems(MavenModuleSet.class);
         }
 
-		@Override
-		public boolean getValue(MavenModuleSet item) {
+        @Override
+        public boolean getValue(MavenModuleSet item) {
             return item.isFingerprintingDisabled();
         }
 
-		@Override
-		public boolean setValue(MavenModuleSet item, boolean value) {
-			item.setIsFingerprintingDisabled(value);
-			return true;
-		}
+        @Override
+        public boolean setValue(MavenModuleSet item, boolean value) {
+            item.setIsFingerprintingDisabled(value);
+            return true;
+        }
         
     }
 }

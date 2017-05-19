@@ -7,7 +7,7 @@ import jenkins.model.Jenkins;
 
 import java.util.List;
 
-@Extension
+@Extension(optional=true)
 public class MavenDisableArtifact extends BooleanSlicer<MavenModuleSet> {
 
     public MavenDisableArtifact() {
@@ -29,20 +29,20 @@ public class MavenDisableArtifact extends BooleanSlicer<MavenModuleSet> {
         }
 
         @SuppressWarnings("unchecked")
-		public List<MavenModuleSet> getWorkDomain() {
+        public List<MavenModuleSet> getWorkDomain() {
             return (List) Jenkins.getInstance().getAllItems(MavenModuleSet.class);
         }
 
-		@Override
-		public boolean getValue(MavenModuleSet item) {
+        @Override
+        public boolean getValue(MavenModuleSet item) {
             return item.isArchivingDisabled();
         }
 
-		@Override
-		public boolean setValue(MavenModuleSet item, boolean value) {
-			item.setIsArchivingDisabled(value);
-			return true;
-		}
+        @Override
+        public boolean setValue(MavenModuleSet item, boolean value) {
+            item.setIsArchivingDisabled(value);
+            return true;
+        }
         
     }
 }
