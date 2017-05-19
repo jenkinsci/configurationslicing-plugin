@@ -50,7 +50,7 @@ public class MavenOptsSlicer extends UnorderedStringSlicer<MavenModuleSet> {
 
         @SuppressWarnings("unchecked")
         public List<MavenModuleSet> getWorkDomain() {
-            return (List) Jenkins.getInstance().getAllItems(MavenModuleSet.class);
+            return Jenkins.getInstance().getAllItems(MavenModuleSet.class);
         }
 
         public boolean setValues(MavenModuleSet item, List<String> set) {

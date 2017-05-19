@@ -30,7 +30,7 @@ public class MavenIncremental extends BooleanSlicer<MavenModuleSet> {
 
         @SuppressWarnings("unchecked")
         public List<MavenModuleSet> getWorkDomain() {
-            return (List) Jenkins.getInstance().getAllItems(MavenModuleSet.class);
+            return Jenkins.getInstance().getAllItems(MavenModuleSet.class);
         }
 
         @Override
