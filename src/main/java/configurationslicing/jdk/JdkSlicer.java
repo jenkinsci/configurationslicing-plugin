@@ -22,7 +22,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
     public JdkSlicer() {
         super(new JdkSlicerSpec());
     }
-    
+
     public static class JdkSlicerSpec extends UnorderedStringSlicerSpec<AbstractProject<?,?>> {
         private static final String DEFAULT = "(Default)";
 
@@ -64,7 +64,9 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
             JDK oldJdk = item.getJDK();
             if (!equals(oldJdk, jdk)) {
 	            try {
-	                item.setJDK(jdk);
+	                if (jdk != null) {
+                        item.setJDK(jdk);
+                    }
 	                return true;
 	            } catch (IOException e) {
 	                e.printStackTrace();
@@ -89,7 +91,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
         	}
         	return true;
         }
-        
+
     }
 
 }
