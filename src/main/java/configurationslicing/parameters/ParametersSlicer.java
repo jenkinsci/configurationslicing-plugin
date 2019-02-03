@@ -11,6 +11,7 @@ import hudson.model.ParameterDefinition;
 import hudson.model.ParametersDefinitionProperty;
 import hudson.model.StringParameterDefinition;
 import hudson.model.StringParameterValue;
+import hudson.model.TextParameterDefinition;
 import jenkins.model.Jenkins;
 
 import java.io.IOException;
@@ -121,7 +122,9 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
 			}
         }
         private ParameterDefinition newParameterDefinition(String newValue, ParameterDefinition old) {
-        	if (old instanceof StringParameterDefinition) {
+        	if (old instanceof TextParameterDefinition) {
+        		return new TextParameterDefinition(old.getName(), newValue, old.getDescription());
+        	} else if (old instanceof StringParameterDefinition) {
         		return new StringParameterDefinition(old.getName(), newValue, old.getDescription());
         	} else if (old instanceof BooleanParameterDefinition) {
         		return new BooleanParameterDefinition(old.getName(), Boolean.parseBoolean(newValue), old.getDescription());
