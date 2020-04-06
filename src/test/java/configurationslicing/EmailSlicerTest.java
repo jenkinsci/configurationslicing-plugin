@@ -82,7 +82,7 @@ public class EmailSlicerTest extends HudsonTestCase {
 			expected = expected.replaceAll(" ", ",");
 		}
 		
-		AbstractProject<?,?> project;
+		AbstractProject project;
 		if (maven) {
 	        String name = createUniqueProjectName();
 	        MavenModuleSet mavenModuleSet = Jenkins.getInstance().createProject(MavenModuleSet.class,name);
@@ -110,7 +110,7 @@ public class EmailSlicerTest extends HudsonTestCase {
 	}
 
 	public void testCommonValues() {
-		UnorderedStringSlice<AbstractProject<?,?>> slice = new UnorderedStringSlice<AbstractProject<?,?>>(new ExtEmailSlicer.ExtEmailSliceSpec());
+		UnorderedStringSlice<AbstractProject> slice = new UnorderedStringSlice<AbstractProject>(new ExtEmailSlicer.ExtEmailSliceSpec());
 		List<String> values = slice.getConfiguredValues();
 		assertEquals(3, values.size());
 		assertTrue(values.contains(""));
@@ -122,7 +122,7 @@ public class EmailSlicerTest extends HudsonTestCase {
 		assertEquals(4, values.size());
 	}
 
-	private String setAndGetCoreValues(AbstractProject<?,?> project, String valuesString) {
+	private String setAndGetCoreValues(AbstractProject project, String valuesString) {
 		CoreEmailSliceSpec spec = new CoreEmailSliceSpec();
 		
 		List<String> values = new ArrayList<String>();
@@ -134,7 +134,7 @@ public class EmailSlicerTest extends HudsonTestCase {
 		return got;
 	}
 
-	private String setAndGetExtValues(AbstractProject<?,?> project, String valuesString) {
+	private String setAndGetExtValues(AbstractProject project, String valuesString) {
 		ExtEmailSliceSpec spec = new ExtEmailSliceSpec();
 		
 		List<String> values = new ArrayList<String>();
@@ -160,7 +160,7 @@ public class EmailSlicerTest extends HudsonTestCase {
 		return mavenProject;
 	}
 	
-	private AbstractProject<?,?> createFreestyleProjectWithSendToIndividualsAndEmptyRecipients()
+	private AbstractProject createFreestyleProjectWithSendToIndividualsAndEmptyRecipients()
 			throws IOException {
 		FreeStyleProject project = createFreeStyleProject();
 		Mailer mailer = new Mailer();
@@ -170,7 +170,7 @@ public class EmailSlicerTest extends HudsonTestCase {
 		return project;
 	}
 	
-	private AbstractProject<?,?> createFreestyleProjectWithExtMailer() throws IOException {
+	private AbstractProject createFreestyleProjectWithExtMailer() throws IOException {
 		FreeStyleProject project = createFreeStyleProject();
 		DescribableList<Publisher,Descriptor<Publisher>> publishers = project.getPublishersList();
 		ExtendedEmailPublisher publisher = new ExtendedEmailPublisher();

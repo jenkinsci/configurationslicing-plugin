@@ -2,7 +2,7 @@ package configurationslicing.logfilesizechecker;
 
 import hudson.Extension;
 import hudson.model.BuildableItemWithBuildWrappers;
-import hudson.model.AbstractProject;
+import hudson.model.BuildableItemWithBuildWrappers;
 import hudson.model.Descriptor;
 import hudson.plugins.logfilesizechecker.LogfilesizecheckerWrapper;
 import hudson.tasks.BuildWrapper;
@@ -23,7 +23,7 @@ import configurationslicing.UnorderedStringSlicer;
  * @author kstutz
  */
 @Extension
-public class LogfilesizecheckerSlicer extends UnorderedStringSlicer<AbstractProject<?, ?>> {
+public class LogfilesizecheckerSlicer extends UnorderedStringSlicer<BuildableItemWithBuildWrappers> {
 
     public LogfilesizecheckerSlicer() {
         super(new LogfilesizeSliceSpec());
@@ -39,7 +39,7 @@ public class LogfilesizecheckerSlicer extends UnorderedStringSlicer<AbstractProj
         }
     }
     
-    public static class LogfilesizeSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?, ?>> {
+    public static class LogfilesizeSliceSpec extends UnorderedStringSlicerSpec<BuildableItemWithBuildWrappers> {
         private static final String DISABLED = "(Disabled)";
         private static final String SEPARATOR = ",";
 
@@ -54,12 +54,12 @@ public class LogfilesizecheckerSlicer extends UnorderedStringSlicer<AbstractProj
         }
 
         @Override
-        public List<AbstractProject<?, ?>> getWorkDomain() {
+        public List<BuildableItemWithBuildWrappers> getWorkDomain() {
             return TopLevelItemSelector.getAllTopLevelItems(BuildableItemWithBuildWrappers.class);
         }
 
         @Override
-        public List<String> getValues(AbstractProject<?, ?> item) {
+        public List<String> getValues(BuildableItemWithBuildWrappers item) {
             final BuildableItemWithBuildWrappers bi = (BuildableItemWithBuildWrappers) item;
             final DescribableList<BuildWrapper, Descriptor<BuildWrapper>> wrappers = bi.getBuildWrappersList();
             final List<String> values = new ArrayList<String>();
@@ -75,7 +75,7 @@ public class LogfilesizecheckerSlicer extends UnorderedStringSlicer<AbstractProj
         }
 
         @Override
-        public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
+        public boolean setValues(BuildableItemWithBuildWrappers item, List<String> set) {
             final BuildableItemWithBuildWrappers bi = (BuildableItemWithBuildWrappers) item;
             final DescribableList<BuildWrapper, Descriptor<BuildWrapper>> wrappers = bi.getBuildWrappersList();
             boolean changed = false;
@@ -124,7 +124,7 @@ public class LogfilesizecheckerSlicer extends UnorderedStringSlicer<AbstractProj
         }
 
         @Override
-        public String getName(AbstractProject<?, ?> item) {
+        public String getName(BuildableItemWithBuildWrappers item) {
             return item.getName();
         }
         @Override

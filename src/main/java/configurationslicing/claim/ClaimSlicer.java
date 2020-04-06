@@ -14,7 +14,7 @@ import configurationslicing.BooleanSlicer;
 import configurationslicing.TopLevelItemSelector;
 
 @Extension
-public class ClaimSlicer extends BooleanSlicer<AbstractProject<?,?>> {
+public class ClaimSlicer extends BooleanSlicer<AbstractProject> {
     public ClaimSlicer() {
         super(new ClaimSpec());
     }
@@ -28,13 +28,13 @@ public class ClaimSlicer extends BooleanSlicer<AbstractProject<?,?>> {
         }
     }
     
-    public static class ClaimSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject<?,?>>
+    public static class ClaimSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject>
     {
         public String getName() {
             return "Claim Slicer";
         }
 
-        public String getName(AbstractProject<?,?> item) {
+        public String getName(AbstractProject item) {
             return item.getFullName();
         }
 
@@ -42,18 +42,18 @@ public class ClaimSlicer extends BooleanSlicer<AbstractProject<?,?>> {
             return "claim";
         }
 
-        public boolean getValue(AbstractProject<?,?> item) {
+        public boolean getValue(AbstractProject item) {
             
             DescribableList<Publisher, Descriptor<Publisher>> publishersList = item.getPublishersList();
             ClaimPublisher claimPublisher = publishersList.get(ClaimPublisher.class);
             return claimPublisher != null;
         }
 
-        public List<AbstractProject<?,?>> getWorkDomain() {
+        public List<AbstractProject> getWorkDomain() {
             return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
-        public boolean setValue(AbstractProject<?,?> item, boolean value) {
+        public boolean setValue(AbstractProject item, boolean value) {
             boolean oldval = getValue(item);
             if (value == oldval) {
                 return true;

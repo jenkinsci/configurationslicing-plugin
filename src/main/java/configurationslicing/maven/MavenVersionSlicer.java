@@ -1,11 +1,9 @@
 package configurationslicing.maven;
 
 import hudson.Extension;
-import hudson.maven.MavenModule;
 import hudson.maven.MavenModuleSet;
 import hudson.model.AbstractProject;
 import hudson.model.Descriptor;
-import hudson.model.Hudson;
 import hudson.model.TopLevelItem;
 import hudson.tasks.Builder;
 import hudson.tasks.Maven;
@@ -32,6 +30,11 @@ public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
 	public MavenVersionSlicer() {
 		super(new MavenVersionSlicerSpec());
 	}
+
+	@Override
+    public void loadPluginDependencyClass() {
+        MavenModuleSet.class.getClass();
+    }
 
 	public static class MavenVersionSlicerSpec extends
 			UnorderedStringSlicerSpec<AbstractProject> {
@@ -178,5 +181,4 @@ public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
 		}
 
 	}
-
 }

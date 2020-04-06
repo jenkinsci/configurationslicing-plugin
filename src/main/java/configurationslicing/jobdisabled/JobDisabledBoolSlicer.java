@@ -2,6 +2,7 @@ package configurationslicing.jobdisabled;
 
 import hudson.Extension;
 import hudson.model.AbstractProject;
+import hudson.model.AbstractProject;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,17 +11,17 @@ import configurationslicing.BooleanSlicer;
 import configurationslicing.TopLevelItemSelector;
 
 @Extension
-public class JobDisabledBoolSlicer extends BooleanSlicer<AbstractProject<?,?>> {
+public class JobDisabledBoolSlicer extends BooleanSlicer<AbstractProject> {
     public JobDisabledBoolSlicer() {
         super(new JobDisabledSpec());
     }
-    public static class JobDisabledSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject<?,?>>
+    public static class JobDisabledSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject>
     {
         public String getName() {
             return "Job Disabled Build Slicer (bool)";
         }
 
-        public String getName(AbstractProject<?,?> item) {
+        public String getName(AbstractProject item) {
             return item.getFullName();
         }
 
@@ -28,15 +29,15 @@ public class JobDisabledBoolSlicer extends BooleanSlicer<AbstractProject<?,?>> {
             return "jobdisabledbool";
         }
 
-        public boolean getValue(AbstractProject<?,?> item) {
+        public boolean getValue(AbstractProject item) {
             return item.isDisabled();
         }
 
-        public List<AbstractProject<?,?>> getWorkDomain() {
+        public List<AbstractProject> getWorkDomain() {
             return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
-        public boolean setValue(AbstractProject<?,?> item, boolean value) {
+        public boolean setValue(AbstractProject item, boolean value) {
             boolean oldval = item.isDisabled();
             try {
                 item.makeDisabled(value);
