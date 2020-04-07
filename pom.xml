@@ -21,6 +21,7 @@
 	</developers>
     <properties>
       <findbugs.failOnError>false</findbugs.failOnError>
+      <java.level>8</java.level>
     </properties>
 	<dependencies>
     <dependency>
