@@ -1,3 +1,9 @@
+Configuration Slicing plugin for Jenkins
+========================================
+
+[![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/configurationslicing.svg)](https://plugins.jenkins.io/configurationslicing)
+[![GitHub release](https://img.shields.io/github/release/jenkinsci/configurationslicing-plugin.svg?label=release)](https://github.com/jenkinsci/configurationslicing-plugin/releases/latest)
+[![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/configurationslicing.svg?color=blue)](https://plugins.jenkins.io/configurationslicing)
 | Plugin Information                                                                                                     |
 |------------------------------------------------------------------------------------------------------------------------|
 | View Configuration Slicing [on the plugin site](https://plugins.jenkins.io/configurationslicing) for more information. |
