@@ -10,7 +10,6 @@ import hudson.model.Job;
 import hudson.model.ParameterDefinition;
 import hudson.model.ParametersDefinitionProperty;
 import hudson.model.StringParameterDefinition;
-import hudson.model.StringParameterValue;
 import jenkins.model.Jenkins;
 
 import java.io.IOException;
@@ -173,8 +172,6 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         			buf.append(choice);
         		}
         		return buf.toString();
-        	} else if (value instanceof StringParameterValue) {
-        		return ((StringParameterValue) value).value;
         	} else {
         		throw new IllegalArgumentException("Don't know how to convert " + value); 
         	}
