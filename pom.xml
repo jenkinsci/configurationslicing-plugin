@@ -26,6 +26,7 @@
 	</developers>
     <properties>
       <findbugs.failOnError>false</findbugs.failOnError>
+      <spotbugs.failOnError>false</spotbugs.failOnError>
       <java.level>8</java.level>
     </properties>
 	<dependencies>
