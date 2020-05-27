@@ -156,6 +156,12 @@ committers (Checkbox "Notify individuals who broke the build") in place.
 
 ### Changelog
 
+For newer versions see the [github relesae page](https://github.com/jenkinsci/configurationslicing-plugin/releases)
+
+#### Version 1.50 - May 25, 2020
+
+[Moved to show changelogs on Github](https://github.com/jenkinsci/configurationslicing-plugin/releases/tag/configurationslicing-1.50).
+
 #### Version 1.41 - May 31, 2015
 
 -   [JENKINS-20319](https://issues.jenkins-ci.org/browse/JENKINS-20319) -
