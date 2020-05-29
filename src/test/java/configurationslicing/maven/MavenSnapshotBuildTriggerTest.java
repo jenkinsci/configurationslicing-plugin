@@ -1,7 +1,8 @@
-package configurationslicing;
+package configurationslicing.maven;
 
 import configurationslicing.maven.MavenSnapshotBuildTrigger.MavenSnapshotBuildTriggerSlicerSpec;
 import hudson.maven.MavenModuleSet;
+import jenkins.model.Jenkins;
 import org.jvnet.hudson.test.HudsonTestCase;
 
 /**
@@ -15,7 +16,7 @@ public class MavenSnapshotBuildTriggerTest extends HudsonTestCase {
         // Create a mock for the MavenModuleSet a.k.a. the project(s) being modified
         // The version of EasyMock in use in this project doesn't seem to support mocking of concrete classes -- upgrade desirable
         //MavenModuleSet mavenModuleSet = EasyMock.createMock(MavenModuleSet.class);
-        MavenModuleSet mavenModuleSet = new MavenModuleSet("mock");
+        MavenModuleSet mavenModuleSet = new MavenModuleSet(Jenkins.getInstance(),"mock");
         // Set the Snapshot builds trigger setting to 'true'
         slicerSpec.setValue(mavenModuleSet, true);
         // Check that the property was set correctly
@@ -31,7 +32,7 @@ public class MavenSnapshotBuildTriggerTest extends HudsonTestCase {
         // Create a mock for the MavenModuleSet a.k.a. the project(s) being modified
         // The version of EasyMock in use in this project doesn't seem to support mocking of concrete classes -- upgrade desirable
         //MavenModuleSet mavenModuleSet = EasyMock.createMock(MavenModuleSet.class);
-        MavenModuleSet mavenModuleSet = new MavenModuleSet("mock");
+        MavenModuleSet mavenModuleSet = new MavenModuleSet(Jenkins.getInstance(),"mock");
         // Set the Snapshot builds trigger setting to 'false'
         slicerSpec.setValue(mavenModuleSet, false);
         // Check that the property was set correctly
