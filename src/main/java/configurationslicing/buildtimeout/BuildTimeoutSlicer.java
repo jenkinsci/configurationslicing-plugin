@@ -2,7 +2,7 @@ package configurationslicing.buildtimeout;
 
 import hudson.Extension;
 import hudson.model.BuildableItemWithBuildWrappers;
-import hudson.model.AbstractProject;
+import hudson.model.BuildableItemWithBuildWrappers;
 import hudson.model.Descriptor;
 import hudson.plugins.build_timeout.BuildTimeoutWrapper;
 import hudson.tasks.BuildWrapper;
@@ -23,7 +23,7 @@ import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 
 @Extension
-public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,?>>{
+public class BuildTimeoutSlicer extends UnorderedStringSlicer<BuildableItemWithBuildWrappers>{
     private static final Logger LOGGER = Logger.getLogger(BuildTimeoutSlicer.class.getName());
 
     public BuildTimeoutSlicer() {
@@ -40,7 +40,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
         }
     }
 
-    public static class BuildTimeoutSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?,?>> {
+    public static class BuildTimeoutSliceSpec extends UnorderedStringSlicerSpec<BuildableItemWithBuildWrappers> {
 
         private static final String DISABLED = "(Disabled)";
 
@@ -55,12 +55,12 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
         }
 
         @Override
-        public List<AbstractProject<?, ?>> getWorkDomain() {
+        public List<BuildableItemWithBuildWrappers> getWorkDomain() {
             return TopLevelItemSelector.getAllTopLevelItems(BuildableItemWithBuildWrappers.class);
         }
 
         @Override
-        public List<String> getValues(AbstractProject<?, ?> item) {
+        public List<String> getValues(BuildableItemWithBuildWrappers item) {
             XStream2 xs = getXStream();
             BuildableItemWithBuildWrappers bi = (BuildableItemWithBuildWrappers) item;
             DescribableList<BuildWrapper,Descriptor<BuildWrapper>> wrappers = bi.getBuildWrappersList();
@@ -106,7 +106,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
         }
 
         @Override
-        public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
+        public boolean setValues(BuildableItemWithBuildWrappers item, List<String> set) {
             LOGGER.info("BuildTimeoutSlicer.setValues for item " + item.getName());
             XStream2 xs = getXStream();
             BuildableItemWithBuildWrappers bi =
@@ -151,7 +151,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<AbstractProject<?,
         }
 
         @Override
-        public String getName(AbstractProject<?, ?> item) {
+        public String getName(BuildableItemWithBuildWrappers item) {
             return item.getFullName();
         }
         @Override

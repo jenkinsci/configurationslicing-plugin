@@ -2,7 +2,7 @@ package configurationslicing.timestamper;
 
 import hudson.Extension;
 import hudson.model.BuildableItemWithBuildWrappers;
-import hudson.model.AbstractProject;
+import hudson.model.BuildableItemWithBuildWrappers;
 import hudson.plugins.timestamper.TimestamperBuildWrapper;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ import configurationslicing.UnorderedStringSlicer;
  * @author jacob_robertson
  */
 @Extension
-public class TimestamperSlicer extends UnorderedStringSlicer<AbstractProject<?,?>>{
+public class TimestamperSlicer extends UnorderedStringSlicer<BuildableItemWithBuildWrappers>{
 
     public TimestamperSlicer() {
         super(new TimestamperSliceSpec());
@@ -28,7 +28,7 @@ public class TimestamperSlicer extends UnorderedStringSlicer<AbstractProject<?,?
         TimestamperBuildWrapper.class.getClass();
     }
     
-    public static class TimestamperSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?,?>> {
+    public static class TimestamperSliceSpec extends UnorderedStringSlicerSpec<BuildableItemWithBuildWrappers> {
 
         private static final String DISABLED = Boolean.FALSE.toString();
 
@@ -44,7 +44,7 @@ public class TimestamperSlicer extends UnorderedStringSlicer<AbstractProject<?,?
             return "Timestamper Slicer";
         }
 
-        public String getName(AbstractProject<?, ?> item) {
+        public String getName(BuildableItemWithBuildWrappers item) {
             return item.getFullName();
         }
 
@@ -55,7 +55,7 @@ public class TimestamperSlicer extends UnorderedStringSlicer<AbstractProject<?,?
         public boolean isBlankNeededForValues() {
         	return false;
         }
-		public List<String> getValues(AbstractProject<?, ?> item) {
+		public List<String> getValues(BuildableItemWithBuildWrappers item) {
         	BuildableItemWithBuildWrappers project = (BuildableItemWithBuildWrappers) item;
         	
         	String value;
@@ -71,11 +71,11 @@ public class TimestamperSlicer extends UnorderedStringSlicer<AbstractProject<?,?
             return booleans;
         }
 
-		public List<AbstractProject<?, ?>> getWorkDomain() {
+		public List<BuildableItemWithBuildWrappers> getWorkDomain() {
             return TopLevelItemSelector.getAllTopLevelItems(BuildableItemWithBuildWrappers.class);
         }
 
-		public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
+		public boolean setValues(BuildableItemWithBuildWrappers item, List<String> set) {
         	BuildableItemWithBuildWrappers project = (BuildableItemWithBuildWrappers) item;
         	String value = set.iterator().next();
         	

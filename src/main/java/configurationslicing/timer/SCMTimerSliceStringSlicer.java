@@ -2,13 +2,14 @@ package configurationslicing.timer;
 
 import hudson.Extension;
 import hudson.model.AbstractProject;
+import hudson.model.Job;
 import hudson.triggers.SCMTrigger;
 import hudson.triggers.Trigger;
 import antlr.ANTLRException;
 import configurationslicing.UnorderedStringSlicer;
 
 @Extension
-public class SCMTimerSliceStringSlicer extends UnorderedStringSlicer<AbstractProject<?,?>>{
+public class SCMTimerSliceStringSlicer extends UnorderedStringSlicer<Job>{
 
     public SCMTimerSliceStringSlicer() {
         super(new SCMTimerSliceSpec());

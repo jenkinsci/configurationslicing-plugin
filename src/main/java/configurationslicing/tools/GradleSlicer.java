@@ -49,12 +49,11 @@ public class GradleSlicer extends AbstractToolSlicer {
 		protected Builder getNewBuilder(Builder oldBuilder,
 				String toolInstallationName) {
 			Gradle oldGradle = (Gradle) oldBuilder;
-			return new Gradle(oldGradle.getDescription(),
-					oldGradle.getSwitches(), oldGradle.getTasks(),
+			return new Gradle(oldGradle.getSwitches(), oldGradle.getTasks(),
 					oldGradle.getRootBuildScriptDir(),
 					oldGradle.getBuildFile(), toolInstallationName,
 					false, oldGradle.isMakeExecutable(),
-					oldGradle.isFromRootBuildScriptDir(), oldGradle.isUseWorkspaceAsHome());
+					oldGradle.getRootBuildScriptDir(), oldGradle.isUseWorkspaceAsHome(), oldGradle.isPassAllAsSystemProperties());
 		}
 
 		@Override

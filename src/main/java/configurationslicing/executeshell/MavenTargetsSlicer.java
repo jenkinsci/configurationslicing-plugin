@@ -1,6 +1,7 @@
 package configurationslicing.executeshell;
 
 import hudson.Extension;
+import hudson.maven.MavenModuleSet;
 import hudson.model.Descriptor;
 import hudson.tasks.Builder;
 import hudson.tasks.Maven;
@@ -17,6 +18,11 @@ public class MavenTargetsSlicer extends AbstractBuildCommandSlicer<Maven> {
 
     public MavenTargetsSlicer() {
         super(new MavenTargetsSliceSpec());
+    }
+
+    @Override
+    public void loadPluginDependencyClass() {
+        MavenModuleSet.class.getClass();
     }
 
     public static class MavenTargetsSliceSpec extends AbstractBuildCommandSliceSpec<Maven> {

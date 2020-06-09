@@ -3,14 +3,14 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>2.5</version>
+		<version>4.1</version>
 	</parent>
 	<artifactId>configurationslicing</artifactId>
 	<packaging>hpi</packaging>
-	<version>1.48-SNAPSHOT</version>
+	<version>1.51-SNAPSHOT</version>
 	<name>Configuration Slicing plugin</name>
 	<description>Allows configuration of a single property across a group of projects</description>
-	<url>http://wiki.jenkins-ci.org/display/JENKINS/Configuration+Slicing+Plugin</url>
+	<url>https://github.com/jenkinsci/configurationslicing-plugin</url>
 
 	<developers>
 		<developer>
@@ -18,9 +18,16 @@
 			<name>Jacob Robertson</name>
 			<email>jacob.robertson.work@gmail.com</email>
 		</developer>
+		<developer>
+			<id>guy_sheffer</id>
+			<name>Guy Sheffer</name>
+			<email>guysoft@gmail.com</email>
+		</developer>
 	</developers>
     <properties>
       <findbugs.failOnError>false</findbugs.failOnError>
+      <spotbugs.failOnError>false</spotbugs.failOnError>
+      <java.level>8</java.level>
     </properties>
 	<dependencies>
     <dependency>
@@ -29,22 +36,83 @@
       <version>2.8</version>
       <optional>true</optional>
     </dependency>
+                <dependency>
+                    <groupId>org.jenkins-ci.plugins</groupId>
+                    <artifactId>junit</artifactId>
+                    <version>1.29</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.jenkins-ci.plugins</groupId>
+                    <artifactId>scm-api</artifactId>
+                    <version>2.2.7</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.jenkins-ci.plugins</groupId>
+                    <artifactId>mailer</artifactId>
+                    <version>1.23</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.codehaus.plexus</groupId>
+                    <artifactId>plexus-utils</artifactId>
+                    <version>3.3.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                    <version>3.10</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-annotations</artifactId>
+                    <version>3.1.12</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.jenkins-ci.plugins</groupId>
+                    <artifactId>ssh-credentials</artifactId>
+                    <version>1.13</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpcore</artifactId>
+                    <version>4.4.13</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.httpcomponents</groupId>
+                    <artifactId>httpclient</artifactId>
+                    <version>4.5.12</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.jenkins-ci.plugins</groupId>
+                    <artifactId>apache-httpcomponents-client-4-api</artifactId>
+                    <version>4.5.10-2.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.jsoup</groupId>
+                    <artifactId>jsoup</artifactId>
+                    <version>1.13.1</version>
+                </dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>matrix-project</artifactId>
-			<version>1.6</version>
+			<version>1.14</version>
 			<optional>true</optional>
 		</dependency>
+                <dependency>
+                    <groupId>org.jenkins-ci.plugins</groupId>
+                    <artifactId>credentials</artifactId>
+                    <version>2.3.7</version>
+                </dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.main</groupId>
 			<artifactId>maven-plugin</artifactId>
-			<version>2.14</version>
+			<version>3.6</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>ant</artifactId>
-			<version>1.1</version>
+			<version>1.11</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -56,13 +124,13 @@
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>email-ext</artifactId>
-			<version>2.37</version>
+			<version>2.69</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>build-timeout</artifactId>
-			<version>1.16</version>
+			<version>1.19.1</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
@@ -74,9 +142,9 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.jvnet.hudson.plugins</groupId>
+			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>timestamper</artifactId>
-			<version>1.2.2</version>
+			<version>1.8.8</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
@@ -90,46 +158,58 @@
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>python</artifactId>
-			<version>1.2</version>
+			<version>1.3</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>gradle</artifactId>
-			<version>1.24</version>
+			<version>1.36</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>logfilesizechecker</artifactId>
-			<version>1.2</version>
+			<version>1.5</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>logstash</artifactId>
-			<version>1.2.0</version>
+			<version>2.3.2</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>claim</artifactId>
-            <version>2.3</version>
+            <version>2.16</version>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>config-file-provider</artifactId>
-            <version>2.7.1</version>
+            <version>3.6.3</version>
             <optional>true</optional>
         </dependency>
-        <dependency>
-        	<groupId>org.codehaus.plexus</groupId>
-        	<artifactId>plexus-utils</artifactId>
-        	<version>3.0.24</version>
-        	<scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.jenkins-ci.plugins.workflow</groupId>
+			<artifactId>workflow-job</artifactId>
+			<version>2.38</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.jenkins-ci.plugins.workflow</groupId>
+			<artifactId>workflow-cps</artifactId>
+			<version>2.80</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.jenkins-ci.plugins.workflow</groupId>
+			<artifactId>workflow-multibranch</artifactId>
+			<version>2.21</version>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
     <scm>
@@ -154,14 +234,14 @@
     <repositories>
         <repository>
             <id>repo.jenkins-ci.org</id>
-            <url>http://repo.jenkins-ci.org/public/</url>
+            <url>https://repo.jenkins-ci.org/public/</url>
         </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
             <id>repo.jenkins-ci.org</id>
-            <url>http://repo.jenkins-ci.org/public/</url>
+            <url>https://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
     </pluginRepositories>
 </project>  

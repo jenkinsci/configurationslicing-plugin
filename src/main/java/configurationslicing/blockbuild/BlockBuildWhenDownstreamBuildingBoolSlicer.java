@@ -10,18 +10,18 @@ import configurationslicing.BooleanSlicer;
 import configurationslicing.TopLevelItemSelector;
 
 @Extension
-public class BlockBuildWhenDownstreamBuildingBoolSlicer extends BooleanSlicer<AbstractProject<?,?>> {
+public class BlockBuildWhenDownstreamBuildingBoolSlicer extends BooleanSlicer<AbstractProject> {
     public BlockBuildWhenDownstreamBuildingBoolSlicer() {
         super(new BlockBuildWhenDownstreamBuildingSpec());
     }
     
-    public static class BlockBuildWhenDownstreamBuildingSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject<?,?>>
+    public static class BlockBuildWhenDownstreamBuildingSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject>
     {
         public String getName() {
             return "Block Build when Downstream Building Slicer (bool)";
         }
 
-        public String getName(AbstractProject<?,?> item) {
+        public String getName(AbstractProject item) {
             return item.getFullName();
         }
 
@@ -29,15 +29,15 @@ public class BlockBuildWhenDownstreamBuildingBoolSlicer extends BooleanSlicer<Ab
             return "blockBuildWhenDownstreamBuilding";
         }
 
-        public boolean getValue(AbstractProject<?,?> item) {
+        public boolean getValue(AbstractProject item) {
             return item.blockBuildWhenDownstreamBuilding();
         }
 
-        public List<AbstractProject<?,?>> getWorkDomain() {
+        public List<AbstractProject> getWorkDomain() {
             return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
-        public boolean setValue(AbstractProject<?,?> item, boolean value) {
+        public boolean setValue(AbstractProject item, boolean value) {
             boolean oldval = item.blockBuildWhenDownstreamBuilding();
             try {
                 item.setBlockBuildWhenDownstreamBuilding(value);

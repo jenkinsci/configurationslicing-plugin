@@ -1,30 +1,26 @@
 package configurationslicing.logstash;
 
-import java.util.Collections;
 import java.util.List;
 
 import jenkins.plugins.logstash.LogstashBuildWrapper;
 
 import hudson.Extension;
 import hudson.Util;
-import hudson.maven.AbstractMavenProject;
-import hudson.maven.MavenModule;
 import hudson.maven.MavenModuleSet;
 import hudson.model.AbstractProject;
 import hudson.model.Descriptor;
 import hudson.model.Project;
 import hudson.tasks.BuildWrapper;
-import hudson.tasks.Publisher;
 import hudson.util.DescribableList;
 import configurationslicing.BooleanSlicer;
 import configurationslicing.TopLevelItemSelector;
 
 @Extension
-public class LogStashSlicer extends BooleanSlicer<AbstractProject<?,?>> {
+public class LogStashSlicer extends BooleanSlicer<AbstractProject> {
     public LogStashSlicer() {
         super(new LogstashSpec());
     }
-    public static class LogstashSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject<?,?>> {
+    public static class LogstashSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject> {
 
         @Override
         public String getName() {
@@ -36,11 +32,11 @@ public class LogStashSlicer extends BooleanSlicer<AbstractProject<?,?>> {
             return "logstash";
         }
 
-        public List<AbstractProject<?,?>> getWorkDomain() {
+        public List<AbstractProject> getWorkDomain() {
             return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
-        public boolean getValue(AbstractProject<?,?> item) {
+        public boolean getValue(AbstractProject item) {
             DescribableList<BuildWrapper, Descriptor<BuildWrapper>> buildWrappersList = 
                     getBuildWrappers(item);
             if(buildWrappersList == null) {
@@ -50,7 +46,7 @@ public class LogStashSlicer extends BooleanSlicer<AbstractProject<?,?>> {
         }
 
         private DescribableList<BuildWrapper, Descriptor<BuildWrapper>> getBuildWrappers(
-                AbstractProject<?, ?> item) {
+                AbstractProject item) {
             if(item instanceof Project) {
                 return ((Project)item).getBuildWrappersList();
             } else if(item instanceof MavenModuleSet) {
@@ -61,12 +57,12 @@ public class LogStashSlicer extends BooleanSlicer<AbstractProject<?,?>> {
         }
 
         @Override
-        public String getName(AbstractProject<?, ?> item) {
+        public String getName(AbstractProject item) {
             return item.getName();
         }
 
         @Override
-        public boolean setValue(AbstractProject<?, ?> item, boolean value) {
+        public boolean setValue(AbstractProject item, boolean value) {
             LogstashBuildWrapper logstashWrapper = new LogstashBuildWrapper();
             if(item instanceof Project) {
                 DescribableList bwList = ((Project)item).getBuildWrappersList();
@@ -102,5 +98,14 @@ public class LogStashSlicer extends BooleanSlicer<AbstractProject<?,?>> {
         }
         
     }
-    
+
+    public boolean isLoaded() {
+        try {
+            new LogstashBuildWrapper();
+            return true;
+        } catch (Throwable t) {
+            return false;
+        }
+    }
+
 }

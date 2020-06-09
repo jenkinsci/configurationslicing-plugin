@@ -1,7 +1,7 @@
 package configurationslicing.logrotator;
 
 import hudson.Extension;
-import hudson.model.AbstractProject;
+import hudson.model.Job;
 import hudson.tasks.LogRotator;
 
 import java.io.IOException;
@@ -11,8 +11,8 @@ import java.util.List;
 import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 
-public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractProject<?,?>> {
-    public LogRotationSlicer(UnorderedStringSlicerSpec<AbstractProject<?,?>> spec) {
+public abstract class LogRotationSlicer extends UnorderedStringSlicer<Job> {
+    public LogRotationSlicer(UnorderedStringSlicerSpec<Job> spec) {
         super(spec);
     }
     
@@ -41,7 +41,7 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
         }
     }
 
-    protected abstract static class AbstractLogRotationSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?,?>> {
+    protected abstract static class AbstractLogRotationSliceSpec extends UnorderedStringSlicerSpec<Job> {
         private static final String DISABLED = "(Disabled)";
         private String displayName;
         private String url;
@@ -61,11 +61,11 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
 		public String getDefaultValueString() {
         	return DISABLED;
         }
-        public String getName(AbstractProject<?, ?> item) {
+        public String getName(Job item) {
             return item.getFullName();
         }
 
-        public List<String> getValues(AbstractProject<?, ?> item) {
+        public List<String> getValues(Job item) {
             String retString = null;
             LogRotator logrotator = item.getLogRotator();
             if (logrotator == null) {
@@ -82,11 +82,11 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<AbstractPr
         }
         abstract protected String getValue(LogRotator rotator);
 
-		public List<AbstractProject<?, ?>> getWorkDomain() {
-            return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
+		public List<Job> getWorkDomain() {
+            return TopLevelItemSelector.getAllTopLevelItems(Job.class);
         }
 
-        public boolean setValues(AbstractProject<?, ?> item, List<String> set) {
+        public boolean setValues(Job item, List<String> set) {
             if (set.isEmpty()) return false;
 
             LogRotator logrotator = item.getLogRotator();

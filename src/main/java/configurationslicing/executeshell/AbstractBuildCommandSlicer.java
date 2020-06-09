@@ -18,13 +18,13 @@ import configurationslicing.UnorderedStringSlicer;
 /**
  * @author Jacob Robertson
  */
-public abstract class AbstractBuildCommandSlicer<B extends Builder> extends UnorderedStringSlicer<AbstractProject<?,?>> {
+public abstract class AbstractBuildCommandSlicer<B extends Builder> extends UnorderedStringSlicer<AbstractProject> {
 
     public AbstractBuildCommandSlicer(AbstractBuildCommandSliceSpec<B> spec) {
         super(spec);
     }
 
-    public static abstract class AbstractBuildCommandSliceSpec<B extends Builder> extends UnorderedStringSlicerSpec<AbstractProject<?,?>> {
+    public static abstract class AbstractBuildCommandSliceSpec<B extends Builder> extends UnorderedStringSlicerSpec<AbstractProject> {
 
         public static final String NOTHING = "(nothing)";
 
@@ -32,7 +32,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
             return NOTHING;
         }
 
-        public String getName(AbstractProject<?, ?> item) {
+        public String getName(AbstractProject item) {
             return item.getFullName();
         }
 
@@ -41,7 +41,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         	return count > 1;
         }
         
-        public List<String> getValues(AbstractProject<?, ?> item) {
+        public List<String> getValues(AbstractProject item) {
             List<String> content = new ArrayList<String>();
             DescribableList<Builder,Descriptor<Builder>> buildersList = getBuildersList(item);
 
@@ -61,8 +61,8 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         public abstract B createBuilder(String command, List<B> existingBuilders, B oldBuilder);
 
         @SuppressWarnings("unchecked")
-        public List<AbstractProject<?, ?>> getWorkDomain() {
-        	List<AbstractProject<?, ?>> list = new ArrayList<AbstractProject<?, ?>>();
+        public List<AbstractProject> getWorkDomain() {
+        	List<AbstractProject> list = new ArrayList<AbstractProject>();
         	List<AbstractProject> temp = Jenkins.getInstance().getAllItems(AbstractProject.class);
         	for (AbstractProject p: temp) {
         		if (p instanceof Project || p instanceof MatrixProject) {
@@ -73,7 +73,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         }
         
         @SuppressWarnings("unchecked")
-		public static DescribableList<Builder,Descriptor<Builder>> getBuildersList(AbstractProject<?, ?> item) {
+		public static DescribableList<Builder,Descriptor<Builder>> getBuildersList(AbstractProject item) {
         	if (item instanceof Project) {
         		return ((Project) item).getBuildersList();
         	} else if (item instanceof MatrixProject) {
@@ -83,7 +83,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         	}
         }
         
-        public boolean setValues(AbstractProject<?, ?> item, List<String> list) {
+        public boolean setValues(AbstractProject item, List<String> list) {
             DescribableList<Builder,Descriptor<Builder>> buildersList = getBuildersList(item);
             List<B> builders = getConcreteBuildersList(buildersList);
             

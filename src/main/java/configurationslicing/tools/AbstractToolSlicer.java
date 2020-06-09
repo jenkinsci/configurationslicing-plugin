@@ -7,9 +7,9 @@ import configurationslicing.UnorderedStringSlicer;
 /**
  * @author Maarten Dirkse
  */
-public abstract class AbstractToolSlicer extends UnorderedStringSlicer<AbstractProject< ? , ? >> {
+public abstract class AbstractToolSlicer extends UnorderedStringSlicer<AbstractProject> {
 
-  public AbstractToolSlicer(UnorderedStringSlicerSpec<AbstractProject< ? , ? >> spec) {
+  public AbstractToolSlicer(UnorderedStringSlicerSpec<AbstractProject> spec) {
     super(spec);
   }
 

@@ -20,7 +20,7 @@ import configurationslicing.UnorderedStringSlicer;
 
 @Extension
 public class CoreEmailSlicer extends
-		UnorderedStringSlicer<AbstractProject<?, ?>> {
+		UnorderedStringSlicer<AbstractProject> {
 
 	public CoreEmailSlicer() {
 		super(new CoreEmailSliceSpec());

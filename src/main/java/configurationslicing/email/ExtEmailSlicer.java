@@ -21,7 +21,7 @@ import org.apache.commons.lang.StringUtils;
 import configurationslicing.UnorderedStringSlicer;
 
 @Extension
-public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>> {
+public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject> {
 
 	public ExtEmailSlicer() {
 		super(new ExtEmailSliceSpec());
@@ -43,7 +43,7 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 		}
 		
 		@Override
-		protected ProjectHandler getProjectHandler(AbstractProject<?,?> project) {
+		protected ProjectHandler getProjectHandler(AbstractProject project) {
 			return this;
 		}
 		@Override
@@ -52,7 +52,7 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 			values.add("$DEFAULT_RECIPIENTS");
 			return values;
 		}
-		public String getRecipients(AbstractProject<?,?> project) {
+		public String getRecipients(AbstractProject project) {
 			ExtendedEmailPublisher mailer = getMailer(project);
 			if (mailer != null) {
 				return mailer.recipientList;
@@ -60,13 +60,13 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 				return null;
 			}
 		}
-		private ExtendedEmailPublisher getMailer(AbstractProject<?,?> project) {
+		private ExtendedEmailPublisher getMailer(AbstractProject project) {
 			DescribableList<Publisher,Descriptor<Publisher>> publishers = project.getPublishersList();
 			Descriptor<Publisher> descriptor = Jenkins.getInstance().getDescriptor(ExtendedEmailPublisher.class);
 			Publisher emailPublisher = publishers.get(descriptor);
 			return (ExtendedEmailPublisher) emailPublisher;
 		}
-		public boolean setRecipients(AbstractProject<?,?> project, String value) {
+		public boolean setRecipients(AbstractProject project, String value) {
 			ExtendedEmailPublisher mailer = getMailer(project);
 			if (!StringUtils.equals(value, mailer.recipientList)) {
 				mailer.recipientList = value;
@@ -75,7 +75,7 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 				return false;
 			}
 		}
-		public boolean addMailer(AbstractProject<?,?> project) throws IOException {
+		public boolean addMailer(AbstractProject project) throws IOException {
 			ExtendedEmailPublisher mailer = getMailer(project);
 			if (mailer == null) {
 				DescribableList<Publisher,Descriptor<Publisher>> publishers = project.getPublishersList();
@@ -97,7 +97,7 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 				return false;
 			}
 		}
-		public boolean removeMailer(AbstractProject<?,?> project) throws IOException {
+		public boolean removeMailer(AbstractProject project) throws IOException {
 			ExtendedEmailPublisher mailer = getMailer(project);
 			if (mailer != null) {
 				DescribableList<Publisher,Descriptor<Publisher>> publishers = project.getPublishersList();
@@ -111,7 +111,7 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject<?, ?>>
 		/**
 		* not yet implemented for ExtendedEmailPublisher
 		*/
-		public boolean sendToIndividuals(AbstractProject<?,?> project) {			
+		public boolean sendToIndividuals(AbstractProject project) {
 			boolean result = false;
 			ExtendedEmailPublisher mailer = getMailer(project);
 			if (mailer != null) {

@@ -13,7 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 
-public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<AbstractProject<?, ?>> {
+public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<AbstractProject> {
 
 	public static final String DISABLED = "(Disabled)";
 	private static final String EMPTY = "";
@@ -28,7 +28,7 @@ public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<A
 		this.url = url;
 	}
 	
-	public List<String> getValues(AbstractProject<?, ?> project) {
+	public List<String> getValues(AbstractProject project) {
 		ProjectHandler handler = getProjectHandler(project);
 		String recipients = handler.getRecipients(project);
 		recipients = normalize(recipients, "\n");
@@ -44,7 +44,7 @@ public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<A
 		values.add(recipients);
 		return values;
 	}
-	public boolean setValues(AbstractProject<?, ?> project, List<String> set) {
+	public boolean setValues(AbstractProject project, List<String> set) {
 		String newEmail = join(set);
 		
 		// only regard explicit (disabled) [regardless of case]
@@ -112,11 +112,11 @@ public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<A
 		}
 		return value;
 	}
-	public List<AbstractProject<?, ?>> getWorkDomain() {
+	public List<AbstractProject> getWorkDomain() {
 		return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
 	}
 
-	protected abstract ProjectHandler getProjectHandler(AbstractProject<?, ?>  project);
+	protected abstract ProjectHandler getProjectHandler(AbstractProject  project);
 	
 	public String getDefaultValueString() {
 		return DISABLED;
@@ -124,7 +124,7 @@ public abstract class AbstractEmailSliceSpec extends UnorderedStringSlicerSpec<A
 	public String getName() {
 		return name;
 	}
-	public String getName(AbstractProject<?, ?> item) {
+	public String getName(AbstractProject item) {
 		return item.getFullName();
 	}
 
