@@ -4,6 +4,7 @@ Configuration Slicing plugin for Jenkins
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/configurationslicing.svg)](https://plugins.jenkins.io/configurationslicing)
 [![GitHub release](https://img.shields.io/github/release/jenkinsci/configurationslicing-plugin.svg?label=release)](https://github.com/jenkinsci/configurationslicing-plugin/releases/latest)
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/configurationslicing.svg?color=blue)](https://plugins.jenkins.io/configurationslicing)
+[![Build Status](https://ci.jenkins.io/job/Plugins/job/configurationslicing-plugin/job/devel/badge/icon)](https://ci.jenkins.io/job/Plugins/job/configurationslicing-plugin/job/devel/)
 | Plugin Information                                                                                                     |
 |------------------------------------------------------------------------------------------------------------------------|
 | View Configuration Slicing [on the plugin site](https://plugins.jenkins.io/configurationslicing) for more information. |
@@ -154,6 +155,12 @@ Setting a empty recipient list leaves existing email notifications to
 committers (Checkbox "Notify individuals who broke the build") in place.
 
 ### Changelog
+
+For newer versions see the [github relesae page](https://github.com/jenkinsci/configurationslicing-plugin/releases)
+
+#### Version 1.50 - May 25, 2020
+
+[Moved to show changelogs on Github](https://github.com/jenkinsci/configurationslicing-plugin/releases/tag/configurationslicing-1.50).
 
 #### Version 1.41 - May 31, 2015
 
