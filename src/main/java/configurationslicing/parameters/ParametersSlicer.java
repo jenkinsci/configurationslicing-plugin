@@ -5,7 +5,6 @@ import hudson.model.ParameterValue;
 import hudson.model.BooleanParameterDefinition;
 import hudson.model.BooleanParameterValue;
 import hudson.model.ChoiceParameterDefinition;
-import hudson.model.Hudson;
 import hudson.model.Job;
 import hudson.model.ParameterDefinition;
 import hudson.model.ParametersDefinitionProperty;
@@ -13,6 +12,7 @@ import hudson.model.StringParameterDefinition;
 
 import hudson.model.TextParameterDefinition;
 import jenkins.model.Jenkins;
+import hudson.model.StringParameterValue;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -165,7 +165,9 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         public String toStringValue(ParameterValue value, ParameterDefinition def) {
         	if (value instanceof BooleanParameterValue) {
         		return String.valueOf(((BooleanParameterValue) value).value);
-        	} else if (def instanceof ChoiceParameterDefinition) {
+        	} else if (value instanceof StringParameterValue) {
+			return ((StringParameterValue) value).getValue();
+		} else if (def instanceof ChoiceParameterDefinition) {
         		ChoiceParameterDefinition cdef = (ChoiceParameterDefinition) def;
         		List<String> choices = cdef.getChoices();
         		StringBuilder buf = new StringBuilder();
