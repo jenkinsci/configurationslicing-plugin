@@ -46,6 +46,10 @@ public class ConfigurationSlicing extends ManagementLink {
         return "Configuration Slicing";
     }
 
+    public String getCategoryName() {
+        return "TOOLS";
+    }
+
     @SuppressWarnings("unchecked")
 	public List<Slicer> getAxes() {
     	ExtensionList<Slicer> elist = Jenkins.getInstance().getExtensionList(Slicer.class);
