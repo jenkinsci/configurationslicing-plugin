@@ -1,6 +1,5 @@
 [[configurationslicing-plugin]]
 = configurationslicing-plugin
-
 :toc: macro
 :toc-title:
 ifdef::env-github[]
