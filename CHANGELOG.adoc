@@ -1,0 +1,266 @@
+[[configurationslicing-plugin-changelog]]
+= configurationslicing-plugin Changelog
+:toc:
+
+For newer versions see the https://github.com/jenkinsci/configurationslicing-plugin/releases[github release page]
+
+== Version 1.50 - May 25, 2020
+
+https://github.com/jenkinsci/configurationslicing-plugin/releases/tag/configurationslicing-1.50[Moved to show changelogs on Github].
+
+== Version 1.41 - May 31, 2015
+
+* https://issues.jenkins-ci.org/browse/JENKINS-20319[JENKINS-20319] -
+E-Mail-Configurations are only completely disabled when set to
+(Disabled). Setting a empty recipient leaves e-mail notifications to
+committers in place.
+* Requires jenkins 1.509.3 and email-ext 2.37
+* https://issues.jenkins-ci.org/browse/JENKINS-21225[JENKINS-21225] -
+Updated Editable email notification to work with email-ext 2.37
+* https://issues.jenkins-ci.org/browse/JENKINS-21445[JENKINS-21445] -
+bug fix in job disabled build slicer
+* https://issues.jenkins-ci.org/browse/JENKINS-25964[JENKINS-25964] -
+NPE in some cases when trying to slice parameters
+
+== Version 1.40 - November 15, 2014
+
+Fix bugs related to selection of maven modules or matrix configurations
+instead of top level project items:
+
+* https://issues.jenkins-ci.org/browse/JENKINS-18455[JENKINS-18455]
+* https://issues.jenkins-ci.org/browse/JENKINS-20082[JENKINS-20082]
+* https://issues.jenkins-ci.org/browse/JENKINS-21556[JENKINS-21556]
+* https://issues.jenkins-ci.org/browse/JENKINS-23776[JENKINS-23776]
+
+== Version 1.39 - October 4, 2014
+
+* https://issues.jenkins-ci.org/browse/JENKINS-16855[JENKINS-16855] -
+Add support for Claim Slicing
+* https://issues.jenkins-ci.org/browse/JENKINS-16869[JENKINS-16869] -
+Do not show the TimeStamper slicer if the TimeStamper plugin is not
+installed
+* https://issues.jenkins-ci.org/browse/JENKINS-23169[JENKINS-23169] -
+NullPointerException with newer Jenkins versions
+
+== Version 1.38.3 - October 3, 2013
+
+* https://issues.jenkins-ci.org/browse/JENKINS-16305[JENKINS-16305] -
+Add support for Quiet period configuration slicing
+* https://issues.jenkins-ci.org/browse/JENKINS-16828[JENKINS-16828] -
+NullPointerException in BooleanSlice.get for "Block Build" when
+slicing by view
+* https://issues.jenkins-ci.org/browse/JENKINS-18060[JENKINS-18060] -
+Add support for logfilesizechecker
+* https://issues.jenkins-ci.org/browse/JENKINS-19858[JENKINS-19858] -
+Visual spacing has degraded dramatically with newer versions of
+Jenkins (noticed in ver. 1.533)
+* https://issues.jenkins-ci.org/browse/JENKINS-14521[JENKINS-14521] -
+Configuration Slicing should temporarily disable the Auto Refresh
+plugin
+* https://issues.jenkins-ci.org/browse/JENKINS-19855[JENKINS-19855] -
+Parameters slicer trims default values - including space at the
+beginning of a Choice Parameter
+* Removed support for Workspace Cleanup Plugin (became too complex to
+perform configuration slicing)
+
+== Version 1.37.1 - Sept 30, 2013
+
+* fix regression introduced by folder support
+(https://issues.jenkins-ci.org/browse/JENKINS-18455[JENKINS-18455])
+
+== Version 1.37 - June 4, 2013
+
+* add support for folders
+* moved to github
+
+== Version 1.36 - October 28, 2012
+
+* https://issues.jenkins-ci.org/browse/JENKINS-14456[JENKINS-14456] -
+Add support for Workspace Cleanup Plugin
+
+== Version 1.35 - October 27, 2012
+
+* Fixed issues with the newer version of the build timeout plugin
+* https://issues.jenkins-ci.org/browse/JENKINS-15528[JENKINS-15528] -
+java.lang.ClassNotFoundException: hudson.plugins.python.Python
+* https://issues.jenkins-ci.org/browse/JENKINS-15447[JENKINS-15447] -
+Warnings with Configuration Slicing plugin
+
+== Version 1.33 - Sept 19, 2012
+
+* https://issues.jenkins-ci.org/browse/JENKINS-15152[JENKINS-15152] -
+Add support for configure 'Block build when upstream project is
+building' and 'Block build when downstream project is building'
+* https://issues.jenkins-ci.org/browse/JENKINS-14784[JENKINS-14784] -
+Add support for the "execute python script" slicer
+
+== Version 1.32 - July 14, 2012
+
+* https://issues.jenkins-ci.org/browse/JENKINS-14417[JENKINS-14417] -
+Add Timestamper slicer
+* https://issues.jenkins-ci.org/browse/JENKINS-11463[JENKINS-11463] -
+Add configuration slicer for build priority sorter
+* https://issues.jenkins-ci.org/browse/JENKINS-13834[JENKINS-13834] -
+E-mail Notification Slicer issues
+* https://issues.jenkins-ci.org/browse/JENKINS-14428[JENKINS-14428] -
+Provide group operations for "Disable build slicer"
+* https://issues.jenkins-ci.org/browse/JENKINS-12294[JENKINS-12294] -
+"Save" button in slicers should float, just like in the new job
+config pages
+
+== Version 1.31 - May 22, 2012
+
+* https://issues.jenkins-ci.org/browse/JENKINS-13866[JENKINS-13866] -
+Configuration slicing for parameters
+* https://issues.jenkins-ci.org/browse/JENKINS-13867[JENKINS-13867] -
+Configuration slicing for Maven versions should apply to Free style
+projects
+
+== Version 1.30 - May 20, 2012
+
+* https://issues.jenkins-ci.org/browse/JENKINS-12515[JENKINS-12515] -
+Add configuration slicing for use of Ant, Gradle and Groovy
+installations
+* https://issues.jenkins-ci.org/browse/JENKINS-13839[JENKINS-13839] -
+Configure Maven goals for multiple jobs and multiple builders
+* https://issues.jenkins-ci.org/browse/JENKINS-12922[JENKINS-12922] -
+Support changing maven version to multiple jobs at once using
+configuration slicing plugin
+
+== Version 1.29 - May 18, 2012
+
+* https://issues.jenkins-ci.org/browse/JENKINS-13830[JENKINS-13830] -
+Add windows batch command
+* https://issues.jenkins-ci.org/browse/JENKINS-11941[JENKINS-11941] -
+Configuration Slicing Plugin's "Execute shell slicer" lists first
+execute shell step only
+
+== Version 1.28.1 - December 24, 2011
+
+* https://issues.jenkins-ci.org/browse/JENKINS-12215[JENKINS-12215] -
+Configuration slicer changes step order
+
+== Version 1.27 - November 28, 2011
+
+* https://issues.jenkins-ci.org/browse/JENKINS-11868[JENKINS-11868] -
+Add configuration slicer for Jenkins build timeout plugin
+
+== Version 1.26 - November 24, 2011
+
+* https://issues.jenkins-ci.org/browse/JENKINS-11781[JENKINS-11781] -
+Configuration Slicing Plugin's "Execute shell slicer" view doesn't
+support Matrix jobs
+
+== Version 1.25 - November 9, 2011
+
+* https://issues.jenkins-ci.org/browse/JENKINS-11649[JENKINS-11649] -
+Add configuration slicers for Discard Old Builds with artifacts
+
+== Version 1.24 - October 26, 2011
+
+* https://issues.jenkins-ci.org/browse/JENKINS-11500[JENKINS-11500] -
+Add execute shell option to the plugin
+
+== Version 1.23 - October 13, 2011
+
+* Added configuration by views - see this wiki page for details
+
+== Version 1.22 - October 6, 2011
+
+* Fixed
+https://issues.jenkins-ci.org/browse/JENKINS-11242[JENKINS-11242] -
+Add configuration slicing for Email-ext plugin
+
+== Version 1.21 - September 22, 2011
+
+* Fixed
+https://issues.jenkins-ci.org/browse/JENKINS-11094[JENKINS-11094] -
+Add Email configuration slicer
+
+== Version 1.20 - August 24, 2011
+
+* Fixed
+https://issues.jenkins-ci.org/browse/JENKINS-8194[JENKINS-8194] -
+Discard Old Builds Slicer resets configuration of artifact keeping
+* Fixed
+https://issues.jenkins-ci.org/browse/JENKINS-10797[JENKINS-10797] -
+Sort "(Disabled)" properly
+* improved navigation options
+
+== Version 1.19 - July 22, 2011
+
+* Fixed
+https://issues.jenkins-ci.org/browse/JENKINS-10431[JENKINS-10431] -
+do not create changes when there are no actual changes
+* sort the index of slicers
+* add newline to job names list to make it easier to cut and paste
+
+== Version 1.18 - July 2011
+
+* Improved handling of chron specs with comments or multiple lines
+* Fixed null pointer problem with timer slicers (previously would
+require reboot to pick up new slicer changes)
+
+== Version 1.17 - July 2011
+
+* Complete redesign of the string slicer GUI (affects most slicers)
+* Added custom workspace slicer
+
+== Version 1.15 - January 22, 2010
+
+* Add Maven project slicing - MAVEN_OPTS and 'Goals and Settings'
+(http://n4.nabble.com/Use-e-option-in-all-maven-jobs-tp1101676p1101676.html[report])
+
+== Version 1.14 - January 16, 2010
+
+* Fix LogRotationSlicer to handle empty strings better
+(https://issues.jenkins-ci.org/browse/JENKINS-5240[5240])
+
+== Version 1.13 - January 15, 2010
+
+* Add Jdk slicer
+(http://n4.nabble.com/Globally-change-default-JDK-td387648.html[report])
+* Finally sort out release issues: The pom.xml for maven-hpi-plugin
+needed to point to a newer javanettasks
+
+== Version 1.12 - attempted January 15, 2010 - never released
+
+== Version 1.11 - attempted January 15, 2010 - never released
+
+== Version 1.10 - attempted November 2, 2009 and January 15, 2010 - never released
+
+== Version 1.9 - July 29, 2009
+
+* No changes. Release was done to figure out case sensitivity issue in
+javanettasks 1.23
+
+== Version 1.8 - attempted July 22, 2009 - never released
+
+== Version 1.7 - attempted July 22, 2009 - never released
+
+== Version 1.6 - attempted July 21, 2009 and July 22, 2009 - never released
+
+== Version 1.5 - July 21, 2009
+
+* Add log rotation slicers, for each of days and builds
+(http://n4.nabble.com/Consumed-1-2-GB-of-memory-tp384274p384285.html[report])
+
+&nbsp;
+
+* Add SCM polling schedule slicer
+
+&nbsp;
+
+* Add slave label slicer
+
+== Version 1.4 - attempted April 9, 2009 - never released
+
+== Version 1.3 - attempted April 9, 2009 - never released
+
+== Version 1.2 - March 16, 2009
+
+* Initial release - supports slicing for timer trigger
+
+== Version 1.1 - attempted March 16, 2009 - never released
+
+== Version 1.0 - attempted March 16, 2009 - never released
