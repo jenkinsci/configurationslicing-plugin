@@ -30,7 +30,7 @@ booleans and strings.
 
 The plugin shows up in Jenkins' UI on the Manage Jenkins page - seen
 here near the bottom of the page:  +
-image:https://wiki.jenkins.io/download/attachments/38142123/ConfigurationSlicing%20-%20Manage%20Hudson.png?version=2&modificationDate=1310821741000&api=v2[]
+image:docs/images/manage_hudson.png[]
 
 The main page of the configuration slicing plugin shows all the
 properties that can be sliced - select one and you are presented with a
@@ -83,7 +83,7 @@ workspace)
 In the case of booleans, the plugin presents a set of checkboxes and
 names.  The user can then adjust that property and save the changes.
 
-image::https://wiki.jenkins.io/download/attachments/38142123/ConfigurationSlicing%20-%20Job%20Disabled%20Slice.png?version=2&modificationDate=1310822184000&api=v2[]
+image::docs/images/job_disabled_slice.png[]
 
 === String slicing
 
@@ -97,7 +97,7 @@ setting when you need it.  For most of these screens, a value of
 at all.  To disable jobs (e.g. for SCM Polling), move those job names
 into that "(Disabled)" box.
 
-image::https://wiki.jenkins.io/download/attachments/38142123/ConfigurationSlicing%20-%20SCM%20Timer%20Slice.png?version=2&modificationDate=1310822734000&api=v2[]
+image::docs/images/scm_timer_slice.png[]
 
 === String slicing multiple values
 
@@ -105,7 +105,7 @@ Some slicers allow you to configure multiple values at a time. In those
 cases, the values are separated by a comma, and follow the given
 example.
 
-image::https://wiki.jenkins.io/download/attachments/38142123/ConfigurationSlicing%20-%20string-multiple-values.png?version=1&modificationDate=1322526234000&api=v2[]
+image::docs/images/string_multiple_values.png[]
 
 === String slicing multiple Builders
 
@@ -115,7 +115,7 @@ jobs like this, you will be presented with an index next to the jobs
 names like "MyJob[0]" and "MyJob[1]". The index indicates which
 instance of the builder you are configuring.
 
-image::https://wiki.jenkins.io/download/attachments/38142123/StringSlicingMultipleBuilders.png?version=1&modificationDate=1337433359000&api=v2[]
+image::docs/images/string_slicing_multiple_builders.png[]
 
 This is available under these links
 
@@ -130,8 +130,8 @@ across multiple jobs at one time through the "Parameters" link. To
 indicate which parameter you are configuring, note the
 "JobName[ParameterName]" syntax.
 
-image:https://wiki.jenkins.io/download/attachments/38142123/ParametersSlicingItems.png?version=1&modificationDate=1337733717000&api=v2[]
-image:https://wiki.jenkins.io/download/attachments/38142123/ParametersSlicingStringParameter.png?version=1&modificationDate=1337733736000&api=v2[]
+image:docs/images/parameters_slicing_items.png[]
+image:docs/images/parameters_slicing_string_parameters.png[]
 
 === Slicing by View
 
@@ -145,7 +145,7 @@ of views to choose from. You don't have to choose a view, as the default
 is to show all jobs. If you select one of the views on the left, your
 list of jobs is filtered down to just the jobs in that view.
 
-image::https://wiki.jenkins.io/download/attachments/38142123/ConfigurationSlicing%20-%20Views.png?version=1&modificationDate=1318517242000&api=v2[]
+image::docs/images/views.png[]
 
 === Email Notifications and https://wiki.jenkins.io/display/JENKINS/Email-ext+plugin[Editable Email Notifications] (from 1.41 on)
 
