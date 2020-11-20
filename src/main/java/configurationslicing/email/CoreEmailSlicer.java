@@ -54,7 +54,7 @@ public class CoreEmailSlicer extends
 		}
 		private Mailer getMailer(AbstractProject project) {
 			DescribableList<Publisher,Descriptor<Publisher>> publishers = project.getPublishersList();
-			Descriptor<Publisher> descriptor = Jenkins.getInstance().getDescriptor(Mailer.class);
+			Descriptor<Publisher> descriptor = Jenkins.get().getDescriptor(Mailer.class);
 			Publisher emailPublisher = publishers.get(descriptor);
 			return (Mailer) emailPublisher;
 		}
@@ -111,7 +111,7 @@ public class CoreEmailSlicer extends
 		private MavenMailer getMailer(AbstractProject project) {
 			MavenModuleSet mavenProject = (MavenModuleSet) project;
 			DescribableList<MavenReporter,Descriptor<MavenReporter>> reporters = mavenProject.getReporters();
-			Descriptor<MavenReporter> descriptor = Jenkins.getInstance().getDescriptor(MavenMailer.class);
+			Descriptor<MavenReporter> descriptor = Jenkins.get().getDescriptor(MavenMailer.class);
 			MavenReporter emailReporter = reporters.get(descriptor);
 			return (MavenMailer) emailReporter;
 		}
@@ -155,7 +155,7 @@ public class CoreEmailSlicer extends
 				return false;
 			}
 		}
-		
+
 	}
-	
+
 }

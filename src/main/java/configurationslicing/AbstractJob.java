@@ -44,6 +44,7 @@ public class AbstractJob {
         throw new IOException("Unsupported job type");
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends Trigger> T getTrigger(Class<T> clazz) {
         if (item instanceof AbstractProject)
             return (T) ((AbstractProject) item).getTrigger(clazz);

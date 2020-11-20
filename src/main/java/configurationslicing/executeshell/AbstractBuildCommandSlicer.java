@@ -40,7 +40,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         public boolean isIndexUsed(int count) {
         	return count > 1;
         }
-        
+
         public List<String> getValues(AbstractProject item) {
             List<String> content = new ArrayList<String>();
             DescribableList<Builder,Descriptor<Builder>> buildersList = getBuildersList(item);
@@ -63,7 +63,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         @SuppressWarnings("unchecked")
         public List<AbstractProject> getWorkDomain() {
         	List<AbstractProject> list = new ArrayList<AbstractProject>();
-        	List<AbstractProject> temp = Jenkins.getInstance().getAllItems(AbstractProject.class);
+        	List<AbstractProject> temp = Jenkins.get().getAllItems(AbstractProject.class);
         	for (AbstractProject p: temp) {
         		if (p instanceof Project || p instanceof MatrixProject) {
         			list.add(p);
@@ -71,7 +71,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         	}
         	return list;
         }
-        
+
         @SuppressWarnings("unchecked")
 		public static DescribableList<Builder,Descriptor<Builder>> getBuildersList(AbstractProject item) {
         	if (item instanceof Project) {
@@ -82,11 +82,11 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         		return null;
         	}
         }
-        
+
         public boolean setValues(AbstractProject item, List<String> list) {
             DescribableList<Builder,Descriptor<Builder>> buildersList = getBuildersList(item);
             List<B> builders = getConcreteBuildersList(buildersList);
-            
+
             int maxLen = Math.max(list.size(), builders.size());
             B[] oldBuilders = createBuilderArray(maxLen);
             B[] newBuilders = createBuilderArray(maxLen);
@@ -105,21 +105,21 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
 	            	}
 	            }
             }
-            
+
             // perform any replacements
             for (int i = 0; i < maxLen; i++) {
 				if (oldBuilders[i] != null && newBuilders[i] != null && oldBuilders[i] != newBuilders[i]) {
 					replaceBuilder(buildersList, oldBuilders[i], newBuilders[i]);
 				}
 			}
-            
+
             // add any new ones (should always add to the end, but might not if the original command was empty)
             for (int i = 0; i < maxLen; i++) {
 				if (oldBuilders[i] == null && newBuilders[i] != null) {
 				    buildersList.add(newBuilders[i]);
 				}
 			}
-            
+
             // delete any old ones
             for (int i = 0; i < maxLen; i++) {
                 if (oldBuilders[i] != null && newBuilders[i] == null) {
@@ -127,7 +127,7 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
                     buildersList.remove(oldBuilders[i]);
                 }
             }
-            
+
             return true;
         }
 
@@ -152,4 +152,3 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
         }
     }
 }
-

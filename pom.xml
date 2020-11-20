@@ -7,7 +7,7 @@
 	</parent>
 	<artifactId>configurationslicing</artifactId>
 	<packaging>hpi</packaging>
-	<version>1.52-SNAPSHOT</version>
+	<version>1.52.1-SNAPSHOT</version>
 	<name>Configuration Slicing plugin</name>
 	<description>Allows configuration of a single property across a group of projects</description>
 	<url>https://github.com/jenkinsci/configurationslicing-plugin</url>
@@ -27,7 +27,8 @@
     <properties>
       <findbugs.failOnError>false</findbugs.failOnError>
       <spotbugs.failOnError>false</spotbugs.failOnError>
-      <java.level>8</java.level>
+			<java.level>8</java.level>
+			<jenkins.version>2.190.1</jenkins.version>
     </properties>
 	<dependencies>
     <dependency>
@@ -36,73 +37,73 @@
       <version>2.8</version>
       <optional>true</optional>
     </dependency>
-                <dependency>
-                    <groupId>org.jenkins-ci.plugins</groupId>
-                    <artifactId>junit</artifactId>
-                    <version>1.29</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.jenkins-ci.plugins</groupId>
-                    <artifactId>scm-api</artifactId>
-                    <version>2.2.7</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.jenkins-ci.plugins</groupId>
-                    <artifactId>mailer</artifactId>
-                    <version>1.23</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.codehaus.plexus</groupId>
-                    <artifactId>plexus-utils</artifactId>
-                    <version>3.3.0</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-lang3</artifactId>
-                    <version>3.10</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.github.spotbugs</groupId>
-                    <artifactId>spotbugs-annotations</artifactId>
-                    <version>3.1.12</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.jenkins-ci.plugins</groupId>
-                    <artifactId>ssh-credentials</artifactId>
-                    <version>1.13</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpcore</artifactId>
-                    <version>4.4.13</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpclient</artifactId>
-                    <version>4.5.12</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.jenkins-ci.plugins</groupId>
-                    <artifactId>apache-httpcomponents-client-4-api</artifactId>
-                    <version>4.5.10-2.0</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.jsoup</groupId>
-                    <artifactId>jsoup</artifactId>
-                    <version>1.13.1</version>
-                </dependency>
+		<dependency>
+				<groupId>org.jenkins-ci.plugins</groupId>
+				<artifactId>junit</artifactId>
+				<version>1.29</version>
+		</dependency>
+		<dependency>
+				<groupId>org.jenkins-ci.plugins</groupId>
+				<artifactId>scm-api</artifactId>
+				<version>2.2.7</version>
+		</dependency>
+		<dependency>
+				<groupId>org.jenkins-ci.plugins</groupId>
+				<artifactId>mailer</artifactId>
+				<version>1.23</version>
+		</dependency>
+		<dependency>
+				<groupId>org.codehaus.plexus</groupId>
+				<artifactId>plexus-utils</artifactId>
+				<version>3.3.0</version>
+		</dependency>
+		<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.10</version>
+		</dependency>
+		<dependency>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-annotations</artifactId>
+				<version>3.1.12</version>
+				<scope>provided</scope>
+		</dependency>
+		<dependency>
+				<groupId>org.jenkins-ci.plugins</groupId>
+				<artifactId>ssh-credentials</artifactId>
+				<version>1.13</version>
+		</dependency>
+		<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpcore</artifactId>
+				<version>4.4.13</version>
+		</dependency>
+		<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>4.5.12</version>
+		</dependency>
+		<dependency>
+				<groupId>org.jenkins-ci.plugins</groupId>
+				<artifactId>apache-httpcomponents-client-4-api</artifactId>
+				<version>4.5.10-2.0</version>
+		</dependency>
+		<dependency>
+				<groupId>org.jsoup</groupId>
+				<artifactId>jsoup</artifactId>
+				<version>1.13.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>matrix-project</artifactId>
 			<version>1.14</version>
 			<optional>true</optional>
 		</dependency>
-                <dependency>
-                    <groupId>org.jenkins-ci.plugins</groupId>
-                    <artifactId>credentials</artifactId>
-                    <version>2.3.7</version>
-                </dependency>
+		<dependency>
+				<groupId>org.jenkins-ci.plugins</groupId>
+				<artifactId>credentials</artifactId>
+				<version>2.3.7</version>
+		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.main</groupId>
 			<artifactId>maven-plugin</artifactId>
@@ -181,17 +182,17 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>claim</artifactId>
-            <version>2.16</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>config-file-provider</artifactId>
-            <version>3.6.3</version>
-            <optional>true</optional>
-        </dependency>
+			<groupId>org.jenkins-ci.plugins</groupId>
+			<artifactId>claim</artifactId>
+			<version>2.16</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.jenkins-ci.plugins</groupId>
+			<artifactId>config-file-provider</artifactId>
+			<version>3.6.3</version>
+			<optional>true</optional>
+		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins.workflow</groupId>
 			<artifactId>workflow-job</artifactId>
@@ -212,11 +213,11 @@
 		</dependency>
 	</dependencies>
 
-    <scm>
-        <connection>scm:git:git@github.com:jenkinsci/configurationslicing-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:jenkinsci/configurationslicing-plugin.git</developerConnection>
-        <url>https://github.com/jenkinsci/configurationslicing-plugin</url>
-      <tag>HEAD</tag>
+	<scm>
+		<connection>scm:git:git@github.com:jenkinsci/configurationslicing-plugin.git</connection>
+		<developerConnection>scm:git:git@github.com:jenkinsci/configurationslicing-plugin.git</developerConnection>
+		<url>https://github.com/jenkinsci/configurationslicing-plugin</url>
+		<tag>HEAD</tag>
   </scm>
 
 	<build>
@@ -226,6 +227,11 @@
 				<configuration>
 					<goals>deploy</goals>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jenkins-ci.tools</groupId>
+				<artifactId>maven-hpi-plugin</artifactId>
+				<version>3.13</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -245,5 +251,3 @@
         </pluginRepository>
     </pluginRepositories>
 </project>  
-  
-

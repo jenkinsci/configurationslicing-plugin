@@ -58,7 +58,7 @@ public class LabelSlicer extends UnorderedStringSlicer<AbstractProject>{
             if(ROAMING.equals(labelName)) {
                 label = null;
             } else {
-                label = Jenkins.getInstance().getLabel(labelName);
+                label = Jenkins.get().getLabel(labelName);
                 if(label == null) return false;
             }
             try {

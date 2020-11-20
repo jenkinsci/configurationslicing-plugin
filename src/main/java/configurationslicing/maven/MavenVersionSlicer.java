@@ -97,7 +97,7 @@ public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
 			if (itemMaven != null) {
 				String itemMavenName = itemMaven.getName();
 				DescriptorImpl descriptorByType =
-				        Jenkins.getInstance().getDescriptorByType(Maven.DescriptorImpl.class);
+				        Jenkins.get().getDescriptorByType(Maven.DescriptorImpl.class);
 				MavenInstallation[] installations = descriptorByType.getInstallations();
 				for (MavenInstallation maven : installations) {
 					String mavenName = maven.getName();
@@ -113,7 +113,7 @@ public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
 			List<AbstractProject> list = new ArrayList<AbstractProject>();
 
             // AbstractProject includes both FreeStyle/Matrix to have Maven build step and MavenModuleSet projects
-            list.addAll(Jenkins.getInstance().getAllItems(AbstractProject.class));
+            list.addAll(Jenkins.get().getAllItems(AbstractProject.class));
 
             CollectionUtils.filter(list, new Predicate() {
                 public boolean evaluate(Object object) {

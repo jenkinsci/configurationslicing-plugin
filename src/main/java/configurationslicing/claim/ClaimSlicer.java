@@ -7,7 +7,6 @@ import hudson.plugins.claim.ClaimPublisher;
 import hudson.tasks.Publisher;
 import hudson.util.DescribableList;
 
-import java.io.IOException;
 import java.util.List;
 
 import configurationslicing.BooleanSlicer;
@@ -18,7 +17,7 @@ public class ClaimSlicer extends BooleanSlicer<AbstractProject> {
     public ClaimSlicer() {
         super(new ClaimSpec());
     }
-    
+
     public boolean isLoaded() {
         try {
             new ClaimPublisher();
@@ -27,7 +26,7 @@ public class ClaimSlicer extends BooleanSlicer<AbstractProject> {
             return false;
         }
     }
-    
+
     public static class ClaimSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject>
     {
         public String getName() {
@@ -43,7 +42,7 @@ public class ClaimSlicer extends BooleanSlicer<AbstractProject> {
         }
 
         public boolean getValue(AbstractProject item) {
-            
+
             DescribableList<Publisher, Descriptor<Publisher>> publishersList = item.getPublishersList();
             ClaimPublisher claimPublisher = publishersList.get(ClaimPublisher.class);
             return claimPublisher != null;

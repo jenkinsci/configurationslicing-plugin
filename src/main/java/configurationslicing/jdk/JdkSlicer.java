@@ -22,7 +22,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject> {
     public JdkSlicer() {
         super(new JdkSlicerSpec());
     }
-    
+
     public static class JdkSlicerSpec extends UnorderedStringSlicerSpec<AbstractProject> {
         private static final String DEFAULT = "(Default)";
 
@@ -55,7 +55,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject> {
 
         public boolean setValues(AbstractProject item, List<String> set) {
             if(set.size() == 0) return false;
-            Jenkins hudson = Jenkins.getInstance();
+            Jenkins hudson = Jenkins.get();
             JDK jdk=null;
             for(String val : set) {
                 jdk = hudson.getJDK(val);
@@ -89,7 +89,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject> {
         	}
         	return true;
         }
-        
+
     }
 
 }

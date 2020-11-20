@@ -44,7 +44,7 @@ public abstract class AbstractSimpleProjectSlicer extends UnorderedStringSlicer<
 
         @SuppressWarnings({ "unchecked" })
 		public List<AbstractProject> getWorkDomain() {
-            return (List) Jenkins.getInstance().getAllItems(getWorkDomainClass());
+            return (List) Jenkins.get().getAllItems(getWorkDomainClass());
         }
         /**
          * Override if needed.

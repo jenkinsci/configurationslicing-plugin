@@ -56,12 +56,12 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         public boolean isIndexUsed(int count) {
         	return true;
         }
-        
+
         @Override
         public boolean isValueTrimmed() {
         	return false;
         }
-        
+
         @Override
         public String getValueIndex(Job item, int index) {
         	List<ParameterItem> pitems = getParameterItems(item);
@@ -78,7 +78,7 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         	// this will happen if the user sets a param name that is not valid
         	throw new IllegalArgumentException(indexName);
         }
-        
+
         public List<String> getValues(Job item) {
         	List<String> values = new ArrayList<String>();
         	List<ParameterItem> pitems = getParameterItems(item);
@@ -158,10 +158,10 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         	int index;
         }
         public List<Job> getWorkDomain() {
-        	List<Job> jobs = Jenkins.getInstance().getAllItems(Job.class);
+        	List<Job> jobs = Jenkins.get().getAllItems(Job.class);
         	return jobs;
         }
-        
+
         public String toStringValue(ParameterValue value, ParameterDefinition def) {
         	if (value instanceof BooleanParameterValue) {
         		return String.valueOf(((BooleanParameterValue) value).value);
@@ -179,18 +179,17 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         		}
         		return buf.toString();
         	} else {
-        		throw new IllegalArgumentException("Don't know how to convert " + value); 
+        		throw new IllegalArgumentException("Don't know how to convert " + value);
         	}
         }
-        
+
         public boolean isSliceableProperty(ParameterDefinition def) {
         	return (def instanceof BooleanParameterDefinition
         			|| def instanceof StringParameterDefinition
         			|| def instanceof ChoiceParameterDefinition
         			);
         }
-        
+
     }
 
 }
-
