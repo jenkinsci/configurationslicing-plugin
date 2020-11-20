@@ -14,7 +14,7 @@ public class MavenIncremental extends BooleanSlicer<MavenModuleSet> {
     public MavenIncremental() {
         super(new MavenIncrementalSlicerSpec());
     }
-    
+
     public static class MavenIncrementalSlicerSpec implements BooleanSlicerSpec<MavenModuleSet> {
 
         public String getName() {
@@ -31,7 +31,7 @@ public class MavenIncremental extends BooleanSlicer<MavenModuleSet> {
 
         @SuppressWarnings("unchecked")
 		public List<MavenModuleSet> getWorkDomain() {
-            return (List) Jenkins.getInstance().getAllItems(MavenModuleSet.class);
+            return (List) Jenkins.get().getAllItems(MavenModuleSet.class);
         }
 
 		@Override
@@ -44,7 +44,6 @@ public class MavenIncremental extends BooleanSlicer<MavenModuleSet> {
 			item.setIncrementalBuild(value);
 			return true;
 		}
-        
+
     }
 }
- 

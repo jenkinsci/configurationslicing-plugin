@@ -34,7 +34,7 @@ public class MavenSnapshotBuildTrigger extends BooleanSlicer<MavenModuleSet> {
 
         @SuppressWarnings("unchecked")
         public List<MavenModuleSet> getWorkDomain() {
-            return (List) Jenkins.getInstance().getAllItems(MavenModuleSet.class);
+            return (List) Jenkins.get().getAllItems(MavenModuleSet.class);
         }
 
         @Override

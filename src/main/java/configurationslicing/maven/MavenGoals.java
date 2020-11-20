@@ -17,13 +17,13 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
     public MavenGoals() {
         super(new MavenGoalsSlicerSpec());
     }
-    
+
     @Override
     public void loadPluginDependencyClass() {
         // this is just to demonstrate that the Maven plugin is loaded
         MavenModuleSet.class.getClass();
     }
-    
+
     public static class MavenGoalsSlicerSpec extends UnorderedStringSlicerSpec<MavenModuleSet> {
         private static final String DEFAULT = "(Default)";
 
@@ -52,7 +52,7 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
 
         @SuppressWarnings("unchecked")
 		public List<MavenModuleSet> getWorkDomain() {
-            return (List) Jenkins.getInstance().getAllItems(MavenModuleSet.class);
+            return (List) Jenkins.get().getAllItems(MavenModuleSet.class);
         }
 
         public boolean setValues(MavenModuleSet item, List<String> set) {
@@ -70,7 +70,6 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
             }
             return true;
         }
-        
+
     }
 }
- 

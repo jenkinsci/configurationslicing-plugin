@@ -19,13 +19,13 @@ public class MavenOptsSlicer extends UnorderedStringSlicer<MavenModuleSet> {
     public MavenOptsSlicer() {
         super(new MavenOptsSlicerSpec());
     }
-    
+
     @Override
     public void loadPluginDependencyClass() {
         // this is just to demonstrate that the Maven plugin is loaded
         MavenModuleSet.class.getClass();
     }
-    
+
     public static class MavenOptsSlicerSpec extends UnorderedStringSlicerSpec<MavenModuleSet> {
 
         public String getDefaultValueString() {
@@ -53,14 +53,14 @@ public class MavenOptsSlicer extends UnorderedStringSlicer<MavenModuleSet> {
 
         @SuppressWarnings("unchecked")
 		public List<MavenModuleSet> getWorkDomain() {
-            return (List) Jenkins.getInstance().getAllItems(MavenModuleSet.class);
+            return (List) Jenkins.get().getAllItems(MavenModuleSet.class);
         }
 
         public boolean setValues(MavenModuleSet item, List<String> set) {
             if(set.isEmpty()) return false;
             String value = set.iterator().next();
             DescriptorImpl descriptor =
-                    Jenkins.getInstance().getDescriptorByType(MavenModuleSet.DescriptorImpl.class);
+                    Jenkins.get().getDescriptorByType(MavenModuleSet.DescriptorImpl.class);
             if(value.equals(descriptor.getGlobalMavenOpts())) {
                 item.setMavenOpts(null);
             } else {
@@ -73,7 +73,6 @@ public class MavenOptsSlicer extends UnorderedStringSlicer<MavenModuleSet> {
             }
             return true;
         }
-        
+
     }
 }
- 

@@ -26,7 +26,7 @@ import org.kohsuke.stapler.StaplerResponse;
 public class ConfigurationSlicing extends ManagementLink {
 
 	private static final Logger LOGGER = Logger.getLogger(ConfigurationSlicing.class.getName());
-	
+
     @Override
     public String getDescription() {
         return "Configure a single aspect across a group of items, in contrast to the traditional configuration of all aspects of a single item";
@@ -52,7 +52,7 @@ public class ConfigurationSlicing extends ManagementLink {
 
     @SuppressWarnings("unchecked")
 	public List<Slicer> getAxes() {
-    	ExtensionList<Slicer> elist = Jenkins.getInstance().getExtensionList(Slicer.class);
+    	ExtensionList<Slicer> elist = Jenkins.get().getExtensionList(Slicer.class);
     	List<Slicer> list = new ArrayList<Slicer>();
     	for (Slicer slicer: elist) {
     		if (slicer.isLoaded()) {
@@ -68,17 +68,17 @@ public class ConfigurationSlicing extends ManagementLink {
     	Collections.sort(list);
     	return list;
     }
-    
+
     public Collection<String> getViews() {
-    	Collection<View> views = Jenkins.getInstance().getViews();
+    	Collection<View> views = Jenkins.get().getViews();
     	List<String> names = new ArrayList<String>();
-    	
+
     	addViews(null, views, names);
-    	
+
     	Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
     	return names;
     }
-    
+
     private void addViews(String baseName, Collection<View> views, List<String> names) {
     	for (View view: views) {
 	    	String name = view.getDisplayName();
@@ -96,8 +96,8 @@ public class ConfigurationSlicing extends ManagementLink {
     }
 
     public Object getDynamic(String token, StaplerRequest req, StaplerResponse rsp) {
-        Jenkins.getInstance().checkPermission(Hudson.ADMINISTER);
-        
+        Jenkins.get().checkPermission(Hudson.ADMINISTER);
+
         for(Slicer s : getAxes()) {
             if(s.getUrl().equals(token)) {
             	return new SliceExecutor(s, null);
@@ -117,7 +117,7 @@ public class ConfigurationSlicing extends ManagementLink {
             this.view = view;
             execute();
         }
-        
+
         private void execute() {
             T accumulator = slicer.getInitialAccumulator();
             worklist = slicer.getWorkDomain();
@@ -132,7 +132,7 @@ public class ConfigurationSlicing extends ManagementLink {
             }
             slice= accumulator;
         }
-        
+
         private List<I> transform(T newslice) {
             List<I> ret = new ArrayList<I>();
             worklist = slicer.getWorkDomain();
@@ -142,19 +142,19 @@ public class ConfigurationSlicing extends ManagementLink {
             }
             return ret;
         }
-        
+
         public ConfigurationSlicing getParent() {
             return ConfigurationSlicing.this;
         }
-        
+
         public T getSlice() {
             return slice;
         }
-        
+
 		public Slicer<T, I> getSlicer() {
 			return slicer;
 		}
-        
+
         public List<I> getChanged() {
             return changed;
         }
@@ -176,7 +176,7 @@ public class ConfigurationSlicing extends ManagementLink {
         public List<I> getWorklist() {
             return worklist;
         }
-        
+
         public void doSliceconfigSubmit( StaplerRequest req, StaplerResponse rsp ) throws IOException, ServletException {
             String pathInfo = req.getPathInfo();
             try {
@@ -192,7 +192,7 @@ public class ConfigurationSlicing extends ManagementLink {
             }
         }
         private String getRedirectPath(String pathInfo) {
-        	String urlPart = "slicing/" + slicer.getUrl() + "/view/"; 
+        	String urlPart = "slicing/" + slicer.getUrl() + "/view/";
         	if (pathInfo.contains(urlPart)) {
         		return "../..";
         	} else {
@@ -200,7 +200,7 @@ public class ConfigurationSlicing extends ManagementLink {
         	}
         }
         public Object getDynamic(String token, StaplerRequest req, StaplerResponse rsp) {
-            Jenkins.getInstance().checkPermission(Hudson.ADMINISTER);
+            Jenkins.get().checkPermission(Hudson.ADMINISTER);
             String viewName = req.getParameter("view");
             View view = null;
             if (viewName != null) {
@@ -215,7 +215,7 @@ public class ConfigurationSlicing extends ManagementLink {
         		if (view instanceof ViewGroup) {
         			view = ((ViewGroup) view).getView(name);
         		} else {
-        			view = Jenkins.getInstance().getView(name);
+        			view = Jenkins.get().getView(name);
         		}
         	}
         	return view;

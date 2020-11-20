@@ -26,7 +26,7 @@ public class TopLevelItemSelector {
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <T extends Item> List<T> getAllTopLevelItems(Class<T> clazz) {
-        List<T> list = Jenkins.getInstance().getAllItems(clazz);
+        List<T> list = Jenkins.get().getAllItems(clazz);
         CollectionUtils.filter(list, new Predicate() {
             public boolean evaluate(Object object) {
                 // exclude MatrixConfiguration, MavenModule, etc

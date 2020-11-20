@@ -41,7 +41,7 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject> {
 		public ExtEmailSliceSpec() {
 			super(",", "Editable Email Notification", "emailext");
 		}
-		
+
 		@Override
 		protected ProjectHandler getProjectHandler(AbstractProject project) {
 			return this;
@@ -62,7 +62,7 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject> {
 		}
 		private ExtendedEmailPublisher getMailer(AbstractProject project) {
 			DescribableList<Publisher,Descriptor<Publisher>> publishers = project.getPublishersList();
-			Descriptor<Publisher> descriptor = Jenkins.getInstance().getDescriptor(ExtendedEmailPublisher.class);
+			Descriptor<Publisher> descriptor = Jenkins.get().getDescriptor(ExtendedEmailPublisher.class);
 			Publisher emailPublisher = publishers.get(descriptor);
 			return (ExtendedEmailPublisher) emailPublisher;
 		}
@@ -86,11 +86,11 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject> {
 				email.setSendToRecipientList(true);
 				trigger.setEmail(email);
 				publisher.getConfiguredTriggers().add(trigger);
-				
+
 				// there is no way to get this text from the plugin itself
 				publisher.defaultContent = "$DEFAULT_CONTENT";
 				publisher.defaultSubject = "$DEFAULT_SUBJECT";
-				
+
 				publishers.add(publisher);
 				return true;
 			} else {
@@ -107,7 +107,7 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject> {
 				return false;
 			}
 		}
-		
+
 		/**
 		* not yet implemented for ExtendedEmailPublisher
 		*/
@@ -125,5 +125,5 @@ public class ExtEmailSlicer extends	UnorderedStringSlicer<AbstractProject> {
 			return result;
 		}
 	}
-	
+
 }
