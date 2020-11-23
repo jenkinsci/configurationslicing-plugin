@@ -12,7 +12,7 @@ import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
-@Extension
+@Extension(optional = true)
 public class PipelineScriptSlicer extends UnorderedStringSlicer<WorkflowJob> {
 
     public PipelineScriptSlicer() {
