@@ -15,7 +15,7 @@ import hudson.util.DescribableList;
 import configurationslicing.BooleanSlicer;
 import configurationslicing.TopLevelItemSelector;
 
-@Extension
+@Extension(optional = true)
 public class LogStashSlicer extends BooleanSlicer<AbstractProject> {
     public LogStashSlicer() {
         super(new LogstashSpec());

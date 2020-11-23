@@ -24,7 +24,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 @SuppressWarnings("unchecked")
-@Extension
+@Extension(optional = true)
 public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
 
 	public MavenVersionSlicer() {
