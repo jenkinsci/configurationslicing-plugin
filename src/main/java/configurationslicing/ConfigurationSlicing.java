@@ -6,6 +6,7 @@ import hudson.model.ManagementLink;
 import hudson.model.TopLevelItem;
 import hudson.model.ViewGroup;
 import hudson.model.Descriptor.FormException;
+import hudson.security.Permission;
 import jenkins.model.Jenkins;
 import hudson.model.Hudson;
 import hudson.model.View;
@@ -17,10 +18,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.annotation.CheckForNull;
 import javax.servlet.ServletException;
 
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.interceptor.RequirePOST;
 
 @Extension
 public class ConfigurationSlicing extends ManagementLink {
@@ -48,6 +51,12 @@ public class ConfigurationSlicing extends ManagementLink {
 
     public String getCategoryName() {
         return "TOOLS";
+    }
+
+    @CheckForNull
+    @Override
+    public Permission getRequiredPermission() {
+        return Jenkins.ADMINISTER;
     }
 
     @SuppressWarnings("unchecked")
@@ -177,6 +186,7 @@ public class ConfigurationSlicing extends ManagementLink {
             return worklist;
         }
 
+        @RequirePOST
         public void doSliceconfigSubmit( StaplerRequest req, StaplerResponse rsp ) throws IOException, ServletException {
             String pathInfo = req.getPathInfo();
             try {
