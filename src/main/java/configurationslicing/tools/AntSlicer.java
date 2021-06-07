@@ -9,7 +9,7 @@ import hudson.tools.ToolInstallation;
 /**
  * @author Maarten Dirkse
  */
-@Extension
+@Extension(optional = true)
 public class AntSlicer extends AbstractToolSlicer {
 
   public AntSlicer() {

@@ -2,7 +2,6 @@ package configurationslicing.logfilesizechecker;
 
 import hudson.Extension;
 import hudson.model.BuildableItemWithBuildWrappers;
-import hudson.model.BuildableItemWithBuildWrappers;
 import hudson.model.Descriptor;
 import hudson.plugins.logfilesizechecker.LogfilesizecheckerWrapper;
 import hudson.tasks.BuildWrapper;
@@ -22,7 +21,7 @@ import configurationslicing.UnorderedStringSlicer;
  * Slicing the configuration of the Logfilesizechecker plugin.
  * @author kstutz
  */
-@Extension
+@Extension(optional = true)
 public class LogfilesizecheckerSlicer extends UnorderedStringSlicer<BuildableItemWithBuildWrappers> {
 
     public LogfilesizecheckerSlicer() {

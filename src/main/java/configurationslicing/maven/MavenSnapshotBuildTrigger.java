@@ -11,7 +11,7 @@ import java.util.List;
  * A simple boolean configuration slicer to set the "Build whenever a SNAPSHOT dependency is built" build trigger in Maven projects
  * Created by Jeff Bischoff on 4/12/16.
  */
-@Extension
+@Extension(optional = true)
 public class MavenSnapshotBuildTrigger extends BooleanSlicer<MavenModuleSet> {
 
     public MavenSnapshotBuildTrigger() {

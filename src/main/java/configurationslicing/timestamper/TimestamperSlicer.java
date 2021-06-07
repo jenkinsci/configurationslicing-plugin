@@ -2,7 +2,6 @@ package configurationslicing.timestamper;
 
 import hudson.Extension;
 import hudson.model.BuildableItemWithBuildWrappers;
-import hudson.model.BuildableItemWithBuildWrappers;
 import hudson.plugins.timestamper.TimestamperBuildWrapper;
 
 import java.io.IOException;
@@ -15,7 +14,7 @@ import configurationslicing.UnorderedStringSlicer;
 /**
  * @author jacob_robertson
  */
-@Extension
+@Extension(optional = true)
 public class TimestamperSlicer extends UnorderedStringSlicer<BuildableItemWithBuildWrappers>{
 
     public TimestamperSlicer() {

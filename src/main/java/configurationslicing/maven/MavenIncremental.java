@@ -8,7 +8,7 @@ import java.util.List;
 import jenkins.model.Jenkins;
 import configurationslicing.BooleanSlicer;
 
-@Extension
+@Extension(optional = true)
 public class MavenIncremental extends BooleanSlicer<MavenModuleSet> {
 
     public MavenIncremental() {

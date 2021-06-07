@@ -2,7 +2,6 @@ package configurationslicing.buildtimeout;
 
 import hudson.Extension;
 import hudson.model.BuildableItemWithBuildWrappers;
-import hudson.model.BuildableItemWithBuildWrappers;
 import hudson.model.Descriptor;
 import hudson.plugins.build_timeout.BuildTimeoutWrapper;
 import hudson.tasks.BuildWrapper;
@@ -22,7 +21,7 @@ import com.thoughtworks.xstream.XStreamException;
 import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 
-@Extension
+@Extension(optional = true)
 public class BuildTimeoutSlicer extends UnorderedStringSlicer<BuildableItemWithBuildWrappers>{
     private static final Logger LOGGER = Logger.getLogger(BuildTimeoutSlicer.class.getName());
 

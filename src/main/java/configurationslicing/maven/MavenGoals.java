@@ -11,7 +11,7 @@ import java.util.List;
 
 import configurationslicing.UnorderedStringSlicer;
 
-@Extension
+@Extension(optional = true)
 public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
 
     public MavenGoals() {

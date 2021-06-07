@@ -13,7 +13,7 @@ import java.util.List;
 
 import configurationslicing.UnorderedStringSlicer;
 
-@Extension
+@Extension(optional = true)
 public class MavenOptsSlicer extends UnorderedStringSlicer<MavenModuleSet> {
 
     public MavenOptsSlicer() {

@@ -12,7 +12,7 @@ import java.util.List;
 import configurationslicing.BooleanSlicer;
 import configurationslicing.TopLevelItemSelector;
 
-@Extension
+@Extension(optional = true)
 public class ClaimSlicer extends BooleanSlicer<AbstractProject> {
     public ClaimSlicer() {
         super(new ClaimSpec());

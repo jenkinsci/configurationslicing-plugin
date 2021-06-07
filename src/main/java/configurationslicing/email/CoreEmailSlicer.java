@@ -8,7 +8,6 @@ import hudson.maven.MavenReporter;
 import hudson.maven.reporters.MavenMailer;
 import hudson.model.AbstractProject;
 import hudson.model.Descriptor;
-import hudson.model.Hudson;
 import hudson.tasks.Mailer;
 import hudson.tasks.Publisher;
 import hudson.util.DescribableList;
@@ -18,7 +17,7 @@ import org.apache.commons.lang.StringUtils;
 
 import configurationslicing.UnorderedStringSlicer;
 
-@Extension
+@Extension(optional = true)
 public class CoreEmailSlicer extends
 		UnorderedStringSlicer<AbstractProject> {
 
