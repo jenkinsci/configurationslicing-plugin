@@ -29,7 +29,7 @@ booleans and strings.
 
 The plugin shows up in Jenkins' UI on the Manage Jenkins page - seen
 here near the bottom of the page:  +
-image:docs/images/manage_hudson.png[]
+image:docs/images/manage_jenkins.png[]
 
 The main page of the configuration slicing plugin shows all the
 properties that can be sliced - select one and you are presented with a
