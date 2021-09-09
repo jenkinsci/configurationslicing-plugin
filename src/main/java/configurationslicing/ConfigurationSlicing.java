@@ -53,10 +53,14 @@ public class ConfigurationSlicing extends ManagementLink {
         return "TOOLS";
     }
 
-    @CheckForNull
     @Override
     public Permission getRequiredPermission() {
         return Jenkins.ADMINISTER;
+    }
+
+    @Override
+    public ManagementLink.Category getCategory() {
+        return ManagementLink.Category.CONFIGURATION;
     }
 
     @SuppressWarnings("unchecked")

@@ -29,7 +29,7 @@ booleans and strings.
 
 The plugin shows up in Jenkins' UI on the Manage Jenkins page - seen
 here near the bottom of the page:  +
-image:docs/images/manage_hudson.png[]
+image:docs/images/manage_jenkins.png[]
 
 The main page of the configuration slicing plugin shows all the
 properties that can be sliced - select one and you are presented with a
@@ -40,10 +40,10 @@ such as slaves, or builds of a project.
 
 *The following functions are supported*
 
-* https://wiki.jenkins.io/display/JENKINS/Ant+Plugin[Ant version per project]
+* https://plugins.jenkins.io/ant/[Ant version per project]
 * Block Build when Downstream Building Slicer (bool)
 * Block Build when Upstream Building Slicer (bool)
-* https://wiki.jenkins.io/display/JENKINS/Build-timeout+Plugin[Build Timeout]
+* https://plugins.jenkins.io/build-timeout/[Build Timeout]
 (does not support all features)
 * Custom Workspace Slicer (Advanced Project Options > Use custom
 workspace)
@@ -52,19 +52,19 @@ workspace)
 * Discard Old Builds Slicer - Max # of builds to keep
 * Discard Old Builds Slicer - Max # of builds to keep with artifacts
 * E-mail Notification
-* https://wiki.jenkins.io/display/JENKINS/Email-ext+plugin[Editable Email Notification]
+* https://plugins.jenkins.io/email-ext/[Editable Email Notification]
 (https://issues.jenkins-ci.org/browse/JENKINS-11774[recipient list only])
-* https://wiki.jenkins.io/display/JENKINS/Jython+Plugin[Execute Jython script]
-* https://wiki.jenkins.io/display/JENKINS/Python+Plugin[Execute Python script]
+* https://plugins.jenkins.io/jython/[Execute Jython script]
+* https://plugins.jenkins.io/python/[Execute Python script]
 * Execute shell slicer
 * Execute Windows batch command slicer
-* https://wiki.jenkins.io/display/JENKINS/Gradle+Plugin[Gradle version per project]
-* https://wiki.jenkins.io/display/JENKINS/Groovy+plugin[Groovy version per project]
+* https://plugins.jenkins.io/gradle/[Gradle version per project]
+* https://plugins.jenkins.io/groovy/[Groovy version per project]
 * JDK per project
 * Job Disabled Build Slicer (bool)
 * Job Disabled Build Slicer (String)
-* https://wiki.jenkins.io/display/JENKINS/Priority+Sorter+Plugin[Job Priority Slicer]
-* https://wiki.jenkins.io/display/JENKINS/Logfilesizechecker+Plugin[Logfilesizechecker Plugin]
+* https://plugins.jenkins.io/PrioritySorter/[Job Priority Slicer]
+* https://plugins.jenkins.io/logfilesizechecker/[Build log file size checker Plugin]
 * Maven "top-level" targets
 * Maven Goals and Options (Maven project)
 * Maven Version (Maven Projects)
@@ -74,8 +74,8 @@ workspace)
 * SCM Timer Trigger Slicer
 * Tied Label Slicer
 * Timer Trigger Slicer
-* https://wiki.jenkins.io/display/JENKINS/Timestamper[Timestamper Slicer]
-* https://wiki.jenkins.io/display/JENKINS/Configuration+Slicing+Plugin[Claim Slicer]
+* https://plugins.jenkins.io/timestamper/[Timestamper Slicer]
+* https://plugins.jenkins.io/configurationslicing/[Configuration Slicer]
 
 === Boolean slicing
 
@@ -146,7 +146,7 @@ list of jobs is filtered down to just the jobs in that view.
 
 image::docs/images/views.png[]
 
-=== Email Notifications and https://wiki.jenkins.io/display/JENKINS/Email-ext+plugin[Editable Email Notifications] (from 1.41 on)
+=== Email Notifications and https://plugins.jenkins.io/email-ext/[Editable Email Notifications] (from 1.41 on)
 
 When editing recipient lists, Email notifications are only completely
 disabled when set to (Disabled).

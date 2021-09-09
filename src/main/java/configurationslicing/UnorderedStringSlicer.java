@@ -40,7 +40,7 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
         /**
          * Some cases we do not want to trim the value.  For example, in Parameters this causes issues.
          * This just requires the user to be more conscientious when configuring parameters.
-         * @return
+         * @return true always
          */
         public boolean isValueTrimmed() {
         	return true;
