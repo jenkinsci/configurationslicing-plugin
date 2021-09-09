@@ -53,7 +53,6 @@ public class ConfigurationSlicing extends ManagementLink {
         return "TOOLS";
     }
 
-    @CheckForNull
     @Override
     public Permission getRequiredPermission() {
         return Jenkins.ADMINISTER;
