@@ -181,7 +181,7 @@
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>gradle</artifactId>
-			<version>1.36</version>
+			<version>1.37.1</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
