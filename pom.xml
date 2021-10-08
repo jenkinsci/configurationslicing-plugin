@@ -39,7 +39,7 @@
         <dependency>
           <groupId>io.jenkins.tools.bom</groupId>
           <artifactId>bom-2.289.x</artifactId>
-          <version>937.v51fde92016ed</version>
+          <version>961.vf0c9f6f59827</version>
           <type>pom</type>
           <scope>import</scope>
         </dependency>
@@ -160,7 +160,7 @@
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>timestamper</artifactId>
-			<version>1.11.8</version>
+			<version>1.13</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
