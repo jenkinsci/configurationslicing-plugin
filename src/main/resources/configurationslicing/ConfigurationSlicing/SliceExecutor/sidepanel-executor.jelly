@@ -1,17 +1,17 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout">
   <l:header />
   <l:side-panel>
     <l:tasks>
-     <l:task icon="images/24x24/up.gif" href="${rootURL}/" title="${%Back to Dashboard}" />
+     <l:task icon="icon-up icon-md" href="${rootURL}/" title="${%Back to Dashboard}" />
      <l:isAdmin>
-       <l:task icon="images/24x24/setting.gif" href="${rootURL}/manage" title="${%Manage Jenkins}" />
-	   <l:task icon="images/24x24/orange-square.gif" href="${rootURL}/${it.parent.urlName}" title="${it.parent.displayName}" />
-	   <l:task icon="images/24x24/orange-square.gif" href="${rootURL}/${it.parent.urlName}/${it.slicer.url}" title="${it.slicer.name}" />
-	   <l:task icon="images/24x24/folder.gif" title="${%Configuration by View}" />
+       <l:task icon="icon-setting icon-md" href="${rootURL}/manage" title="${%Manage Jenkins}" />
+	   <l:task icon="icon-orange-square icon-md" href="${rootURL}/${it.parent.urlName}" title="${it.parent.displayName}" />
+	   <l:task icon="icon-orange-square icon-md" href="${rootURL}/${it.parent.urlName}/${it.slicer.url}" title="${it.slicer.name}" />
+	   <l:task icon="icon-folder icon-md" title="${%Configuration by View}" />
 	   <l:tasks>
 	   <j:forEach var="view" items="${it.parent.views}">
-	   		<l:task icon="images/24x24/folder.gif" href="${rootURL}/${it.parent.urlName}/${it.slicer.url}/view?view=${view}" title="${view}" />
+	   		<l:task icon="icon-folder icon-md" href="${rootURL}/${it.parent.urlName}/${it.slicer.url}/view?view=${view}" title="${view}" />
 	   </j:forEach>
 	   </l:tasks>
      </l:isAdmin>
