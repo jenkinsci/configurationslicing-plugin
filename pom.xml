@@ -31,6 +31,7 @@
         <gitHubRepo>jenkinsci/configurationslicing-plugin</gitHubRepo>
         <findbugs.failOnError>false</findbugs.failOnError>
         <spotbugs.failOnError>false</spotbugs.failOnError>
+        <spotbugs.excludeFilterFile>suppressed-spotbug-errors.xml</spotbugs.excludeFilterFile>
         <java.level>8</java.level>
         <jenkins.version>2.289.3</jenkins.version>
     </properties>
