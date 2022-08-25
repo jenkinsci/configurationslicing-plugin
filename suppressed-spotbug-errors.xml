@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    see https://spotbugs.readthedocs.io/en/stable/filter.html#source
+    and https://stackoverflow.com/questions/52336795/spotbugs-maven-plugin-exclude-a-directory
+    for an explanation of the technique
+ -->
+<FindBugsFilter>
+    <Match>
+    <Or>
+        <And>
+            <Bug pattern="EQ_COMPARETO_USE_OBJECT_EQUALS"/>
+            <Class name="configurationslicing.BooleanSlicer]"/>
+        </And>
+        <And>
+            <Bug pattern="UWF_UNWRITTEN_FIELD"/>
+            <Class name="configurationslicing.ConfigurationSlicing$SliceExecutor"/>
+        </And>
+        <And>
+            <Bug pattern="EQ_COMPARETO_USE_OBJECT_EQUALS"/>
+            <Class name="configurationslicing.UnorderedStringSlicer"/>
+      </And>
+        <And>
+            <Bug pattern="EQ_COMPARETO_USE_OBJECT_EQUALS"/>
+            <Class name="configurationslicing.executeshell.ExecuteJythonSlicerWrapper"/>
+      </And>
+        <And>
+            <Bug pattern="EQ_COMPARETO_USE_OBJECT_EQUALS"/>
+            <Class name="configurationslicing.executeshell.ExecutePythonSlicerWrapper"/>
+      </And>
+        <And>
+            <Bug pattern="EQ_COMPARETO_USE_OBJECT_EQUALS"/>
+            <Class name="configurationslicing.tools.GroovySlicerWrapper"/>
+      </And> 
+        <And>
+            <Bug pattern="EQ_COMPARETO_USE_OBJECT_EQUALS"/>
+            <Class name="configurationslicing.tools.GradleSlicerWrapper"/>
+      </And> 
+        <And>
+            <Bug pattern="EQ_COMPARETO_USE_OBJECT_EQUALS"/>
+            <Class name="configurationslicing.prioritysorter.PrioritySorterSlicerWrapper"/>
+      </And> 
+        <And>
+            <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE"/>
+            <Class name="configurationslicing.parameters.ParametersSlicer$ParametersSliceSpec"/>
+      </And> 
+        <And>
+            <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+            <Class name="configurationslicing.parameters.ParametersSlicer$ParametersSliceSpec"/>
+      </And> 
+        <And>
+            <Bug pattern="DLS_DEAD_LOCAL_STORE"/>
+            <Class name="configurationslicing.logstash.LogStashSlicer$LogstashSpec"/>
+      </And> 
+              <And>
+            <Bug pattern="EQ_COMPARETO_USE_OBJECT_EQUALS"/>
+            <Class name="configurationslicing.BooleanSlicer"/>
+      </And> 
+        <And>
+            <Bug pattern="REC_CATCH_EXCEPTION"/>
+            <Class name="configurationslicing.executeshell.ExecutePythonSlicer$ExecutePythonSliceSpec"/>
+      </And> 
+        <And>
+            <Bug pattern="NP_NULL_ON_SOME_PATH"/>
+            <Class name="configurationslicing.logfilesizechecker.LogfilesizecheckerSlicer$LogfilesizeSliceSpec"/>
+      </And> 
+    </Or>
+  </Match>
+</FindBugsFilter>
