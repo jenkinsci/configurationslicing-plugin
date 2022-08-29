@@ -135,7 +135,7 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>groovy</artifactId>
-            <version>1.9</version>
+            <version>442.v817e6d937d6c</version>
             <optional>true</optional>
         </dependency>
         <dependency>
