@@ -1,0 +1,4 @@
+<?jelly escape-by-default='true'?>
+<div>
+Allows configuration of a single property across a group of projects
+</div>
