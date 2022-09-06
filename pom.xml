@@ -11,7 +11,6 @@
     <packaging>hpi</packaging>
     <version>${changelist}</version>
     <name>Configuration Slicing plugin</name>
-    <description>Allows configuration of a single property across a group of projects</description>
     <url>https://github.com/jenkinsci/configurationslicing-plugin</url>
 
     <developers>
