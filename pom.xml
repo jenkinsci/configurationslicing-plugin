@@ -32,13 +32,13 @@
         <spotbugs.failOnError>false</spotbugs.failOnError>
         <spotbugs.excludeFilterFile>suppressed-spotbug-errors.xml</spotbugs.excludeFilterFile>
         <java.level>8</java.level>
-        <jenkins.version>2.332.4</jenkins.version>
+        <jenkins.version>2.361.4</jenkins.version>
     </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.332.x</artifactId>
+                <artifactId>bom-2.361.x</artifactId>
                 <version>1723.vcb_9fee52c9fc</version>
                 <type>pom</type>
                 <scope>import</scope>
