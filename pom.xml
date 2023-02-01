@@ -196,7 +196,7 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>claim</artifactId>
-            <version>495.v01a_c6fb_2b_a_7a</version>
+            <version>516.v36293563731d</version>
             <optional>true</optional>
         </dependency>
         <dependency>
