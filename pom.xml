@@ -28,9 +28,6 @@
     <properties>
         <changelist>999999-SNAPSHOT</changelist>
         <gitHubRepo>jenkinsci/configurationslicing-plugin</gitHubRepo>
-        <findbugs.failOnError>false</findbugs.failOnError>
-        <spotbugs.failOnError>false</spotbugs.failOnError>
-        <spotbugs.excludeFilterFile>suppressed-spotbug-errors.xml</spotbugs.excludeFilterFile>
         <jenkins.version>2.361.4</jenkins.version>
     </properties>
     <dependencyManagement>
