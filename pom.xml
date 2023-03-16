@@ -62,9 +62,8 @@
             <artifactId>mailer</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
+          <groupId>io.jenkins.plugins</groupId>
+          <artifactId>commons-lang3-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.spotbugs</groupId>
