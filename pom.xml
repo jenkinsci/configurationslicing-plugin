@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.54</version>
+        <version>4.55</version>
         <relativePath/>
     </parent>
     <artifactId>configurationslicing</artifactId>
@@ -31,7 +31,6 @@
         <findbugs.failOnError>false</findbugs.failOnError>
         <spotbugs.failOnError>false</spotbugs.failOnError>
         <spotbugs.excludeFilterFile>suppressed-spotbug-errors.xml</spotbugs.excludeFilterFile>
-        <java.level>8</java.level>
         <jenkins.version>2.361.4</jenkins.version>
     </properties>
     <dependencyManagement>
@@ -117,6 +116,12 @@
             <artifactId>maven-plugin</artifactId>
             <version>3.21</version>
             <optional>true</optional>
+            <exclusions>
+              <exclusion>
+                <groupId>javax.annotation</groupId>
+                <artifactId>javax.annotation-api</artifactId>
+              </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>commons-net</groupId> <!-- satisfy upper bounds dependency error -->
@@ -192,6 +197,12 @@
             <artifactId>logstash</artifactId>
             <version>2.3.2</version>
             <optional>true</optional>
+            <exclusions>
+              <exclusion>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+              </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
