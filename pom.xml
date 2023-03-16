@@ -116,6 +116,12 @@
             <artifactId>maven-plugin</artifactId>
             <version>3.21</version>
             <optional>true</optional>
+            <exclusions>
+              <exclusion>
+                <groupId>javax.annotation</groupId>
+                <artifactId>javax.annotation-api</artifactId>
+              </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>commons-net</groupId> <!-- satisfy upper bounds dependency error -->
