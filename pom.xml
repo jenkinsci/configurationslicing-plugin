@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.55</version>
+        <version>4.56</version>
         <relativePath/>
     </parent>
     <artifactId>configurationslicing</artifactId>
@@ -28,9 +28,6 @@
     <properties>
         <changelist>999999-SNAPSHOT</changelist>
         <gitHubRepo>jenkinsci/configurationslicing-plugin</gitHubRepo>
-        <findbugs.failOnError>false</findbugs.failOnError>
-        <spotbugs.failOnError>false</spotbugs.failOnError>
-        <spotbugs.excludeFilterFile>suppressed-spotbug-errors.xml</spotbugs.excludeFilterFile>
         <jenkins.version>2.361.4</jenkins.version>
     </properties>
     <dependencyManagement>
@@ -38,7 +35,7 @@
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
                 <artifactId>bom-2.361.x</artifactId>
-                <version>1836.vfe602c266c05</version>
+                <version>1887.vda_d0ddb_c15c4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -65,28 +62,12 @@
             <artifactId>mailer</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.spotbugs</groupId>
-            <artifactId>spotbugs-annotations</artifactId>
-            <scope>provided</scope>
+          <groupId>io.jenkins.plugins</groupId>
+          <artifactId>commons-lang3-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>ssh-credentials</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>4.4.16</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.14</version>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
