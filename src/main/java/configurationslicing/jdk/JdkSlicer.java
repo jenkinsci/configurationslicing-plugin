@@ -64,7 +64,9 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject> {
             JDK oldJdk = item.getJDK();
             if (!equals(oldJdk, jdk)) {
 	            try {
-	                item.setJDK(jdk);
+	                if (jdk != null) {
+                            item.setJDK(jdk);
+                        }
 	                return true;
 	            } catch (IOException e) {
 	                e.printStackTrace();
