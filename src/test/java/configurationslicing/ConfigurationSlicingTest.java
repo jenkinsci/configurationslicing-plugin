@@ -1,6 +1,6 @@
 package configurationslicing;
 
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import org.htmlunit.FailingHttpStatusCodeException;
 import jenkins.model.Jenkins;
 import org.junit.Rule;
 import org.junit.Test;
