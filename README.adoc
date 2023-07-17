@@ -13,7 +13,7 @@ endif::[]
 image:https://img.shields.io/jenkins/plugin/v/configurationslicing.svg[Jenkins Plugin,link=https://plugins.jenkins.io/configurationslicing]
 image:https://img.shields.io/github/release/jenkinsci/configurationslicing-plugin.svg?label=release[GitHub release,link=https://github.com/jenkinsci/configurationslicing-plugin/releases/latest]
 image:https://img.shields.io/jenkins/plugin/i/configurationslicing.svg?color=blue[Jenkins Plugin Installs,link=https://plugins.jenkins.io/configurationslicing]
-image:https://ci.jenkins.io/job/Plugins/job/configurationslicing-plugin/job/devel/badge/icon[Build Status,link=https://ci.jenkins.io/job/Plugins/job/configurationslicing-plugin/job/devel/]
+image:https://ci.jenkins.io/job/Plugins/job/configurationslicing-plugin/job/master/badge/icon[Build Status,link=https://ci.jenkins.io/job/Plugins/job/configurationslicing-plugin/job/master/]
 
 toc::[]
 
