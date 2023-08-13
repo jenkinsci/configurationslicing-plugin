@@ -219,31 +219,6 @@
         <tag>${scmTag}</tag>
     </scm>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-release-plugin</artifactId>
-                <configuration>
-                    <goals>deploy</goals>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.jenkins-ci.tools</groupId>
-                <artifactId>maven-hpi-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <forkCount>1C</forkCount>
-                    <parallel>all</parallel>
-                    <useUnlimitedThreads>true</useUnlimitedThreads>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
-
     <repositories>
         <repository>
             <id>repo.jenkins-ci.org</id>
