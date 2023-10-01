@@ -1,16 +1,18 @@
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates
+---
 version: 2
 updates:
-  - package-ecosystem: maven
+  - package-ecosystem: "maven"
     directory: "/"
-    schedule:
-      interval: monthly
-    open-pull-requests-limit: 10
-    target-branch: master
-    reviewers:
-      - guysoft
     labels:
-      - dependencies
-  - package-ecosystem: github-actions
-    directory: /
+      - "dependencies"
+    reviewers:
+      - "guysoft"
     schedule:
-      interval: monthly
+      interval: "monthly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    labels:
+      - "skip-changelog"
+    schedule:
+      interval: "monthly"
