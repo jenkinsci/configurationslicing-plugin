@@ -5,7 +5,6 @@ import hudson.model.AbstractProject;
 import hudson.model.Job;
 import hudson.triggers.TimerTrigger;
 import hudson.triggers.Trigger;
-import antlr.ANTLRException;
 import configurationslicing.UnorderedStringSlicer;
 
 @Extension
@@ -29,7 +28,7 @@ public class TimerSliceStringSlicer extends UnorderedStringSlicer<Job>{
         }
 
         @SuppressWarnings("unchecked")
-		public Trigger newTrigger(String spec, Trigger oldTrigger) throws ANTLRException {
+		public Trigger newTrigger(String spec, Trigger oldTrigger) {
             return new TimerTrigger(spec);
         }
         

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import antlr.ANTLRException;
 import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer.UnorderedStringSlicerSpec;
 
@@ -54,7 +53,7 @@ public abstract class AbstractTimerSliceSpec extends
 		return TopLevelItemSelector.getAllTopLevelItems(Job.class);
 	}
 
-	public abstract Trigger newTrigger(String spec, Trigger oldTrigger) throws ANTLRException;
+	public abstract Trigger newTrigger(String spec, Trigger oldTrigger);
 
 	public boolean setValues(Job item, List<String> set) {
 		if (set.isEmpty())
@@ -90,7 +89,7 @@ public abstract class AbstractTimerSliceSpec extends
 				newtrigger.start(item, true);
 			}
 			return true;
-		} catch (ANTLRException e) {
+		} catch (IllegalArgumentException e) {
 			// need to log this
 			return false;
 		} catch (IOException e) {
