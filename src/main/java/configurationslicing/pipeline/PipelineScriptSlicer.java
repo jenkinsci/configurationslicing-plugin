@@ -2,6 +2,8 @@ package configurationslicing.pipeline;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
@@ -14,6 +16,7 @@ import static org.apache.commons.lang.StringUtils.isEmpty;
 
 @Extension(optional = true)
 public class PipelineScriptSlicer extends UnorderedStringSlicer<WorkflowJob> {
+    private static final Logger LOGGER = Logger.getLogger(PipelineScriptSlicer.class.getName());
 
     public PipelineScriptSlicer() {
         super(new PipelineScriptSliceSpec());
@@ -61,6 +64,14 @@ public class PipelineScriptSlicer extends UnorderedStringSlicer<WorkflowJob> {
             return TopLevelItemSelector.getAllTopLevelItems(WorkflowJob.class);
         }
 
+        private void setDefinition(WorkflowJob item, String definition) {
+            try {
+                item.setDefinition(new CpsFlowDefinition(definition, true));
+            } catch (hudson.model.Descriptor.FormException e) {
+                LOGGER.log(Level.FINE, "Cannot set definition", e);
+            }
+        }
+
         public boolean setValues(WorkflowJob item, List<String> set) {
             if (set.isEmpty() || set.size() > 1) {
                 return false;
@@ -74,9 +85,9 @@ public class PipelineScriptSlicer extends UnorderedStringSlicer<WorkflowJob> {
                     case DEFINED_IN_SCM:
                         break;
                     case EMPTY:
-                        item.setDefinition(new CpsFlowDefinition("", true));
+                        setDefinition(item, "");
                     default:
-                        item.setDefinition(new CpsFlowDefinition(newValue, true));
+                        setDefinition(item, newValue);
                 }
 
             }
