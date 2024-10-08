@@ -1,12 +1,10 @@
 package configurationslicing.customworkspace;
 
+import configurationslicing.project.AbstractSimpleProjectSlicer;
 import hudson.Extension;
 import hudson.model.AbstractProject;
 import hudson.model.FreeStyleProject;
-
 import java.io.IOException;
-
-import configurationslicing.project.AbstractSimpleProjectSlicer;
 
 /**
  * @author jacob_robertson
@@ -18,32 +16,34 @@ public class CustomWorkspaceStringSlicer extends AbstractSimpleProjectSlicer {
         super(new CustomWorkspaceStringSliceSpec());
     }
 
-    public static class CustomWorkspaceStringSliceSpec extends AbstractSimpleProjectSlicer.AbstractSimpleProjectSliceSpec {
+    public static class CustomWorkspaceStringSliceSpec
+            extends AbstractSimpleProjectSlicer.AbstractSimpleProjectSliceSpec {
 
         public String getName() {
             return "Custom Workspace Slicer";
         }
+
         public String getUrl() {
             return "customworkspace";
         }
+
         @Override
         protected String getValue(AbstractProject item) {
-        	if (item instanceof FreeStyleProject) {
-        		FreeStyleProject project = (FreeStyleProject) item;
-        		String ws = project.getCustomWorkspace();
-        		return ws;
-        	} else {
-        		return null;
-        	}
-        }
-        @Override
-        protected void setValue(AbstractProject item, String value)
-        		throws IOException {
-        	if (item instanceof FreeStyleProject) {
-        		FreeStyleProject project = (FreeStyleProject) item;
-       			project.setCustomWorkspace(value);
-        	}
+            if (item instanceof FreeStyleProject) {
+                FreeStyleProject project = (FreeStyleProject) item;
+                String ws = project.getCustomWorkspace();
+                return ws;
+            } else {
+                return null;
+            }
         }
 
+        @Override
+        protected void setValue(AbstractProject item, String value) throws IOException {
+            if (item instanceof FreeStyleProject) {
+                FreeStyleProject project = (FreeStyleProject) item;
+                project.setCustomWorkspace(value);
+            }
+        }
     }
 }

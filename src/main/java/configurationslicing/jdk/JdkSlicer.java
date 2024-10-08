@@ -1,20 +1,16 @@
 package configurationslicing.jdk;
 
+import configurationslicing.TopLevelItemSelector;
+import configurationslicing.UnorderedStringSlicer;
 import hudson.Extension;
 import hudson.model.AbstractProject;
-import hudson.model.Hudson;
 import hudson.model.JDK;
-import jenkins.model.Jenkins;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import jenkins.model.Jenkins;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
-
-import configurationslicing.TopLevelItemSelector;
-import configurationslicing.UnorderedStringSlicer;
 
 @Extension
 public class JdkSlicer extends UnorderedStringSlicer<AbstractProject> {
@@ -27,8 +23,9 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject> {
         private static final String DEFAULT = "(Default)";
 
         public String getDefaultValueString() {
-        	return DEFAULT;
+            return DEFAULT;
         }
+
         public String getName() {
             return "JDK per project";
         }
@@ -49,49 +46,48 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject> {
             return ret;
         }
 
-		public List<AbstractProject> getWorkDomain() {
+        public List<AbstractProject> getWorkDomain() {
             return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
         public boolean setValues(AbstractProject item, List<String> set) {
-            if(set.size() == 0) return false;
+            if (set.size() == 0) return false;
             Jenkins hudson = Jenkins.get();
-            JDK jdk=null;
-            for(String val : set) {
+            JDK jdk = null;
+            for (String val : set) {
                 jdk = hudson.getJDK(val);
-                if(jdk!=null) break;
+                if (jdk != null) break;
             }
             JDK oldJdk = item.getJDK();
             if (!equals(oldJdk, jdk)) {
-	            try {
-	                if (jdk != null) {
-                            item.setJDK(jdk);
-                        }
-	                return true;
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	                return false;
-	            }
+                try {
+                    if (jdk != null) {
+                        item.setJDK(jdk);
+                    }
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
+                }
             } else {
-            	return false;
+                return false;
             }
         }
+
         public static boolean equals(JDK j1, JDK j2) {
-        	if (ObjectUtils.equals(j1, j2)) {
-        		return true;
-        	}
-        	if (j1 == null || j2 == null) {
-        		return false;
-        	}
-        	if (!StringUtils.equals(j1.getHome(), j2.getHome())) {
-        		return false;
-        	}
-        	if (!StringUtils.equals(j1.getName(), j2.getName())) {
-        		return false;
-        	}
-        	return true;
+            if (ObjectUtils.equals(j1, j2)) {
+                return true;
+            }
+            if (j1 == null || j2 == null) {
+                return false;
+            }
+            if (!StringUtils.equals(j1.getHome(), j2.getHome())) {
+                return false;
+            }
+            if (!StringUtils.equals(j1.getName(), j2.getName())) {
+                return false;
+            }
+            return true;
         }
-
     }
-
 }

@@ -1,5 +1,8 @@
 package configurationslicing.buildtimeout;
 
+import com.thoughtworks.xstream.XStreamException;
+import configurationslicing.TopLevelItemSelector;
+import configurationslicing.UnorderedStringSlicer;
 import hudson.Extension;
 import hudson.model.BuildableItemWithBuildWrappers;
 import hudson.model.Descriptor;
@@ -7,22 +10,15 @@ import hudson.plugins.build_timeout.BuildTimeoutWrapper;
 import hudson.tasks.BuildWrapper;
 import hudson.util.DescribableList;
 import hudson.util.XStream2;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
 import org.apache.commons.lang.StringUtils;
 
-import com.thoughtworks.xstream.XStreamException;
-
-import configurationslicing.TopLevelItemSelector;
-import configurationslicing.UnorderedStringSlicer;
-
 @Extension(optional = true)
-public class BuildTimeoutSlicer extends UnorderedStringSlicer<BuildableItemWithBuildWrappers>{
+public class BuildTimeoutSlicer extends UnorderedStringSlicer<BuildableItemWithBuildWrappers> {
     private static final Logger LOGGER = Logger.getLogger(BuildTimeoutSlicer.class.getName());
 
     public BuildTimeoutSlicer() {
@@ -31,7 +27,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<BuildableItemWithB
 
     @Override
     public boolean isLoaded() {
-        try { 
+        try {
             BuildTimeoutWrapper.class.toString();
             return true;
         } catch (Throwable t) {
@@ -62,7 +58,7 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<BuildableItemWithB
         public List<String> getValues(BuildableItemWithBuildWrappers item) {
             XStream2 xs = getXStream();
             BuildableItemWithBuildWrappers bi = (BuildableItemWithBuildWrappers) item;
-            DescribableList<BuildWrapper,Descriptor<BuildWrapper>> wrappers = bi.getBuildWrappersList();
+            DescribableList<BuildWrapper, Descriptor<BuildWrapper>> wrappers = bi.getBuildWrappersList();
             List<String> values = new ArrayList<String>();
             BuildTimeoutWrapper wrapper = wrappers.get(BuildTimeoutWrapper.class);
             if (wrapper != null) {
@@ -108,10 +104,8 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<BuildableItemWithB
         public boolean setValues(BuildableItemWithBuildWrappers item, List<String> set) {
             LOGGER.info("BuildTimeoutSlicer.setValues for item " + item.getName());
             XStream2 xs = getXStream();
-            BuildableItemWithBuildWrappers bi =
-                    (BuildableItemWithBuildWrappers) item;
-            DescribableList<BuildWrapper,Descriptor<BuildWrapper>> wrappers =
-                    bi.getBuildWrappersList();
+            BuildableItemWithBuildWrappers bi = (BuildableItemWithBuildWrappers) item;
+            DescribableList<BuildWrapper, Descriptor<BuildWrapper>> wrappers = bi.getBuildWrappersList();
             boolean changed = false;
             BuildTimeoutWrapper wrapper = wrappers.get(BuildTimeoutWrapper.class);
             BuildTimeoutWrapper newWrapper = null;
@@ -122,20 +116,20 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<BuildableItemWithB
             } else {
                 try {
                     Object o = xs.fromXML(line);
-                    if(o instanceof BuildTimeoutWrapper) {
-                        newWrapper = (BuildTimeoutWrapper)o;
-                        changed=true;
+                    if (o instanceof BuildTimeoutWrapper) {
+                        newWrapper = (BuildTimeoutWrapper) o;
+                        changed = true;
                     }
                 } catch (XStreamException xse) {
                     LOGGER.warning("XStreamException parsing XML for BuildTimeoutSlicer: " + xse.getMessage());
-                    changed=false;
+                    changed = false;
                 }
             }
 
             if (delete) {
                 if (wrapper != null) {
                     wrappers.remove(wrapper);
-                    changed=true;
+                    changed = true;
                 }
             } else if (newWrapper != null && changed) {
                 try {
@@ -153,10 +147,12 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<BuildableItemWithB
         public String getName(BuildableItemWithBuildWrappers item) {
             return item.getFullName();
         }
+
         @Override
         public String getDefaultValueString() {
             return DISABLED;
         }
+
         @Override
         public String getConfiguredValueDescription() {
             return "Build Timeout XML";

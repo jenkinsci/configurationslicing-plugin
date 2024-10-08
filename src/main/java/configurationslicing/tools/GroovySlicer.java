@@ -10,52 +10,60 @@ import jenkins.model.Jenkins;
  */
 public class GroovySlicer extends AbstractToolSlicer {
 
-  public GroovySlicer() {
-    super(new GroovySlicerSpec());
-  }
-
-  @Override
-  protected Class< ? extends Builder> getPluginClass() {
-    return Groovy.class;
-  }
-
-  public static class GroovySlicerSpec extends AbstractToolSlicerSpec {
-
-    @Override
-    public String getDefaultValueString() {
-      return "(Default)";
+    public GroovySlicer() {
+        super(new GroovySlicerSpec());
     }
 
     @Override
-    public String getName() {
-      return "Groovy version per project";
+    protected Class<? extends Builder> getPluginClass() {
+        return Groovy.class;
     }
 
-    @Override
-    public String getUrl() {
-      return "projectgroovy";
-    }
+    public static class GroovySlicerSpec extends AbstractToolSlicerSpec {
 
-    @Override
-    protected Class< ? extends Builder> getBuilderClass() {
-      return Groovy.class;
-    }
+        @Override
+        public String getDefaultValueString() {
+            return "(Default)";
+        }
 
-    @Override
-    protected Builder getNewBuilder(Builder oldInstall, String installationName) {
-      Groovy oldGroovy = (Groovy) oldInstall;
-      return new Groovy(oldGroovy.getScriptSource(), installationName, oldGroovy.getParameters(), oldGroovy.getScriptParameters(),
-          oldGroovy.getProperties(), oldGroovy.getJavaOpts(), oldGroovy.getClassPath());
-    }
+        @Override
+        public String getName() {
+            return "Groovy version per project";
+        }
 
-    @Override
-    protected String getToolName(Builder builder) {
-      return ((Groovy) builder).getGroovyName();
-    }
+        @Override
+        public String getUrl() {
+            return "projectgroovy";
+        }
 
-    @Override
-    protected ToolInstallation[] getToolInstallations() {
-      return Jenkins.get().getDescriptorByType(Groovy.DescriptorImpl.class).getInstallations();
+        @Override
+        protected Class<? extends Builder> getBuilderClass() {
+            return Groovy.class;
+        }
+
+        @Override
+        protected Builder getNewBuilder(Builder oldInstall, String installationName) {
+            Groovy oldGroovy = (Groovy) oldInstall;
+            return new Groovy(
+                    oldGroovy.getScriptSource(),
+                    installationName,
+                    oldGroovy.getParameters(),
+                    oldGroovy.getScriptParameters(),
+                    oldGroovy.getProperties(),
+                    oldGroovy.getJavaOpts(),
+                    oldGroovy.getClassPath());
+        }
+
+        @Override
+        protected String getToolName(Builder builder) {
+            return ((Groovy) builder).getGroovyName();
+        }
+
+        @Override
+        protected ToolInstallation[] getToolInstallations() {
+            return Jenkins.get()
+                    .getDescriptorByType(Groovy.DescriptorImpl.class)
+                    .getInstallations();
+        }
     }
-  }
 }

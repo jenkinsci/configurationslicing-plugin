@@ -1,18 +1,17 @@
 package configurationslicing.pipeline;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 import hudson.Extension;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.flow.FlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
-
-import static org.apache.commons.lang.StringUtils.isEmpty;
 
 @Extension(optional = true)
 public class PipelineScriptSlicer extends UnorderedStringSlicer<WorkflowJob> {
@@ -24,7 +23,7 @@ public class PipelineScriptSlicer extends UnorderedStringSlicer<WorkflowJob> {
 
     @Override
     public void loadPluginDependencyClass() {
-         CpsFlowDefinition.class.getClass();
+        CpsFlowDefinition.class.getClass();
     }
 
     public static class PipelineScriptSliceSpec extends UnorderedStringSlicerSpec<WorkflowJob> {
@@ -89,7 +88,6 @@ public class PipelineScriptSlicer extends UnorderedStringSlicer<WorkflowJob> {
                     default:
                         setDefinition(item, newValue);
                 }
-
             }
             return false; // for some reason setDefinition is already saving the job
         }

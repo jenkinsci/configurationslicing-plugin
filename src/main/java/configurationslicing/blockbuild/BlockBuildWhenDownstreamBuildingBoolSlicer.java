@@ -1,22 +1,20 @@
 package configurationslicing.blockbuild;
 
-import hudson.Extension;
-import hudson.model.AbstractProject;
-
-import java.io.IOException;
-import java.util.List;
-
 import configurationslicing.BooleanSlicer;
 import configurationslicing.TopLevelItemSelector;
+import hudson.Extension;
+import hudson.model.AbstractProject;
+import java.io.IOException;
+import java.util.List;
 
 @Extension
 public class BlockBuildWhenDownstreamBuildingBoolSlicer extends BooleanSlicer<AbstractProject> {
     public BlockBuildWhenDownstreamBuildingBoolSlicer() {
         super(new BlockBuildWhenDownstreamBuildingSpec());
     }
-    
-    public static class BlockBuildWhenDownstreamBuildingSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject>
-    {
+
+    public static class BlockBuildWhenDownstreamBuildingSpec
+            implements BooleanSlicer.BooleanSlicerSpec<AbstractProject> {
         public String getName() {
             return "Block Build when Downstream Building Slicer (bool)";
         }

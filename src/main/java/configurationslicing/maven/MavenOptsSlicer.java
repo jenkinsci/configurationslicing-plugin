@@ -1,17 +1,13 @@
 package configurationslicing.maven;
 
+import configurationslicing.UnorderedStringSlicer;
 import hudson.Extension;
 import hudson.maven.MavenModuleSet;
 import hudson.maven.MavenModuleSet.DescriptorImpl;
-import hudson.model.Hudson;
-import hudson.tasks.Maven;
-import jenkins.model.Jenkins;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import configurationslicing.UnorderedStringSlicer;
+import jenkins.model.Jenkins;
 
 @Extension(optional = true)
 public class MavenOptsSlicer extends UnorderedStringSlicer<MavenModuleSet> {
@@ -29,7 +25,7 @@ public class MavenOptsSlicer extends UnorderedStringSlicer<MavenModuleSet> {
     public static class MavenOptsSlicerSpec extends UnorderedStringSlicerSpec<MavenModuleSet> {
 
         public String getDefaultValueString() {
-        	return null;
+            return null;
         }
 
         public String getName() {
@@ -52,16 +48,15 @@ public class MavenOptsSlicer extends UnorderedStringSlicer<MavenModuleSet> {
         }
 
         @SuppressWarnings("unchecked")
-		public List<MavenModuleSet> getWorkDomain() {
+        public List<MavenModuleSet> getWorkDomain() {
             return (List) Jenkins.get().getAllItems(MavenModuleSet.class);
         }
 
         public boolean setValues(MavenModuleSet item, List<String> set) {
-            if(set.isEmpty()) return false;
+            if (set.isEmpty()) return false;
             String value = set.iterator().next();
-            DescriptorImpl descriptor =
-                    Jenkins.get().getDescriptorByType(MavenModuleSet.DescriptorImpl.class);
-            if(value.equals(descriptor.getGlobalMavenOpts())) {
+            DescriptorImpl descriptor = Jenkins.get().getDescriptorByType(MavenModuleSet.DescriptorImpl.class);
+            if (value.equals(descriptor.getGlobalMavenOpts())) {
                 item.setMavenOpts(null);
             } else {
                 item.setMavenOpts(value);
@@ -73,6 +68,5 @@ public class MavenOptsSlicer extends UnorderedStringSlicer<MavenModuleSet> {
             }
             return true;
         }
-
     }
 }

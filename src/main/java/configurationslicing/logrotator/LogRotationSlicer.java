@@ -1,39 +1,40 @@
 package configurationslicing.logrotator;
 
+import configurationslicing.TopLevelItemSelector;
+import configurationslicing.UnorderedStringSlicer;
 import hudson.Extension;
 import hudson.model.Job;
 import hudson.tasks.LogRotator;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import configurationslicing.TopLevelItemSelector;
-import configurationslicing.UnorderedStringSlicer;
 
 public abstract class LogRotationSlicer extends UnorderedStringSlicer<Job> {
     public LogRotationSlicer(UnorderedStringSlicerSpec<Job> spec) {
         super(spec);
     }
-    
+
     @Extension
     public static class Days extends LogRotationSlicer {
         public Days() {
             super(new LogRotationDaysSliceSpec());
         }
     }
+
     @Extension
     public static class Count extends LogRotationSlicer {
         public Count() {
             super(new LogRotationBuildsSliceSpec());
         }
     }
+
     @Extension
     public static class ArtifactDays extends LogRotationSlicer {
         public ArtifactDays() {
             super(new ArtifactDaysSliceSpec());
         }
     }
+
     @Extension
     public static class ArtifactBuilds extends LogRotationSlicer {
         public ArtifactBuilds() {
@@ -45,22 +46,26 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<Job> {
         private static final String DISABLED = "(Disabled)";
         private String displayName;
         private String url;
-         
+
         public AbstractLogRotationSliceSpec(String displayName, String url) {
-			this.displayName = "Discard Old Builds Slicer - " + displayName;
-			this.url = url;
-		}
+            this.displayName = "Discard Old Builds Slicer - " + displayName;
+            this.url = url;
+        }
+
         @Override
         public String getName() {
-        	return displayName;
+            return displayName;
         }
+
         @Override
         public String getUrl() {
-        	return url;
+            return url;
         }
-		public String getDefaultValueString() {
-        	return DISABLED;
+
+        public String getDefaultValueString() {
+            return DISABLED;
         }
+
         public String getName(Job item) {
             return item.getFullName();
         }
@@ -71,7 +76,7 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<Job> {
             if (logrotator == null) {
                 retString = DISABLED;
             } else {
-            	retString = getValue(logrotator);
+                retString = getValue(logrotator);
                 if (retString.length() == 0) {
                     retString = DISABLED;
                 }
@@ -80,9 +85,10 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<Job> {
             ret.add(retString);
             return ret;
         }
-        abstract protected String getValue(LogRotator rotator);
 
-		public List<Job> getWorkDomain() {
+        protected abstract String getValue(LogRotator rotator);
+
+        public List<Job> getWorkDomain() {
             return TopLevelItemSelector.getAllTopLevelItems(Job.class);
         }
 
@@ -92,21 +98,21 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<Job> {
             LogRotator logrotator = item.getLogRotator();
             int days = -1;
             int builds = -1;
-    	    int artifactDaysToKeep = -1;
-    	    int artifactNumToKeep = -1;
-            
+            int artifactDaysToKeep = -1;
+            int artifactNumToKeep = -1;
+
             if (logrotator != null) {
                 days = logrotator.getDaysToKeep();
                 builds = logrotator.getNumToKeep();
                 artifactDaysToKeep = logrotator.getArtifactDaysToKeep();
                 artifactNumToKeep = logrotator.getArtifactNumToKeep();
             }
-            
+
             int newInt = -1;
             String newString = null;
-            for(String line: set) {
-            	newString = line;
-            	break;
+            for (String line : set) {
+                newString = line;
+                break;
             }
             if (!DISABLED.equals(newString)) {
                 newInt = Integer.parseInt(newString);
@@ -115,107 +121,123 @@ public abstract class LogRotationSlicer extends UnorderedStringSlicer<Job> {
             builds = getNewBuilds(builds, newInt);
             artifactDaysToKeep = getNewArtifactDays(artifactDaysToKeep, newInt);
             artifactNumToKeep = getNewArtifactBuilds(artifactNumToKeep, newInt);
-    	    
+
             LogRotator newlogrotator = new LogRotator(days, builds, artifactDaysToKeep, artifactNumToKeep);
-            
+
             if (!LogRotationSlicer.equals(newlogrotator, logrotator)) {
                 try {
                     item.setLogRotator(newlogrotator);
-	                item.save();
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	                return false;
-	            }
-	            return true;
+                    item.save();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+                return true;
             } else {
-            	return false;
+                return false;
             }
         }
+
         protected int getNewDays(int oldDays, int newValue) {
-       		return oldDays;
+            return oldDays;
         }
+
         protected int getNewBuilds(int oldBuilds, int newValue) {
-       		return oldBuilds;
+            return oldBuilds;
         }
+
         protected int getNewArtifactDays(int oldValue, int newValue) {
-       		return oldValue;
+            return oldValue;
         }
+
         protected int getNewArtifactBuilds(int oldValue, int newValue) {
-       		return oldValue;
+            return oldValue;
         }
     }
-    
+
     public static class LogRotationDaysSliceSpec extends AbstractLogRotationSliceSpec {
         public LogRotationDaysSliceSpec() {
             super("Days to keep builds", "logrotationdays");
         }
+
         @Override
         protected String getValue(LogRotator rotator) {
-        	return rotator.getDaysToKeepStr();
+            return rotator.getDaysToKeepStr();
         }
+
         @Override
         protected int getNewDays(int oldDays, int newValue) {
-        	return newValue;
+            return newValue;
         }
     }
+
     public static class LogRotationBuildsSliceSpec extends AbstractLogRotationSliceSpec {
         public LogRotationBuildsSliceSpec() {
-        	super("Max # of builds to keep", "logrotationbuilds");
+            super("Max # of builds to keep", "logrotationbuilds");
         }
+
         @Override
         protected String getValue(LogRotator rotator) {
-        	return rotator.getNumToKeepStr();
+            return rotator.getNumToKeepStr();
         }
+
         @Override
         protected int getNewBuilds(int oldBuilds, int newValue) {
-        	return newValue;
+            return newValue;
         }
     }
+
     public static class ArtifactDaysSliceSpec extends AbstractLogRotationSliceSpec {
         public ArtifactDaysSliceSpec() {
             super("Days to keep artifacts", "artifactsdays");
         }
+
         @Override
         protected String getValue(LogRotator rotator) {
-        	return rotator.getArtifactDaysToKeepStr();
+            return rotator.getArtifactDaysToKeepStr();
         }
+
         @Override
         protected int getNewArtifactDays(int oldDays, int newValue) {
-        	return newValue;
+            return newValue;
         }
     }
+
     public static class ArtifactBuildsSliceSpec extends AbstractLogRotationSliceSpec {
         public ArtifactBuildsSliceSpec() {
             super("Max # of builds to keep with artifacts", "artifactsbuilds");
         }
+
         @Override
         protected String getValue(LogRotator rotator) {
-        	return rotator.getArtifactNumToKeepStr();
+            return rotator.getArtifactNumToKeepStr();
         }
+
         @Override
         protected int getNewArtifactBuilds(int oldValue, int newValue) {
-        	return newValue;
+            return newValue;
         }
     }
+
     public static boolean equals(LogRotator r1, LogRotator r2) {
-    	if (r1 == r2) {
-    		return true;
-    	}
-    	if (r1 == null || r2 == null) {
-    		return false;
-    	}
-    	if (r1.getDaysToKeep() != r2.getDaysToKeep()) {
-    		return false;
-    	}
-    	if (r1.getNumToKeep() != r2.getNumToKeep()) {
-    		return false;
-    	}
-    	if (r1.getArtifactDaysToKeep() != r2.getArtifactDaysToKeep()) {
-    		return false;
-    	}
-    	if (r1.getArtifactNumToKeep() != r2.getArtifactNumToKeep()) {
-    		return false;
-    	}
-    	return true;
+        if (r1 == r2) {
+            return true;
+        }
+        if (r1 == null || r2 == null) {
+            return false;
+        }
+        if (r1.getDaysToKeep() != r2.getDaysToKeep()) {
+            return false;
+        }
+        if (r1.getNumToKeep() != r2.getNumToKeep()) {
+            return false;
+        }
+        if (r1.getArtifactDaysToKeep() != r2.getArtifactDaysToKeep()) {
+            return false;
+        }
+        if (r1.getArtifactNumToKeep() != r2.getArtifactNumToKeep()) {
+            return false;
+        }
+        return true;
     }
 }

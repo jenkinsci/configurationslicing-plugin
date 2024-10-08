@@ -8,52 +8,51 @@ import java.util.List;
  */
 public abstract class SlicerLoader<T, I> implements Slicer<T, I> {
 
-	abstract protected Slicer<T, I> buildDelegateOnConstruction() throws Throwable;
-	
-	private Slicer<T, I> delegate;
+    protected abstract Slicer<T, I> buildDelegateOnConstruction() throws Throwable;
 
-	public SlicerLoader() {
-		try {
-			delegate = buildDelegateOnConstruction();
-		} catch (Throwable t) {
-			delegate = null;
-		}
-	}
+    private Slicer<T, I> delegate;
 
-	public boolean isLoaded() {
-		return delegate != null && delegate.isLoaded();
-	}
+    public SlicerLoader() {
+        try {
+            delegate = buildDelegateOnConstruction();
+        } catch (Throwable t) {
+            delegate = null;
+        }
+    }
 
-	public Slicer<T, I> getDelegate() {
-		return delegate;
-	}
+    public boolean isLoaded() {
+        return delegate != null && delegate.isLoaded();
+    }
 
-	public int compareTo(Slicer<UnorderedStringSlice<I>, I> o) {
-		return 0;
-	}
+    public Slicer<T, I> getDelegate() {
+        return delegate;
+    }
 
-	public String getName() {
-		return null;
-	}
+    public int compareTo(Slicer<UnorderedStringSlice<I>, I> o) {
+        return 0;
+    }
 
-	public String getUrl() {
-		return null;
-	}
+    public String getName() {
+        return null;
+    }
 
-	public List<I> getWorkDomain() {
-		return null;
-	}
+    public String getUrl() {
+        return null;
+    }
 
-	public T getInitialAccumulator() {
-		return null;
-	}
+    public List<I> getWorkDomain() {
+        return null;
+    }
 
-	public UnorderedStringSlice<I> accumulate(UnorderedStringSlice<I> t, I i) {
-		return null;
-	}
+    public T getInitialAccumulator() {
+        return null;
+    }
 
-	public boolean transform(UnorderedStringSlice<I> t, I i) {
-		return false;
-	}
-	
+    public UnorderedStringSlice<I> accumulate(UnorderedStringSlice<I> t, I i) {
+        return null;
+    }
+
+    public boolean transform(UnorderedStringSlice<I> t, I i) {
+        return false;
+    }
 }

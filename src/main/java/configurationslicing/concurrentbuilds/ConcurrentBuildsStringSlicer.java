@@ -1,15 +1,14 @@
 package configurationslicing.concurrentbuilds;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import static configurationslicing.AbstractJob.fix;
 
 import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 import hudson.Extension;
 import hudson.model.Job;
-
-import static configurationslicing.AbstractJob.fix;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Extension
 public class ConcurrentBuildsStringSlicer extends UnorderedStringSlicer<Job> {

@@ -10,55 +10,60 @@ import hudson.tools.ToolInstallation;
  */
 public class GradleSlicer extends AbstractToolSlicer {
 
-	public GradleSlicer() {
-		super(new GradleSlicerSpec());
-	}
+    public GradleSlicer() {
+        super(new GradleSlicerSpec());
+    }
 
-	@Override
-	protected Class<? extends Builder> getPluginClass() {
-		return Gradle.class;
-	}
+    @Override
+    protected Class<? extends Builder> getPluginClass() {
+        return Gradle.class;
+    }
 
-	public static class GradleSlicerSpec extends AbstractToolSlicerSpec {
-		@Override
-		public String getDefaultValueString() {
-			return "(Default)";
-		}
+    public static class GradleSlicerSpec extends AbstractToolSlicerSpec {
+        @Override
+        public String getDefaultValueString() {
+            return "(Default)";
+        }
 
-		@Override
-		public String getName() {
-			return "Gradle version per project";
-		}
+        @Override
+        public String getName() {
+            return "Gradle version per project";
+        }
 
-		@Override
-		public String getUrl() {
-			return "projectgradle";
-		}
+        @Override
+        public String getUrl() {
+            return "projectgradle";
+        }
 
-		@Override
-		protected Class<? extends Builder> getBuilderClass() {
-			return Gradle.class;
-		}
+        @Override
+        protected Class<? extends Builder> getBuilderClass() {
+            return Gradle.class;
+        }
 
-		@Override
-		protected ToolInstallation[] getToolInstallations() {
-			return new DescriptorImpl().getInstallations();
-		}
+        @Override
+        protected ToolInstallation[] getToolInstallations() {
+            return new DescriptorImpl().getInstallations();
+        }
 
-		@Override
-		protected Builder getNewBuilder(Builder oldBuilder,
-				String toolInstallationName) {
-			Gradle oldGradle = (Gradle) oldBuilder;
-			return new Gradle(oldGradle.getSwitches(), oldGradle.getTasks(),
-					oldGradle.getRootBuildScriptDir(),
-					oldGradle.getBuildFile(), toolInstallationName,
-					false, oldGradle.isMakeExecutable(),
-					oldGradle.getRootBuildScriptDir(), oldGradle.isUseWorkspaceAsHome(), oldGradle.isPassAllAsSystemProperties());
-		}
+        @Override
+        protected Builder getNewBuilder(Builder oldBuilder, String toolInstallationName) {
+            Gradle oldGradle = (Gradle) oldBuilder;
+            return new Gradle(
+                    oldGradle.getSwitches(),
+                    oldGradle.getTasks(),
+                    oldGradle.getRootBuildScriptDir(),
+                    oldGradle.getBuildFile(),
+                    toolInstallationName,
+                    false,
+                    oldGradle.isMakeExecutable(),
+                    oldGradle.getRootBuildScriptDir(),
+                    oldGradle.isUseWorkspaceAsHome(),
+                    oldGradle.isPassAllAsSystemProperties());
+        }
 
-		@Override
-		protected String getToolName(Builder builder) {
-			return ((Gradle) builder).getGradleName();
-		}
-	}
+        @Override
+        protected String getToolName(Builder builder) {
+            return ((Gradle) builder).getGradleName();
+        }
+    }
 }

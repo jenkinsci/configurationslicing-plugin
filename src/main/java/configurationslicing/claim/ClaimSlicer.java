@@ -1,16 +1,14 @@
 package configurationslicing.claim;
 
+import configurationslicing.BooleanSlicer;
+import configurationslicing.TopLevelItemSelector;
 import hudson.Extension;
 import hudson.model.AbstractProject;
 import hudson.model.Descriptor;
 import hudson.plugins.claim.ClaimPublisher;
 import hudson.tasks.Publisher;
 import hudson.util.DescribableList;
-
 import java.util.List;
-
-import configurationslicing.BooleanSlicer;
-import configurationslicing.TopLevelItemSelector;
 
 @Extension(optional = true)
 public class ClaimSlicer extends BooleanSlicer<AbstractProject> {
@@ -27,8 +25,7 @@ public class ClaimSlicer extends BooleanSlicer<AbstractProject> {
         }
     }
 
-    public static class ClaimSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject>
-    {
+    public static class ClaimSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject> {
         public String getName() {
             return "Claim Slicer";
         }
@@ -56,7 +53,7 @@ public class ClaimSlicer extends BooleanSlicer<AbstractProject> {
             boolean oldval = getValue(item);
             if (value == oldval) {
                 return true;
-            } else if (value==false) { // request to remove the publisher
+            } else if (value == false) { // request to remove the publisher
                 DescribableList<Publisher, Descriptor<Publisher>> publishersList = item.getPublishersList();
                 ClaimPublisher claimPublisher = publishersList.get(ClaimPublisher.class);
                 publishersList.remove(claimPublisher);

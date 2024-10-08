@@ -1,22 +1,19 @@
 package configurationslicing.jobdisabled;
 
-import hudson.Extension;
-import hudson.model.AbstractProject;
-import hudson.model.AbstractProject;
-
-import java.io.IOException;
-import java.util.List;
-
 import configurationslicing.BooleanSlicer;
 import configurationslicing.TopLevelItemSelector;
+import hudson.Extension;
+import hudson.model.AbstractProject;
+import java.io.IOException;
+import java.util.List;
 
 @Extension
 public class JobDisabledBoolSlicer extends BooleanSlicer<AbstractProject> {
     public JobDisabledBoolSlicer() {
         super(new JobDisabledSpec());
     }
-    public static class JobDisabledSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject>
-    {
+
+    public static class JobDisabledSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject> {
         public String getName() {
             return "Job Disabled Build Slicer (bool)";
         }

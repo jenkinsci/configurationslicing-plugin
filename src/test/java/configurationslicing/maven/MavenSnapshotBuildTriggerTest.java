@@ -14,9 +14,10 @@ public class MavenSnapshotBuildTriggerTest extends HudsonTestCase {
         // Create the class under test
         MavenSnapshotBuildTriggerSlicerSpec slicerSpec = new MavenSnapshotBuildTriggerSlicerSpec();
         // Create a mock for the MavenModuleSet a.k.a. the project(s) being modified
-        // The version of EasyMock in use in this project doesn't seem to support mocking of concrete classes -- upgrade desirable
-        //MavenModuleSet mavenModuleSet = EasyMock.createMock(MavenModuleSet.class);
-        MavenModuleSet mavenModuleSet = new MavenModuleSet(Jenkins.get(),"mock");
+        // The version of EasyMock in use in this project doesn't seem to support mocking of concrete classes -- upgrade
+        // desirable
+        // MavenModuleSet mavenModuleSet = EasyMock.createMock(MavenModuleSet.class);
+        MavenModuleSet mavenModuleSet = new MavenModuleSet(Jenkins.get(), "mock");
         // Set the Snapshot builds trigger setting to 'true'
         slicerSpec.setValue(mavenModuleSet, true);
         // Check that the property was set correctly
@@ -30,9 +31,10 @@ public class MavenSnapshotBuildTriggerTest extends HudsonTestCase {
         // Create the class under test
         MavenSnapshotBuildTriggerSlicerSpec slicerSpec = new MavenSnapshotBuildTriggerSlicerSpec();
         // Create a mock for the MavenModuleSet a.k.a. the project(s) being modified
-        // The version of EasyMock in use in this project doesn't seem to support mocking of concrete classes -- upgrade desirable
-        //MavenModuleSet mavenModuleSet = EasyMock.createMock(MavenModuleSet.class);
-        MavenModuleSet mavenModuleSet = new MavenModuleSet(Jenkins.get(),"mock");
+        // The version of EasyMock in use in this project doesn't seem to support mocking of concrete classes -- upgrade
+        // desirable
+        // MavenModuleSet mavenModuleSet = EasyMock.createMock(MavenModuleSet.class);
+        MavenModuleSet mavenModuleSet = new MavenModuleSet(Jenkins.get(), "mock");
         // Set the Snapshot builds trigger setting to 'false'
         slicerSpec.setValue(mavenModuleSet, false);
         // Check that the property was set correctly
@@ -41,5 +43,4 @@ public class MavenSnapshotBuildTriggerTest extends HudsonTestCase {
         // In this case, setting the build trigger to 'false' means setting the ignoreUpstremChanges flag to 'true'
         assertTrue(mavenModuleSet.ignoreUpstremChanges());
     }
-
 }

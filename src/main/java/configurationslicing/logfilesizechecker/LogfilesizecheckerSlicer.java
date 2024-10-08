@@ -1,21 +1,18 @@
 package configurationslicing.logfilesizechecker;
 
+import configurationslicing.TopLevelItemSelector;
+import configurationslicing.UnorderedStringSlicer;
 import hudson.Extension;
 import hudson.model.BuildableItemWithBuildWrappers;
 import hudson.model.Descriptor;
 import hudson.plugins.logfilesizechecker.LogfilesizecheckerWrapper;
 import hudson.tasks.BuildWrapper;
 import hudson.util.DescribableList;
-
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
-
-import configurationslicing.TopLevelItemSelector;
-import configurationslicing.UnorderedStringSlicer;
 
 /**
  * Slicing the configuration of the Logfilesizechecker plugin.
@@ -37,7 +34,7 @@ public class LogfilesizecheckerSlicer extends UnorderedStringSlicer<BuildableIte
             return false;
         }
     }
-    
+
     public static class LogfilesizeSliceSpec extends UnorderedStringSlicerSpec<BuildableItemWithBuildWrappers> {
         private static final String DISABLED = "(Disabled)";
         private static final String SEPARATOR = ",";
@@ -104,7 +101,7 @@ public class LogfilesizecheckerSlicer extends UnorderedStringSlicer<BuildableIte
             } else {
                 changed = true;
             }
-            
+
             if (delete) {
                 if (wrapper != null) {
                     wrappers.remove(wrapper);
@@ -118,7 +115,7 @@ public class LogfilesizecheckerSlicer extends UnorderedStringSlicer<BuildableIte
                     return false;
                 }
             }
-            
+
             return changed;
         }
 
@@ -126,28 +123,33 @@ public class LogfilesizecheckerSlicer extends UnorderedStringSlicer<BuildableIte
         public String getName(BuildableItemWithBuildWrappers item) {
             return item.getName();
         }
+
         @Override
         public String getDefaultValueString() {
             return DISABLED;
         }
+
         @Override
         public String getConfiguredValueDescription() {
-            return "SetOwn, MaxLogSize in MB, Fail <i>(e.g. true,7,false)</i>" 
-                    + "<ul><li>Set your own maximum log size instead of using default (true/false)</li>" 
-                    + "<li>Maximum log size (int) (use 0 to use global default)</li>" 
+            return "SetOwn, MaxLogSize in MB, Fail <i>(e.g. true,7,false)</i>"
+                    + "<ul><li>Set your own maximum log size instead of using default (true/false)</li>"
+                    + "<li>Maximum log size (int) (use 0 to use global default)</li>"
                     + "<li>Mark build as failed instead of aborted (true/false)</li></ul>";
         }
 
-        public static LogfilesizecheckerWrapper newLogfilesizecheckerWrapper(int maxLogSize, boolean failBuild, boolean setOwn) {
+        public static LogfilesizecheckerWrapper newLogfilesizecheckerWrapper(
+                int maxLogSize, boolean failBuild, boolean setOwn) {
             final Class<LogfilesizecheckerWrapper> cls = LogfilesizecheckerWrapper.class;
-            final Class<?>[] types = new Class<?>[] {Integer.TYPE, Boolean.TYPE, Boolean.TYPE };
+            final Class<?>[] types = new Class<?>[] {Integer.TYPE, Boolean.TYPE, Boolean.TYPE};
             Constructor<LogfilesizecheckerWrapper> cons;
             try {
                 cons = cls.getDeclaredConstructor(types);
             } catch (Exception e) {
-                throw new UnsupportedClassVersionError("Cannot find a version of LogfilesizecheckerWrapper constructor that can be used:" + e.getMessage());
+                throw new UnsupportedClassVersionError(
+                        "Cannot find a version of LogfilesizecheckerWrapper constructor that can be used:"
+                                + e.getMessage());
             }
-            
+
             Object[] args = null;
             if (cons != null) {
                 args = new Object[] {maxLogSize, failBuild, setOwn};
@@ -157,7 +159,9 @@ public class LogfilesizecheckerSlicer extends UnorderedStringSlicer<BuildableIte
             try {
                 wrapper = (LogfilesizecheckerWrapper) cons.newInstance(args);
             } catch (Exception e) {
-                throw new UnsupportedClassVersionError("Cannot find a version of LogfilesizecheckerWrapper constructor that can be used:" + e.getMessage());
+                throw new UnsupportedClassVersionError(
+                        "Cannot find a version of LogfilesizecheckerWrapper constructor that can be used:"
+                                + e.getMessage());
             }
             return wrapper;
         }

@@ -7,7 +7,6 @@ import hudson.tasks.Builder;
 import hudson.tasks.Maven;
 import hudson.tasks.Maven.MavenInstallation;
 import hudson.util.DescribableList;
-
 import java.util.List;
 
 /**
@@ -27,7 +26,7 @@ public class MavenTargetsSlicer extends AbstractBuildCommandSlicer<Maven> {
 
     public static class MavenTargetsSliceSpec extends AbstractBuildCommandSliceSpec<Maven> {
 
-    	private static final String DEFAULT_MAVEN = "(Default)";
+        private static final String DEFAULT_MAVEN = "(Default)";
 
         public String getName() {
             return "Maven top-level targets";
@@ -36,17 +35,25 @@ public class MavenTargetsSlicer extends AbstractBuildCommandSlicer<Maven> {
         public String getUrl() {
             return "maventopleveltargets";
         }
+
         @Override
         public Maven createBuilder(String command, List<Maven> existingBuilders, Maven oldBuilder) {
             if (oldBuilder != null) {
                 MavenInstallation mavenInstall = oldBuilder.getMaven();
                 String mavenName = mavenInstall == null ? null : mavenInstall.getName();
-                return new Maven(command, mavenName, oldBuilder.pom, oldBuilder.properties, oldBuilder.jvmOptions,
-                        oldBuilder.usePrivateRepository, oldBuilder.getSettings(), oldBuilder.getGlobalSettings());
+                return new Maven(
+                        command,
+                        mavenName,
+                        oldBuilder.pom,
+                        oldBuilder.properties,
+                        oldBuilder.jvmOptions,
+                        oldBuilder.usePrivateRepository,
+                        oldBuilder.getSettings(),
+                        oldBuilder.getGlobalSettings());
             } else {
                 // if the job already has another maven command, use the right version of maven
                 String mavenName = DEFAULT_MAVEN;
-                for (Maven maven: existingBuilders) {
+                for (Maven maven : existingBuilders) {
                     MavenInstallation install = maven.getMaven();
                     if (install != null) {
                         mavenName = install.getName();
@@ -56,20 +63,20 @@ public class MavenTargetsSlicer extends AbstractBuildCommandSlicer<Maven> {
                 return new Maven(command, mavenName);
             }
         }
+
         @Override
         public Maven[] createBuilderArray(int len) {
-        	return new Maven[len];
+            return new Maven[len];
         }
+
         @Override
         public String getCommand(Maven builder) {
-        	return builder.getTargets();
+            return builder.getTargets();
         }
+
         @Override
-        public List<Maven> getConcreteBuildersList(
-        		DescribableList<Builder, Descriptor<Builder>> buildersList) {
+        public List<Maven> getConcreteBuildersList(DescribableList<Builder, Descriptor<Builder>> buildersList) {
             return buildersList.getAll(Maven.class);
         }
-
     }
 }
-

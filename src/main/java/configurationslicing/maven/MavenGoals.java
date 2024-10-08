@@ -1,15 +1,12 @@
 package configurationslicing.maven;
 
+import configurationslicing.UnorderedStringSlicer;
 import hudson.Extension;
 import hudson.maven.MavenModuleSet;
-import hudson.model.Hudson;
-import jenkins.model.Jenkins;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import configurationslicing.UnorderedStringSlicer;
+import jenkins.model.Jenkins;
 
 @Extension(optional = true)
 public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
@@ -28,7 +25,7 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
         private static final String DEFAULT = "(Default)";
 
         public String getDefaultValueString() {
-        	return DEFAULT;
+            return DEFAULT;
         }
 
         public String getName() {
@@ -51,14 +48,14 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
         }
 
         @SuppressWarnings("unchecked")
-		public List<MavenModuleSet> getWorkDomain() {
+        public List<MavenModuleSet> getWorkDomain() {
             return (List) Jenkins.get().getAllItems(MavenModuleSet.class);
         }
 
         public boolean setValues(MavenModuleSet item, List<String> set) {
-            if(set.isEmpty()) return false;
+            if (set.isEmpty()) return false;
             String value = set.iterator().next();
-            if(DEFAULT.equalsIgnoreCase(value)) {
+            if (DEFAULT.equalsIgnoreCase(value)) {
                 item.setGoals(null);
             } else {
                 item.setGoals(value);
@@ -70,6 +67,5 @@ public class MavenGoals extends UnorderedStringSlicer<MavenModuleSet> {
             }
             return true;
         }
-
     }
 }
