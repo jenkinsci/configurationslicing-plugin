@@ -1,9 +1,7 @@
 package configurationslicing.logstash;
 
-import java.util.List;
-
-import jenkins.plugins.logstash.LogstashBuildWrapper;
-
+import configurationslicing.BooleanSlicer;
+import configurationslicing.TopLevelItemSelector;
 import hudson.Extension;
 import hudson.Util;
 import hudson.maven.MavenModuleSet;
@@ -12,14 +10,15 @@ import hudson.model.Descriptor;
 import hudson.model.Project;
 import hudson.tasks.BuildWrapper;
 import hudson.util.DescribableList;
-import configurationslicing.BooleanSlicer;
-import configurationslicing.TopLevelItemSelector;
+import java.util.List;
+import jenkins.plugins.logstash.LogstashBuildWrapper;
 
 @Extension(optional = true)
 public class LogStashSlicer extends BooleanSlicer<AbstractProject> {
     public LogStashSlicer() {
         super(new LogstashSpec());
     }
+
     public static class LogstashSpec implements BooleanSlicer.BooleanSlicerSpec<AbstractProject> {
 
         @Override
@@ -37,20 +36,18 @@ public class LogStashSlicer extends BooleanSlicer<AbstractProject> {
         }
 
         public boolean getValue(AbstractProject item) {
-            DescribableList<BuildWrapper, Descriptor<BuildWrapper>> buildWrappersList = 
-                    getBuildWrappers(item);
-            if(buildWrappersList == null) {
+            DescribableList<BuildWrapper, Descriptor<BuildWrapper>> buildWrappersList = getBuildWrappers(item);
+            if (buildWrappersList == null) {
                 return false;
             }
             return !buildWrappersList.getAll(LogstashBuildWrapper.class).isEmpty();
         }
 
-        private DescribableList<BuildWrapper, Descriptor<BuildWrapper>> getBuildWrappers(
-                AbstractProject item) {
-            if(item instanceof Project) {
-                return ((Project)item).getBuildWrappersList();
-            } else if(item instanceof MavenModuleSet) {
-                return ((MavenModuleSet)item).getBuildWrappersList();
+        private DescribableList<BuildWrapper, Descriptor<BuildWrapper>> getBuildWrappers(AbstractProject item) {
+            if (item instanceof Project) {
+                return ((Project) item).getBuildWrappersList();
+            } else if (item instanceof MavenModuleSet) {
+                return ((MavenModuleSet) item).getBuildWrappersList();
             } else {
                 return null;
             }
@@ -64,29 +61,27 @@ public class LogStashSlicer extends BooleanSlicer<AbstractProject> {
         @Override
         public boolean setValue(AbstractProject item, boolean value) {
             LogstashBuildWrapper logstashWrapper = new LogstashBuildWrapper();
-            if(item instanceof Project) {
-                DescribableList bwList = ((Project)item).getBuildWrappersList();
-                List<LogstashBuildWrapper> lsList =
-                        Util.filter(bwList, LogstashBuildWrapper.class);
-                if(lsList.isEmpty() != value) {
+            if (item instanceof Project) {
+                DescribableList bwList = ((Project) item).getBuildWrappersList();
+                List<LogstashBuildWrapper> lsList = Util.filter(bwList, LogstashBuildWrapper.class);
+                if (lsList.isEmpty() != value) {
                     // already matches value.  Do nothing.
                     return false;
                 }
-                if(value) {
+                if (value) {
                     bwList.add(new LogstashBuildWrapper());
                 } else {
                     bwList.removeAll(lsList);
                 }
                 return true;
-            } else if(item instanceof MavenModuleSet) {
-                DescribableList bwList = ((MavenModuleSet)item).getBuildWrappersList();
-                List<LogstashBuildWrapper> lsList =
-                        Util.filter(bwList, LogstashBuildWrapper.class);
-                if(lsList.isEmpty() != value) {
+            } else if (item instanceof MavenModuleSet) {
+                DescribableList bwList = ((MavenModuleSet) item).getBuildWrappersList();
+                List<LogstashBuildWrapper> lsList = Util.filter(bwList, LogstashBuildWrapper.class);
+                if (lsList.isEmpty() != value) {
                     // already matches value.  Do nothing.
                     return false;
                 }
-                if(value) {
+                if (value) {
                     bwList.add(new LogstashBuildWrapper());
                 } else {
                     bwList.removeAll(lsList);
@@ -96,7 +91,6 @@ public class LogStashSlicer extends BooleanSlicer<AbstractProject> {
                 return false;
             }
         }
-        
     }
 
     public boolean isLoaded() {
@@ -107,5 +101,4 @@ public class LogStashSlicer extends BooleanSlicer<AbstractProject> {
             return false;
         }
     }
-
 }

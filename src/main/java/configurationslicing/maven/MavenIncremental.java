@@ -1,12 +1,10 @@
 package configurationslicing.maven;
 
+import configurationslicing.BooleanSlicer;
 import hudson.Extension;
 import hudson.maven.MavenModuleSet;
-
 import java.util.List;
-
 import jenkins.model.Jenkins;
-import configurationslicing.BooleanSlicer;
 
 @Extension(optional = true)
 public class MavenIncremental extends BooleanSlicer<MavenModuleSet> {
@@ -30,20 +28,19 @@ public class MavenIncremental extends BooleanSlicer<MavenModuleSet> {
         }
 
         @SuppressWarnings("unchecked")
-		public List<MavenModuleSet> getWorkDomain() {
+        public List<MavenModuleSet> getWorkDomain() {
             return (List) Jenkins.get().getAllItems(MavenModuleSet.class);
         }
 
-		@Override
-		public boolean getValue(MavenModuleSet item) {
-			return item.isIncrementalBuild();
-		}
+        @Override
+        public boolean getValue(MavenModuleSet item) {
+            return item.isIncrementalBuild();
+        }
 
-		@Override
-		public boolean setValue(MavenModuleSet item, boolean value) {
-			item.setIncrementalBuild(value);
-			return true;
-		}
-
+        @Override
+        public boolean setValue(MavenModuleSet item, boolean value) {
+            item.setIncrementalBuild(value);
+            return true;
+        }
     }
 }

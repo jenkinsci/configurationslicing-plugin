@@ -1,31 +1,30 @@
 package configurationslicing.label;
 
+import configurationslicing.TopLevelItemSelector;
+import configurationslicing.UnorderedStringSlicer;
 import hudson.Extension;
 import hudson.model.AbstractProject;
-import hudson.model.Hudson;
 import hudson.model.Label;
-import jenkins.model.Jenkins;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-
-import configurationslicing.TopLevelItemSelector;
-import configurationslicing.UnorderedStringSlicer;
+import jenkins.model.Jenkins;
 
 @Extension
-public class LabelSlicer extends UnorderedStringSlicer<AbstractProject>{
+public class LabelSlicer extends UnorderedStringSlicer<AbstractProject> {
 
     public LabelSlicer() {
         super(new LabelSliceSpec());
     }
+
     public static class LabelSliceSpec extends UnorderedStringSlicerSpec<AbstractProject> {
 
         private static final String ROAMING = "(Roaming)";
 
         public String getDefaultValueString() {
-        	return ROAMING;
+            return ROAMING;
         }
+
         public String getName() {
             return "Tied Label Slicer";
         }
@@ -44,22 +43,22 @@ public class LabelSlicer extends UnorderedStringSlicer<AbstractProject>{
             return Collections.singletonList(labelName);
         }
 
-		public List<AbstractProject> getWorkDomain() {
+        public List<AbstractProject> getWorkDomain() {
             return TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class);
         }
 
         public boolean setValues(AbstractProject item, List<String> set) {
             // can only have one label at a time.  do nothing if a node has zero
             // or multiple labels
-            if(set.isEmpty() || set.size() > 1) return false;
+            if (set.isEmpty() || set.size() > 1) return false;
 
             Label label = null;
             String labelName = set.iterator().next();
-            if(ROAMING.equals(labelName)) {
+            if (ROAMING.equals(labelName)) {
                 label = null;
             } else {
                 label = Jenkins.get().getLabel(labelName);
-                if(label == null) return false;
+                if (label == null) return false;
             }
             try {
                 item.setAssignedLabel(label);

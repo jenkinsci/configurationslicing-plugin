@@ -3,9 +3,8 @@ package configurationslicing.maven;
 import configurationslicing.BooleanSlicer;
 import hudson.Extension;
 import hudson.maven.MavenModuleSet;
-import jenkins.model.Jenkins;
-
 import java.util.List;
+import jenkins.model.Jenkins;
 
 /**
  * A simple boolean configuration slicer to set the "Build whenever a SNAPSHOT dependency is built" build trigger in Maven projects
@@ -39,17 +38,18 @@ public class MavenSnapshotBuildTrigger extends BooleanSlicer<MavenModuleSet> {
 
         @Override
         public boolean getValue(MavenModuleSet item) {
-            // The UI displays the box checked if upstream builds are *not* ignored, so this slicer should match that behavior
-            return ! item.ignoreUpstremChanges();
+            // The UI displays the box checked if upstream builds are *not* ignored, so this slicer should match that
+            // behavior
+            return !item.ignoreUpstremChanges();
         }
 
         @Override
         public boolean setValue(MavenModuleSet item, boolean value) {
-            // The UI displays the box checked if upstream builds are *not* ignored, so this slicer should match that behavior
-            boolean ignored = ! value;
+            // The UI displays the box checked if upstream builds are *not* ignored, so this slicer should match that
+            // behavior
+            boolean ignored = !value;
             item.setIgnoreUpstremChanges(ignored);
             return true;
         }
-
     }
 }

@@ -1,24 +1,24 @@
 package configurationslicing.timer;
 
+import configurationslicing.UnorderedStringSlicer;
 import hudson.Extension;
-import hudson.model.AbstractProject;
 import hudson.model.Job;
 import hudson.triggers.TimerTrigger;
 import hudson.triggers.Trigger;
-import configurationslicing.UnorderedStringSlicer;
 
 @Extension
-public class TimerSliceStringSlicer extends UnorderedStringSlicer<Job>{
+public class TimerSliceStringSlicer extends UnorderedStringSlicer<Job> {
 
     public TimerSliceStringSlicer() {
         super(new TimerSliceSpec());
     }
+
     public static class TimerSliceSpec extends AbstractTimerSliceSpec {
 
-    	public TimerSliceSpec() {
-			super(TimerTrigger.class);
-		}
-    	
+        public TimerSliceSpec() {
+            super(TimerTrigger.class);
+        }
+
         public String getName() {
             return "Timer Trigger Slicer";
         }
@@ -28,9 +28,8 @@ public class TimerSliceStringSlicer extends UnorderedStringSlicer<Job>{
         }
 
         @SuppressWarnings("unchecked")
-		public Trigger newTrigger(String spec, Trigger oldTrigger) {
+        public Trigger newTrigger(String spec, Trigger oldTrigger) {
             return new TimerTrigger(spec);
         }
-        
     }
 }

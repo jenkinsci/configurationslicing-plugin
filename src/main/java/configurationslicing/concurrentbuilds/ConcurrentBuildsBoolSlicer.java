@@ -1,14 +1,13 @@
 package configurationslicing.concurrentbuilds;
 
-import java.io.IOException;
-import java.util.List;
+import static configurationslicing.AbstractJob.fix;
 
 import configurationslicing.BooleanSlicer;
 import configurationslicing.TopLevelItemSelector;
 import hudson.Extension;
 import hudson.model.Job;
-
-import static configurationslicing.AbstractJob.fix;
+import java.io.IOException;
+import java.util.List;
 
 @Extension
 public class ConcurrentBuildsBoolSlicer extends BooleanSlicer<Job> {
