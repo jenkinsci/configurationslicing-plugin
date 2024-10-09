@@ -1,5 +1,9 @@
 package configurationslicing;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import configurationslicing.logrotator.LogRotationSlicer;
 import configurationslicing.logrotator.LogRotationSlicer.LogRotationBuildsSliceSpec;
 import configurationslicing.logrotator.LogRotationSlicer.LogRotationDaysSliceSpec;
@@ -7,13 +11,18 @@ import hudson.model.AbstractProject;
 import hudson.tasks.LogRotator;
 import java.util.ArrayList;
 import java.util.List;
-import org.jvnet.hudson.test.HudsonTestCase;
+import org.junit.Rule;
+import org.junit.Test;
+import org.jvnet.hudson.test.JenkinsRule;
 
-public class LogRotationSlicerTest extends HudsonTestCase {
+public class LogRotationSlicerTest {
+    @Rule
+    public JenkinsRule r = new JenkinsRule();
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSetValues() throws Exception {
-        AbstractProject item = createFreeStyleProject();
+        AbstractProject item = r.createFreeStyleProject();
 
         int daysToKeep = 111;
         int numToKeep = 222;
@@ -21,10 +30,10 @@ public class LogRotationSlicerTest extends HudsonTestCase {
         int artifactNumToKeep = 444;
 
         LogRotator lr = new LogRotator(daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep);
-        assertEquals(lr, daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep);
+        equalsLogRotator(lr, daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep);
 
         item.setLogRotator(lr);
-        assertEquals(item.getLogRotator(), daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep);
+        equalsLogRotator(item.getLogRotator(), daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep);
 
         numToKeep = 12345;
         List<String> set = new ArrayList<String>();
@@ -32,7 +41,7 @@ public class LogRotationSlicerTest extends HudsonTestCase {
 
         LogRotationBuildsSliceSpec buildsSpec = new LogRotationBuildsSliceSpec();
         buildsSpec.setValues(item, set);
-        assertEquals(item.getLogRotator(), daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep);
+        equalsLogRotator(item.getLogRotator(), daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep);
 
         daysToKeep = 54321;
         set = new ArrayList<String>();
@@ -40,10 +49,10 @@ public class LogRotationSlicerTest extends HudsonTestCase {
 
         LogRotationDaysSliceSpec daysSpec = new LogRotationDaysSliceSpec();
         daysSpec.setValues(item, set);
-        assertEquals(item.getLogRotator(), daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep);
+        equalsLogRotator(item.getLogRotator(), daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep);
     }
 
-    private void assertEquals(
+    private void equalsLogRotator(
             LogRotator lr, int daysToKeep, int numToKeep, int artifactDaysToKeep, int artifactNumToKeep) {
         assertEquals(daysToKeep, lr.getDaysToKeep());
         assertEquals(numToKeep, lr.getNumToKeep());
@@ -51,6 +60,7 @@ public class LogRotationSlicerTest extends HudsonTestCase {
         assertEquals(artifactNumToKeep, lr.getArtifactNumToKeep());
     }
 
+    @Test
     public void testLogRotatorEquals() {
         doTestLogRotatorEquals(0, 0, 0, 0, true);
         doTestLogRotatorEquals(-1, -1, -1, -1, true);
