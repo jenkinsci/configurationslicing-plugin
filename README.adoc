@@ -18,8 +18,6 @@ toc::[]
 
 == Plugin information
 
-View Configuration Slicing https://plugins.jenkins.io/configurationslicing[on the plugin site] for more information.
-
 Perform mass configuration of select project properties, including
 email, timer, discard old builds, and Maven configuration.It has a
 framework to make it very easy to add a configuration page for a new
