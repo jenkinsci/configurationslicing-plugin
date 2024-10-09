@@ -1,5 +1,7 @@
 package configurationslicing;
 
+import static org.junit.Assert.assertEquals;
+
 import configurationslicing.timer.AbstractTimerSliceSpec;
 import configurationslicing.timer.SCMTimerSliceStringSlicer;
 import configurationslicing.timer.TimerSliceStringSlicer;
@@ -7,16 +9,22 @@ import hudson.model.AbstractProject;
 import hudson.triggers.Trigger;
 import java.util.ArrayList;
 import java.util.List;
-import org.jvnet.hudson.test.HudsonTestCase;
+import org.junit.Rule;
+import org.junit.Test;
+import org.jvnet.hudson.test.JenkinsRule;
 
-public class TimerSliceStringSlicerTest extends HudsonTestCase {
+public class TimerSliceStringSlicerTest {
+    @Rule
+    public JenkinsRule r = new JenkinsRule();
 
+    @Test
     public void testTimerSliceStringSlicer() throws Exception {
         TimerSliceStringSlicer slicer = new TimerSliceStringSlicer();
         TimerSliceStringSlicer.TimerSliceSpec spec = new TimerSliceStringSlicer.TimerSliceSpec();
         doTestTimerSliceStringSlicer(slicer, spec);
     }
 
+    @Test
     public void testSCMTimerSliceStringSlicer() throws Exception {
         SCMTimerSliceStringSlicer slicer = new SCMTimerSliceStringSlicer();
         SCMTimerSliceStringSlicer.SCMTimerSliceSpec spec = new SCMTimerSliceStringSlicer.SCMTimerSliceSpec();
@@ -79,7 +87,7 @@ public class TimerSliceStringSlicerTest extends HudsonTestCase {
             String name,
             String chron)
             throws Exception {
-        AbstractProject project = createFreeStyleProject(name);
+        AbstractProject project = r.createFreeStyleProject(name);
         Trigger trigger = spec.newTrigger(chron, null);
         project.addTrigger(trigger);
         slicer.accumulate(slice, project);
