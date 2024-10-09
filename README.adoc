@@ -1,5 +1,5 @@
 [[configurationslicing-plugin]]
-= configurationslicing-plugin
+= Configuration slicing plugin
 :toc: macro
 :toc-title:
 ifdef::env-github[]
