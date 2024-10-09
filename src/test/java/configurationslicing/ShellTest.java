@@ -1,16 +1,23 @@
 package configurationslicing;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import configurationslicing.executeshell.ExecuteShellSlicer;
 import hudson.model.Project;
 import hudson.tasks.Shell;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.jvnet.hudson.test.HudsonTestCase;
+import org.junit.Rule;
+import org.junit.Test;
+import org.jvnet.hudson.test.JenkinsRule;
 
-public class ShellTest extends HudsonTestCase {
+public class ShellTest {
+    @Rule
+    public JenkinsRule r = new JenkinsRule();
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testGetMultipleShells() throws Exception {
         ExecuteShellSlicer.ExecuteShellSliceSpec spec = new ExecuteShellSlicer.ExecuteShellSliceSpec();
 
@@ -24,6 +31,7 @@ public class ShellTest extends HudsonTestCase {
         assertEquals(command2, values.get(1));
     }
 
+    @Test
     public void testSetMultipleShells() throws Exception {
         int count = 0;
         doTestSetMultipleShells("shell-" + (count++), new String[] {"a", "b"}, new String[] {"c", "d", "e"});
@@ -70,7 +78,7 @@ public class ShellTest extends HudsonTestCase {
 
     @SuppressWarnings("unchecked")
     private Project createProject(String name, String... shells) throws Exception {
-        Project project = createFreeStyleProject(name);
+        Project project = r.createFreeStyleProject(name);
         for (String shell : shells) {
             project.getBuildersList().add(new Shell(shell));
         }
@@ -78,6 +86,7 @@ public class ShellTest extends HudsonTestCase {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testNoBracketNames() {
         ExecuteShellSlicer.ExecuteShellSliceSpec spec = new ExecuteShellSlicer.ExecuteShellSliceSpec();
 
@@ -97,11 +106,12 @@ public class ShellTest extends HudsonTestCase {
     }
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testBracketNames() throws Exception {
 
-        createFreeStyleProject("a");
-        createFreeStyleProject("b");
-        createFreeStyleProject("c");
+        r.createFreeStyleProject("a");
+        r.createFreeStyleProject("b");
+        r.createFreeStyleProject("c");
 
         ExecuteShellSlicer.ExecuteShellSliceSpec spec = new ExecuteShellSlicer.ExecuteShellSliceSpec();
 
