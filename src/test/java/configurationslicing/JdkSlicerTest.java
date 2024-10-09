@@ -1,11 +1,16 @@
 package configurationslicing;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import configurationslicing.jdk.JdkSlicer;
 import hudson.model.JDK;
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class JdkSlicerTest extends TestCase {
+public class JdkSlicerTest {
 
+    @Test
     public void testJdkEquals() {
         doTestJdkEquals("h1", "h2", "n1", "n2", false);
         doTestJdkEquals("h1", "h1", "n1", "n2", false);

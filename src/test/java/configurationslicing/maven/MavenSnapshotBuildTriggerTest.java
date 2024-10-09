@@ -1,15 +1,23 @@
 package configurationslicing.maven;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import configurationslicing.maven.MavenSnapshotBuildTrigger.MavenSnapshotBuildTriggerSlicerSpec;
 import hudson.maven.MavenModuleSet;
 import jenkins.model.Jenkins;
-import org.jvnet.hudson.test.HudsonTestCase;
+import org.junit.Rule;
+import org.junit.Test;
+import org.jvnet.hudson.test.JenkinsRule;
 
 /**
  * Created by jbischoff on 4/12/16.
  */
-public class MavenSnapshotBuildTriggerTest extends HudsonTestCase {
+public class MavenSnapshotBuildTriggerTest {
+    @Rule
+    public JenkinsRule r = new JenkinsRule();
 
+    @Test
     public void testEnableSnapshotBuildTrigger() {
         // Create the class under test
         MavenSnapshotBuildTriggerSlicerSpec slicerSpec = new MavenSnapshotBuildTriggerSlicerSpec();
@@ -27,6 +35,7 @@ public class MavenSnapshotBuildTriggerTest extends HudsonTestCase {
         assertFalse(mavenModuleSet.ignoreUpstremChanges());
     }
 
+    @Test
     public void testDisableSnapshotBuildTrigger() {
         // Create the class under test
         MavenSnapshotBuildTriggerSlicerSpec slicerSpec = new MavenSnapshotBuildTriggerSlicerSpec();
