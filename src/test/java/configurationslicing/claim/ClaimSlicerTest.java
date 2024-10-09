@@ -1,20 +1,28 @@
 package configurationslicing.claim;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import configurationslicing.claim.ClaimSlicer.ClaimSpec;
 import hudson.maven.MavenModuleSet;
 import hudson.model.AbstractProject;
 import jenkins.model.Jenkins;
+import org.junit.Rule;
 import org.junit.Test;
-import org.jvnet.hudson.test.HudsonTestCase;
+import org.jvnet.hudson.test.JenkinsRule;
 
-public class ClaimSlicerTest extends HudsonTestCase {
+public class ClaimSlicerTest {
+    @Rule
+    public JenkinsRule r = new JenkinsRule();
+
+    private static int projectNameCounter = 0;
 
     /*
      * Test that we can interrogate and set values using the claim slicer on free style projects
      */
     @Test
     public void testFreeStyleValues() throws Exception {
-        AbstractProject item = createFreeStyleProject();
+        AbstractProject item = r.createFreeStyleProject();
         doTestValues(item);
     }
 
@@ -65,5 +73,9 @@ public class ClaimSlicerTest extends HudsonTestCase {
 
         claimsEnabled = spec.getValue(item);
         assertFalse("Claims should be disabled after they have been unset", claimsEnabled);
+    }
+
+    private String createUniqueProjectName() {
+        return "somestring-" + projectNameCounter++;
     }
 }
