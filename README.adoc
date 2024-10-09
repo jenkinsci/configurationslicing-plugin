@@ -1,5 +1,5 @@
 [[configurationslicing-plugin]]
-= configurationslicing-plugin
+= Configuration slicing plugin
 :toc: macro
 :toc-title:
 ifdef::env-github[]
@@ -17,8 +17,6 @@ image:https://ci.jenkins.io/job/Plugins/job/configurationslicing-plugin/job/mast
 toc::[]
 
 == Plugin information
-
-View Configuration Slicing https://plugins.jenkins.io/configurationslicing[on the plugin site] for more information.
 
 Perform mass configuration of select project properties, including
 email, timer, discard old builds, and Maven configuration.It has a
@@ -152,3 +150,9 @@ disabled when set to (Disabled).
 
 Setting a empty recipient list leaves existing email notifications to
 committers (Checkbox "Notify individuals who broke the build") in place.
+
+[[changelog]]
+== Changelog in https://github.com/jenkinsci/configurationslicing-plugin/releases[GitHub Releases]
+
+Release notes have been recorded in https://github.com/jenkinsci/configurationslicing-plugin/releases[GitHub] since configuration slicing plugin 1.50.
+Prior release notes were recorded in the repository link:https://github.com/jenkinsci/configurationslicing-plugin/blob/1.52.1/CHANGELOG.adoc[change log].
