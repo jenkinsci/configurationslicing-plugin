@@ -1,5 +1,8 @@
 package configurationslicing;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import configurationslicing.email.AbstractEmailSliceSpec;
 import configurationslicing.email.CoreEmailSlicer.CoreEmailSliceSpec;
 import configurationslicing.email.ExtEmailSlicer;
@@ -21,9 +24,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import jenkins.model.Jenkins;
-import org.jvnet.hudson.test.HudsonTestCase;
+import org.junit.Rule;
+import org.junit.Test;
+import org.jvnet.hudson.test.JenkinsRule;
 
-public class EmailSlicerTest extends HudsonTestCase {
+public class EmailSlicerTest {
+    @Rule
+    public JenkinsRule r = new JenkinsRule();
+
+    private static int projectNameCounter = 0;
 
     /**
      * Given a project with a core mailer with mailer.sendToIndividuals == true, setting recipients with a slicer must
@@ -33,6 +42,7 @@ public class EmailSlicerTest extends HudsonTestCase {
      *  <li>return the set list of recipients (like "john@doe.com sue@gov.com") otherwise</li>
      * @throws Exception
      */
+    @Test
     public void testSendToIndividuals() throws Exception {
         assertEquals(
                 "Setting empty recipients with sendToIndividuals enabled",
@@ -80,6 +90,7 @@ public class EmailSlicerTest extends HudsonTestCase {
                 setAndGetExtValues(createFreestyleProjectWithExtMailer(), "(disabled)"));
     }
 
+    @Test
     public void testNormalize() {
         doTestNormalize("email@gov.com", "email@gov.com");
         doTestNormalize("email@gov.com, CAPS@gov", "caps@gov email@gov.com");
@@ -92,6 +103,7 @@ public class EmailSlicerTest extends HudsonTestCase {
         assertEquals(expect, normalized);
     }
 
+    @Test
     public void testSetValues() throws Exception {
         doTestSetValues("(Disabled)", "(Disabled)");
         doTestSetValues("caps@gov email@gov.com", "email@gov.com, CAPS@gov");
@@ -118,7 +130,7 @@ public class EmailSlicerTest extends HudsonTestCase {
 
             project = mavenModuleSet;
         } else {
-            project = createFreeStyleProject();
+            project = r.createFreeStyleProject();
         }
         AbstractEmailSliceSpec spec;
         if (core) {
@@ -137,6 +149,7 @@ public class EmailSlicerTest extends HudsonTestCase {
         assertEquals(expected, got);
     }
 
+    @Test
     public void testCommonValues() {
         UnorderedStringSlice<AbstractProject> slice =
                 new UnorderedStringSlice<AbstractProject>(new ExtEmailSlicer.ExtEmailSliceSpec());
@@ -189,7 +202,7 @@ public class EmailSlicerTest extends HudsonTestCase {
     }
 
     private AbstractProject createFreestyleProjectWithSendToIndividualsAndEmptyRecipients() throws IOException {
-        FreeStyleProject project = createFreeStyleProject();
+        FreeStyleProject project = r.createFreeStyleProject();
         Mailer mailer = new Mailer();
         mailer.sendToIndividuals = true;
         DescribableList<Publisher, Descriptor<Publisher>> publishers = project.getPublishersList();
@@ -198,7 +211,7 @@ public class EmailSlicerTest extends HudsonTestCase {
     }
 
     private AbstractProject createFreestyleProjectWithExtMailer() throws IOException {
-        FreeStyleProject project = createFreeStyleProject();
+        FreeStyleProject project = r.createFreeStyleProject();
         DescribableList<Publisher, Descriptor<Publisher>> publishers = project.getPublishersList();
         ExtendedEmailPublisher publisher = new ExtendedEmailPublisher();
         FailureTrigger trigger = FailureTrigger.createDefault();
@@ -214,5 +227,9 @@ public class EmailSlicerTest extends HudsonTestCase {
 
         publishers.add(publisher);
         return project;
+    }
+
+    private String createUniqueProjectName() {
+        return "somestring-" + projectNameCounter++;
     }
 }
