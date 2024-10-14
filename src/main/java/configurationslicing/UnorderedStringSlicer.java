@@ -26,7 +26,7 @@ public class UnorderedStringSlicer<I> implements Slicer<UnorderedStringSlice<I>,
         }
 
         public String getConfiguredValueDescription() {
-            return "Configured Value";
+            return Messages.configurationSlicing_configuredValueDescription();
         }
         /**
          * Allows you to use "MyJob[0]" to indicate separate values
