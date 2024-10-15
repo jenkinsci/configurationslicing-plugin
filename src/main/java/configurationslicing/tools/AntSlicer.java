@@ -29,7 +29,7 @@ public class AntSlicer extends AbstractToolSlicer {
 
         @Override
         public String getName() {
-            return "Ant version per project";
+            return Messages.antSlicer_name();
         }
 
         @Override

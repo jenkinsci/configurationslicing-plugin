@@ -28,7 +28,7 @@ public class ConfigurationSlicing extends ManagementLink {
 
     @Override
     public String getDescription() {
-        return "Configure a single aspect across a group of items, in contrast to the traditional configuration of all aspects of a single item";
+        return Messages.configurationSlicing_description();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ConfigurationSlicing extends ManagementLink {
     }
 
     public String getDisplayName() {
-        return "Configuration Slicing";
+        return Messages.configurationSlicing_displayName();
     }
 
     public String getCategoryName() {
