@@ -26,40 +26,40 @@ public class AbstractJob {
     }
 
     public boolean isConcurrentBuilds() {
-        if (item instanceof AbstractProject) return ((AbstractProject) item).isConcurrentBuild();
-        if (item instanceof WorkflowJob) return ((WorkflowJob) item).isConcurrentBuild();
+        if (item instanceof AbstractProject<?, ?> project) return project.isConcurrentBuild();
+        if (item instanceof WorkflowJob job) return job.isConcurrentBuild();
 
         return true;
     }
 
     public void makeConcurrentBuilds(boolean value) throws IOException {
-        if (item instanceof AbstractProject) ((AbstractProject) item).setConcurrentBuild(value);
-        if (item instanceof WorkflowJob) ((WorkflowJob) item).setConcurrentBuild(value);
+        if (item instanceof AbstractProject<?, ?> project) project.setConcurrentBuild(value);
+        if (item instanceof WorkflowJob job) job.setConcurrentBuild(value);
 
         throw new IOException("Unsupported job type");
     }
 
     @SuppressWarnings("unchecked")
     public <T extends Trigger> T getTrigger(Class<T> clazz) {
-        if (item instanceof AbstractProject) return (T) ((AbstractProject) item).getTrigger(clazz);
-        if (item instanceof WorkflowJob) {
-            return getTrigger((WorkflowJob) item, clazz);
+        if (item instanceof AbstractProject<?, ?> project) return (T) project.getTrigger(clazz);
+        if (item instanceof WorkflowJob job) {
+            return getTrigger(job, clazz);
         }
 
         return null;
     }
 
     public void removeTrigger(TriggerDescriptor trigger) throws IOException {
-        if (item instanceof AbstractProject) ((AbstractProject) item).removeTrigger(trigger);
-        if (item instanceof WorkflowJob) {
-            removeTrigger((WorkflowJob) item, trigger);
+        if (item instanceof AbstractProject<?, ?> project) project.removeTrigger(trigger);
+        if (item instanceof WorkflowJob job) {
+            removeTrigger(job, trigger);
         }
     }
 
     public void addTrigger(Trigger<?> trigger) throws IOException {
-        if (item instanceof AbstractProject) ((AbstractProject) item).addTrigger(trigger);
-        if (item instanceof WorkflowJob) {
-            ((WorkflowJob) item).addTrigger(trigger);
+        if (item instanceof AbstractProject<?, ?> project) project.addTrigger(trigger);
+        if (item instanceof WorkflowJob job) {
+            job.addTrigger(trigger);
         }
     }
 

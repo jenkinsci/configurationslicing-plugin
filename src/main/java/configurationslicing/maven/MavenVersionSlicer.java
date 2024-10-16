@@ -55,8 +55,8 @@ public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
         }
 
         public List<String> getValues(AbstractProject item) {
-            if (item instanceof MavenModuleSet) {
-                return getValues((MavenModuleSet) item);
+            if (item instanceof MavenModuleSet set) {
+                return getValues(set);
             } else {
                 List<String> ret = new ArrayList<String>();
                 List<Maven> builders = getBuilders(item);
@@ -132,8 +132,8 @@ public class MavenVersionSlicer extends UnorderedStringSlicer<AbstractProject> {
             if (MULTIPLE.equals(mavenVersion)) {
                 return true;
             }
-            if (item instanceof MavenModuleSet) {
-                return setValues((MavenModuleSet) item, mavenVersion);
+            if (item instanceof MavenModuleSet moduleSet) {
+                return setValues(moduleSet, mavenVersion);
             } else {
                 List<Maven> builders = getBuilders(item);
                 DescribableList<Builder, Descriptor<Builder>> buildersList =

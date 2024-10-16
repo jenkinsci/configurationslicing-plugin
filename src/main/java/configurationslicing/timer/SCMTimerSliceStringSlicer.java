@@ -30,8 +30,8 @@ public class SCMTimerSliceStringSlicer extends UnorderedStringSlicer<Job> {
         @SuppressWarnings("unchecked")
         public Trigger newTrigger(String spec, Trigger oldTrigger) {
             boolean ignorePostCommitHooks = false;
-            if (oldTrigger instanceof SCMTrigger) {
-                ignorePostCommitHooks = ((SCMTrigger) oldTrigger).isIgnorePostCommitHooks();
+            if (oldTrigger instanceof SCMTrigger trigger) {
+                ignorePostCommitHooks = trigger.isIgnorePostCommitHooks();
             }
             return new SCMTrigger(spec, ignorePostCommitHooks);
         }

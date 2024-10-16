@@ -44,10 +44,10 @@ public class LogStashSlicer extends BooleanSlicer<AbstractProject> {
         }
 
         private DescribableList<BuildWrapper, Descriptor<BuildWrapper>> getBuildWrappers(AbstractProject item) {
-            if (item instanceof Project) {
-                return ((Project) item).getBuildWrappersList();
-            } else if (item instanceof MavenModuleSet) {
-                return ((MavenModuleSet) item).getBuildWrappersList();
+            if (item instanceof Project<?, ?> project) {
+                return project.getBuildWrappersList();
+            } else if (item instanceof MavenModuleSet set) {
+                return set.getBuildWrappersList();
             } else {
                 return null;
             }
@@ -61,8 +61,8 @@ public class LogStashSlicer extends BooleanSlicer<AbstractProject> {
         @Override
         public boolean setValue(AbstractProject item, boolean value) {
             LogstashBuildWrapper logstashWrapper = new LogstashBuildWrapper();
-            if (item instanceof Project) {
-                DescribableList bwList = ((Project) item).getBuildWrappersList();
+            if (item instanceof Project<?, ?> project) {
+                DescribableList bwList = project.getBuildWrappersList();
                 List<LogstashBuildWrapper> lsList = Util.filter(bwList, LogstashBuildWrapper.class);
                 if (lsList.isEmpty() != value) {
                     // already matches value.  Do nothing.
@@ -74,8 +74,8 @@ public class LogStashSlicer extends BooleanSlicer<AbstractProject> {
                     bwList.removeAll(lsList);
                 }
                 return true;
-            } else if (item instanceof MavenModuleSet) {
-                DescribableList bwList = ((MavenModuleSet) item).getBuildWrappersList();
+            } else if (item instanceof MavenModuleSet set) {
+                DescribableList bwList = set.getBuildWrappersList();
                 List<LogstashBuildWrapper> lsList = Util.filter(bwList, LogstashBuildWrapper.class);
                 if (lsList.isEmpty() != value) {
                     // already matches value.  Do nothing.

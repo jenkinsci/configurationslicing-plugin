@@ -65,8 +65,8 @@ public class ConfigurationSlicing extends ManagementLink {
         List<Slicer> list = new ArrayList<Slicer>();
         for (Slicer slicer : elist) {
             if (slicer.isLoaded()) {
-                if (slicer instanceof SlicerLoader) {
-                    slicer = ((SlicerLoader) slicer).getDelegate();
+                if (slicer instanceof SlicerLoader<?, ?> loader) {
+                    slicer = loader.getDelegate();
                 }
                 list.add(slicer);
                 LOGGER.fine("Loaded: " + slicer.getClass());
@@ -94,8 +94,7 @@ public class ConfigurationSlicing extends ManagementLink {
             if (baseName != null) {
                 name = baseName + "/" + name;
             }
-            if (view instanceof ViewGroup) {
-                ViewGroup group = (ViewGroup) view;
+            if (view instanceof ViewGroup group) {
                 Collection<View> subviews = group.getViews();
                 addViews(name, subviews, names);
             } else {
@@ -227,8 +226,8 @@ public class ConfigurationSlicing extends ManagementLink {
             String[] split = token.split("/");
             View view = null;
             for (String name : split) {
-                if (view instanceof ViewGroup) {
-                    view = ((ViewGroup) view).getView(name);
+                if (view instanceof ViewGroup group) {
+                    view = group.getView(name);
                 } else {
                     view = Jenkins.get().getView(name);
                 }
