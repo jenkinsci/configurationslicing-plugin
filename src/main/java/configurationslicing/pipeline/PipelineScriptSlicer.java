@@ -50,8 +50,8 @@ public class PipelineScriptSlicer extends UnorderedStringSlicer<WorkflowJob> {
         public List<String> getValues(WorkflowJob item) {
             FlowDefinition definition = item.getDefinition();
             String flow = definition == null ? EMPTY : DEFINED_IN_SCM;
-            if (definition instanceof CpsFlowDefinition) {
-                flow = ((CpsFlowDefinition) definition).getScript();
+            if (definition instanceof CpsFlowDefinition flowDefinition) {
+                flow = flowDefinition.getScript();
                 if (isEmpty(flow)) {
                     flow = EMPTY;
                 }

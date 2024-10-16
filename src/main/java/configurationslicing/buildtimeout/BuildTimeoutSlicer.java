@@ -116,8 +116,8 @@ public class BuildTimeoutSlicer extends UnorderedStringSlicer<BuildableItemWithB
             } else {
                 try {
                     Object o = xs.fromXML(line);
-                    if (o instanceof BuildTimeoutWrapper) {
-                        newWrapper = (BuildTimeoutWrapper) o;
+                    if (o instanceof BuildTimeoutWrapper timeoutWrapper) {
+                        newWrapper = timeoutWrapper;
                         changed = true;
                     }
                 } catch (XStreamException xse) {

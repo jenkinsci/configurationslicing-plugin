@@ -75,10 +75,10 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
 
         @SuppressWarnings("unchecked")
         public static DescribableList<Builder, Descriptor<Builder>> getBuildersList(AbstractProject item) {
-            if (item instanceof Project) {
-                return ((Project) item).getBuildersList();
-            } else if (item instanceof MatrixProject) {
-                return ((MatrixProject) item).getBuildersList();
+            if (item instanceof Project<?, ?> project) {
+                return project.getBuildersList();
+            } else if (item instanceof MatrixProject project) {
+                return project.getBuildersList();
             } else {
                 return null;
             }

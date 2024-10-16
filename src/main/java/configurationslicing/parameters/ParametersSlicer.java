@@ -171,12 +171,11 @@ public class ParametersSlicer extends UnorderedStringSlicer<Job> {
         }
 
         public String toStringValue(ParameterValue value, ParameterDefinition def) {
-            if (value instanceof BooleanParameterValue) {
-                return String.valueOf(((BooleanParameterValue) value).value);
-            } else if (value instanceof StringParameterValue) {
-                return ((StringParameterValue) value).getValue();
-            } else if (def instanceof ChoiceParameterDefinition) {
-                ChoiceParameterDefinition cdef = (ChoiceParameterDefinition) def;
+            if (value instanceof BooleanParameterValue parameterValue) {
+                return String.valueOf(parameterValue.value);
+            } else if (value instanceof StringParameterValue parameterValue) {
+                return parameterValue.getValue();
+            } else if (def instanceof ChoiceParameterDefinition cdef) {
                 List<String> choices = cdef.getChoices();
                 StringBuilder buf = new StringBuilder();
                 for (String choice : choices) {

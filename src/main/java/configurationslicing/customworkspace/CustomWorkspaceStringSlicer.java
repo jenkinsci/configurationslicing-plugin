@@ -29,8 +29,7 @@ public class CustomWorkspaceStringSlicer extends AbstractSimpleProjectSlicer {
 
         @Override
         protected String getValue(AbstractProject item) {
-            if (item instanceof FreeStyleProject) {
-                FreeStyleProject project = (FreeStyleProject) item;
+            if (item instanceof FreeStyleProject project) {
                 String ws = project.getCustomWorkspace();
                 return ws;
             } else {
@@ -40,8 +39,7 @@ public class CustomWorkspaceStringSlicer extends AbstractSimpleProjectSlicer {
 
         @Override
         protected void setValue(AbstractProject item, String value) throws IOException {
-            if (item instanceof FreeStyleProject) {
-                FreeStyleProject project = (FreeStyleProject) item;
+            if (item instanceof FreeStyleProject project) {
                 project.setCustomWorkspace(value);
             }
         }
