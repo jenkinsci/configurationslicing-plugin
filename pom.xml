@@ -42,8 +42,7 @@
 
     <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
     <jenkins.baseline>2.479</jenkins.baseline>
-    <!-- TODO: update to LTS once 2.479.1 is released -->
-    <jenkins.version>${jenkins.baseline}</jenkins.version>
+    <jenkins.version>${jenkins.baseline}.1</jenkins.version>
     <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
 
     <spotless.check.skip>false</spotless.check.skip>
