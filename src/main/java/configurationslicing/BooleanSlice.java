@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 public class BooleanSlice<I> extends Slice {
     private Map<String, Boolean> nameToValue;
@@ -62,7 +62,7 @@ public class BooleanSlice<I> extends Slice {
     }
 
     @Override
-    public Slice newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+    public Slice newInstance(StaplerRequest2 req, JSONObject formData) throws FormException {
         return new BooleanSlice<I>(
                 BooleanSlice.this.spec, req.bindJSONToList(ItemState.class, formData.get("itemstate")));
     }

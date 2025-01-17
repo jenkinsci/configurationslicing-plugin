@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 public class UnorderedStringSlice<I> extends Slice {
 
@@ -162,7 +162,7 @@ public class UnorderedStringSlice<I> extends Slice {
     }
 
     @Override
-    public Slice newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+    public Slice newInstance(StaplerRequest2 req, JSONObject formData) throws FormException {
         return new UnorderedStringSlice<I>(
                 UnorderedStringSlice.this.spec,
                 getStringList(formData, "configValue"),

@@ -6,7 +6,7 @@ import hudson.util.DescribableList;
 import java.util.List;
 import net.sf.json.JSONObject;
 import org.jvnet.hudson.plugins.Jython;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 /**
  * Slicer for the jython builder
@@ -40,10 +40,14 @@ public class ExecuteJythonSlicer extends AbstractBuildCommandSlicer<Jython> {
         @Override
         public Jython createBuilder(String command, List<Jython> existingBuilders, Jython oldBuilder) {
             // this is an unfortunate workaround that is necessary due to the Jython constructor being private
-            StaplerRequest req = null;
+            StaplerRequest2 req = null;
             JSONObject formData = new JSONObject();
             formData.put("jython", command);
-            return (Jython) JYTHON_DESCRIPTOR.newInstance(req, formData);
+            try {
+                return (Jython) JYTHON_DESCRIPTOR.newInstance(req, formData);
+            } catch (Descriptor.FormException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override

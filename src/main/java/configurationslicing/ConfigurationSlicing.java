@@ -9,16 +9,16 @@ import hudson.model.TopLevelItem;
 import hudson.model.View;
 import hudson.model.ViewGroup;
 import hudson.security.Permission;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
-import javax.servlet.ServletException;
 import jenkins.model.Jenkins;
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.StaplerRequest2;
+import org.kohsuke.stapler.StaplerResponse2;
 import org.kohsuke.stapler.interceptor.RequirePOST;
 
 @Extension
@@ -103,7 +103,7 @@ public class ConfigurationSlicing extends ManagementLink {
         }
     }
 
-    public Object getDynamic(String token, StaplerRequest req, StaplerResponse rsp) {
+    public Object getDynamic(String token, StaplerRequest2 req, StaplerResponse2 rsp) {
         Jenkins.get().checkPermission(Hudson.ADMINISTER);
 
         for (Slicer s : getAxes()) {
@@ -188,7 +188,8 @@ public class ConfigurationSlicing extends ManagementLink {
         }
 
         @RequirePOST
-        public void doSliceconfigSubmit(StaplerRequest req, StaplerResponse rsp) throws IOException, ServletException {
+        public void doSliceconfigSubmit(StaplerRequest2 req, StaplerResponse2 rsp)
+                throws IOException, ServletException {
             String pathInfo = req.getPathInfo();
             try {
                 T newslice = (T) slice.newInstance(req, req.getSubmittedForm());
@@ -212,7 +213,7 @@ public class ConfigurationSlicing extends ManagementLink {
             }
         }
 
-        public Object getDynamic(String token, StaplerRequest req, StaplerResponse rsp) {
+        public Object getDynamic(String token, StaplerRequest2 req, StaplerResponse2 rsp) {
             Jenkins.get().checkPermission(Hudson.ADMINISTER);
             String viewName = req.getParameter("view");
             View view = null;

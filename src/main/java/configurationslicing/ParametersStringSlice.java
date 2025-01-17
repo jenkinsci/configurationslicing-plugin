@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import net.sf.json.JSONObject;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 public class ParametersStringSlice<I> extends UnorderedStringSlice<I> {
 
@@ -24,7 +24,7 @@ public class ParametersStringSlice<I> extends UnorderedStringSlice<I> {
     }
 
     @Override
-    public Slice newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+    public Slice newInstance(StaplerRequest2 req, JSONObject formData) throws FormException {
         /*
         {"itemNames":
         ["MD\n","Secure-A-1\nSecure-A-2\nSecure-B-1\nSecure-B-2\n",""],
