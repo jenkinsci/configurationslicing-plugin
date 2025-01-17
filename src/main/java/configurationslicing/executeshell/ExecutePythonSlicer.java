@@ -9,7 +9,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.List;
 import net.sf.json.JSONObject;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 /**
  * Slicer for the python builder
@@ -59,7 +59,7 @@ public class ExecutePythonSlicer extends AbstractBuildCommandSlicer<Python> {
             if (python == null) {
                 // this is an unfortunate workaround that is necessary due to the Python constructor being private in
                 // certain versions
-                StaplerRequest req = null;
+                StaplerRequest2 req = null;
                 JSONObject formData = new JSONObject();
                 formData.put("python", command);
                 try {
