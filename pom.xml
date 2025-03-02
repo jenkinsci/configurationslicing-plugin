@@ -17,19 +17,6 @@
   <name>Configuration Slicing plugin</name>
   <url>https://github.com/jenkinsci/configurationslicing-plugin</url>
 
-  <developers>
-    <developer>
-      <id>jacob_robertson</id>
-      <name>Jacob Robertson</name>
-      <email>jacob.robertson.work@gmail.com</email>
-    </developer>
-    <developer>
-      <id>guy_sheffer</id>
-      <name>Guy Sheffer</name>
-      <email>guysoft@gmail.com</email>
-    </developer>
-  </developers>
-
   <scm>
     <connection>scm:git:https://github.com/${gitHubRepo}</connection>
     <developerConnection>scm:git:https://github.com/${gitHubRepo}</developerConnection>
@@ -42,7 +29,7 @@
 
     <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
     <jenkins.baseline>2.479</jenkins.baseline>
-    <jenkins.version>${jenkins.baseline}.1</jenkins.version>
+    <jenkins.version>${jenkins.baseline}.3</jenkins.version>
     <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
 
     <spotless.check.skip>false</spotless.check.skip>
@@ -54,7 +41,7 @@
         <!-- Pick up common dependencies for the selected LTS line: https://github.com/jenkinsci/bom#usage -->
         <groupId>io.jenkins.tools.bom</groupId>
         <artifactId>bom-${jenkins.baseline}.x</artifactId>
-        <version>4051.v78dce3ce8b_d6</version>
+        <version>4228.v0a_71308d905b_</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -105,7 +92,6 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>claim</artifactId>
-      <version>590.v544cb_038c099</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -133,6 +119,10 @@
       <artifactId>groovy</artifactId>
       <version>497.v7b_061a_a_de65d</version>
       <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>jsoup</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
@@ -204,11 +194,6 @@
       <groupId>org.jenkins-ci.plugins.workflow</groupId>
       <artifactId>workflow-multibranch</artifactId>
       <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.jsoup</groupId>
-      <artifactId>jsoup</artifactId>
-      <version>1.18.3</version>
     </dependency>
     <dependency>
       <groupId>org.jvnet.hudson.plugins</groupId>
