@@ -135,6 +135,10 @@
     </dependency>
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>jsoup</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>junit</artifactId>
     </dependency>
     <dependency>
@@ -203,11 +207,6 @@
       <groupId>org.jenkins-ci.plugins.workflow</groupId>
       <artifactId>workflow-multibranch</artifactId>
       <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.jsoup</groupId>
-      <artifactId>jsoup</artifactId>
-      <version>1.18.3</version>
     </dependency>
     <dependency>
       <groupId>org.jvnet.hudson.plugins</groupId>
