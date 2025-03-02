@@ -117,7 +117,7 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>groovy</artifactId>
-      <version>2.2</version>
+      <version>497.v7b_061a_a_de65d</version>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -153,7 +153,7 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>mask-passwords</artifactId>
-      <version>173.v6a_077a_291eb_5</version>
+      <version>188.v66e477dcb_24a_</version>
       <optional>true</optional>
     </dependency>
     <dependency>
