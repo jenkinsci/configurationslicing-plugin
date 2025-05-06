@@ -1,24 +1,31 @@
 package configurationslicing.maven;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import configurationslicing.maven.MavenSnapshotBuildTrigger.MavenSnapshotBuildTriggerSlicerSpec;
 import hudson.maven.MavenModuleSet;
 import jenkins.model.Jenkins;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
 /**
  * Created by jbischoff on 4/12/16.
  */
-public class MavenSnapshotBuildTriggerTest {
-    @Rule
-    public JenkinsRule r = new JenkinsRule();
+@WithJenkins
+class MavenSnapshotBuildTriggerTest {
+
+    private JenkinsRule r;
+
+    @BeforeEach
+    void setUp(JenkinsRule rule) {
+        r = rule;
+    }
 
     @Test
-    public void testEnableSnapshotBuildTrigger() {
+    void testEnableSnapshotBuildTrigger() {
         // Create the class under test
         MavenSnapshotBuildTriggerSlicerSpec slicerSpec = new MavenSnapshotBuildTriggerSlicerSpec();
         // Create a mock for the MavenModuleSet a.k.a. the project(s) being modified
@@ -36,7 +43,7 @@ public class MavenSnapshotBuildTriggerTest {
     }
 
     @Test
-    public void testDisableSnapshotBuildTrigger() {
+    void testDisableSnapshotBuildTrigger() {
         // Create the class under test
         MavenSnapshotBuildTriggerSlicerSpec slicerSpec = new MavenSnapshotBuildTriggerSlicerSpec();
         // Create a mock for the MavenModuleSet a.k.a. the project(s) being modified

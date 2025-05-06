@@ -1,27 +1,34 @@
 package configurationslicing.claim;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import configurationslicing.claim.ClaimSlicer.ClaimSpec;
 import hudson.maven.MavenModuleSet;
 import hudson.model.AbstractProject;
 import jenkins.model.Jenkins;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
-public class ClaimSlicerTest {
-    @Rule
-    public JenkinsRule r = new JenkinsRule();
+@WithJenkins
+class ClaimSlicerTest {
+
+    private JenkinsRule r;
 
     private static int projectNameCounter = 0;
+
+    @BeforeEach
+    void setUp(JenkinsRule rule) {
+        r = rule;
+    }
 
     /*
      * Test that we can interrogate and set values using the claim slicer on free style projects
      */
     @Test
-    public void testFreeStyleValues() throws Exception {
+    void testFreeStyleValues() throws Exception {
         AbstractProject item = r.createFreeStyleProject();
         doTestValues(item);
     }
@@ -31,7 +38,7 @@ public class ClaimSlicerTest {
      */
 
     @Test
-    public void testMavenValues() throws Exception {
+    void testMavenValues() throws Exception {
         String name = createUniqueProjectName();
         MavenModuleSet mavenModuleSet = Jenkins.get().createProject(MavenModuleSet.class, name);
         mavenModuleSet.setRunHeadless(true);
@@ -45,34 +52,34 @@ public class ClaimSlicerTest {
      * The test that this method returns false otherwise is problematic to test meaningfully in the unit test environment
      */
     @Test
-    public void testIsLoaded() {
+    void testIsLoaded() {
         ClaimSlicer slicer = new ClaimSlicer();
         boolean isLoaded = slicer.isLoaded();
-        assertTrue("Expect claim slicer to be loaded when we have the claim plugin", isLoaded);
+        assertTrue(isLoaded, "Expect claim slicer to be loaded when we have the claim plugin");
     }
 
     private void doTestValues(AbstractProject item) {
         ClaimSpec spec = new ClaimSpec();
         boolean claimsEnabled = spec.getValue(item);
-        assertFalse("Claims should be disabled on a new project", claimsEnabled);
+        assertFalse(claimsEnabled, "Claims should be disabled on a new project");
 
         boolean valueSet = spec.setValue(item, false);
-        assertTrue("disabling a value when it is already disabled should work", valueSet);
+        assertTrue(valueSet, "disabling a value when it is already disabled should work");
 
         valueSet = spec.setValue(item, true);
-        assertTrue("setting a value when it is disabled should work", valueSet);
+        assertTrue(valueSet, "setting a value when it is disabled should work");
 
         claimsEnabled = spec.getValue(item);
-        assertTrue("Claims should be enabled after they have been set", claimsEnabled);
+        assertTrue(claimsEnabled, "Claims should be enabled after they have been set");
 
         valueSet = spec.setValue(item, true);
-        assertTrue("setting a value when it is already enabled should work", valueSet);
+        assertTrue(valueSet, "setting a value when it is already enabled should work");
 
         valueSet = spec.setValue(item, false);
-        assertTrue("removing the publisher when it is enabled should work", valueSet);
+        assertTrue(valueSet, "removing the publisher when it is enabled should work");
 
         claimsEnabled = spec.getValue(item);
-        assertFalse("Claims should be disabled after they have been unset", claimsEnabled);
+        assertFalse(claimsEnabled, "Claims should be disabled after they have been unset");
     }
 
     private String createUniqueProjectName() {

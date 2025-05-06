@@ -1,15 +1,15 @@
 package configurationslicing;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import configurationslicing.executeshell.ExecutePythonSlicer;
 import hudson.plugins.python.Python;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PythonTest {
+class PythonTest {
 
     @Test
-    public void testCreatePython() throws Exception {
+    void testCreatePython() {
         // this is failing at runtime for a method not found problem with "newInstance"
         Python p = new ExecutePythonSlicer.ExecutePythonSliceSpec().createBuilder("hello", null, null);
         assertNotNull(p);

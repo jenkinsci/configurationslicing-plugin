@@ -1,6 +1,6 @@
 package configurationslicing;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import configurationslicing.timer.AbstractTimerSliceSpec;
 import configurationslicing.timer.SCMTimerSliceStringSlicer;
@@ -9,23 +9,30 @@ import hudson.model.AbstractProject;
 import hudson.triggers.Trigger;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
-public class TimerSliceStringSlicerTest {
-    @Rule
-    public JenkinsRule r = new JenkinsRule();
+@WithJenkins
+class TimerSliceStringSlicerTest {
+
+    private JenkinsRule r;
+
+    @BeforeEach
+    void setUp(JenkinsRule rule) {
+        r = rule;
+    }
 
     @Test
-    public void testTimerSliceStringSlicer() throws Exception {
+    void testTimerSliceStringSlicer() throws Exception {
         TimerSliceStringSlicer slicer = new TimerSliceStringSlicer();
         TimerSliceStringSlicer.TimerSliceSpec spec = new TimerSliceStringSlicer.TimerSliceSpec();
         doTestTimerSliceStringSlicer(slicer, spec);
     }
 
     @Test
-    public void testSCMTimerSliceStringSlicer() throws Exception {
+    void testSCMTimerSliceStringSlicer() throws Exception {
         SCMTimerSliceStringSlicer slicer = new SCMTimerSliceStringSlicer();
         SCMTimerSliceStringSlicer.SCMTimerSliceSpec spec = new SCMTimerSliceStringSlicer.SCMTimerSliceSpec();
         doTestTimerSliceStringSlicer(slicer, spec);
@@ -63,7 +70,7 @@ public class TimerSliceStringSlicerTest {
         assertEquals(2, getRealValues(slice).size());
 
         assertEquals(1, project.getTriggers().size());
-        List<String> set = new ArrayList<String>(getRealValues(slice));
+        List<String> set = new ArrayList<>(getRealValues(slice));
         spec.setValues(project, set);
         assertEquals(1, project.getTriggers().size());
         Trigger timer = project.getTrigger(spec.getTriggerClass());
