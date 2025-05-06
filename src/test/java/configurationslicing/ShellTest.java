@@ -8,17 +8,23 @@ import hudson.tasks.Shell;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
-public class ShellTest {
-    @Rule
-    public JenkinsRule r = new JenkinsRule();
+@WithJenkins
+class ShellTest {
 
-    @SuppressWarnings("unchecked")
+    private JenkinsRule r;
+
+    @BeforeEach
+    void setUp(JenkinsRule rule) {
+        r = rule;
+    }
+
     @Test
-    public void testGetMultipleShells() throws Exception {
+    void testGetMultipleShells() throws Exception {
         ExecuteShellSlicer.ExecuteShellSliceSpec spec = new ExecuteShellSlicer.ExecuteShellSliceSpec();
 
         String command1 = "foo";
@@ -32,7 +38,7 @@ public class ShellTest {
     }
 
     @Test
-    public void testSetMultipleShells() throws Exception {
+    void testSetMultipleShells() throws Exception {
         int count = 0;
         doTestSetMultipleShells("shell-" + (count++), new String[] {"a", "b"}, new String[] {"c", "d", "e"});
         doTestSetMultipleShells("shell-" + (count++), new String[] {"a", "b"}, new String[] {"a", "e", "b"});
@@ -44,7 +50,6 @@ public class ShellTest {
         doTestSetMultipleShells("shell-" + (count++), new String[] {}, new String[] {"a", "b"});
     }
 
-    @SuppressWarnings("unchecked")
     public void doTestSetMultipleShells(String name, String[] oldCommands, String[] newCommands) throws Exception {
         ExecuteShellSlicer.ExecuteShellSliceSpec spec = new ExecuteShellSlicer.ExecuteShellSliceSpec();
 
@@ -59,10 +64,10 @@ public class ShellTest {
         List<String> newShells = Arrays.asList(newCommands);
         spec.setValues(project, newShells);
 
-        List<String> newCommandsClean = new ArrayList<String>();
-        for (int i = 0; i < newCommands.length; i++) {
-            if (!"".equals(newCommands[i])) {
-                newCommandsClean.add(newCommands[i]);
+        List<String> newCommandsClean = new ArrayList<>();
+        for (String newCommand : newCommands) {
+            if (!"".equals(newCommand)) {
+                newCommandsClean.add(newCommand);
             }
         }
         if (newCommandsClean.isEmpty()) {
@@ -87,15 +92,15 @@ public class ShellTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void testNoBracketNames() {
+    void testNoBracketNames() {
         ExecuteShellSlicer.ExecuteShellSliceSpec spec = new ExecuteShellSlicer.ExecuteShellSliceSpec();
 
         String v1 = "v1";
-        List<String> configurationValues = new ArrayList<String>();
+        List<String> configurationValues = new ArrayList<>();
         configurationValues.add(v1);
 
         String n1 = "n1";
-        List<String> itemNames = new ArrayList<String>();
+        List<String> itemNames = new ArrayList<>();
         itemNames.add(n1);
 
         UnorderedStringSlice slice = new UnorderedStringSlice(spec, configurationValues, itemNames);
@@ -107,7 +112,7 @@ public class ShellTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void testBracketNames() throws Exception {
+    void testBracketNames() throws Exception {
 
         r.createFreeStyleProject("a");
         r.createFreeStyleProject("b");
@@ -117,11 +122,11 @@ public class ShellTest {
 
         String v1 = "v1";
         String v2 = "v2";
-        List<String> configurationValues = new ArrayList<String>();
+        List<String> configurationValues = new ArrayList<>();
         configurationValues.add(v1);
         configurationValues.add(v2);
 
-        List<String> itemNames = new ArrayList<String>();
+        List<String> itemNames = new ArrayList<>();
         itemNames.add("a[1]\nb[2]");
         itemNames.add("a[0]\nc[4]");
 

@@ -2,15 +2,15 @@ package configurationslicing;
 
 import static configurationslicing.timer.AbstractTimerSliceSpec.joinChronSpec;
 import static configurationslicing.timer.AbstractTimerSliceSpec.splitChronSpec;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class ChronSplittingTest {
+class ChronSplittingTest {
 
     @Test
-    public void testNoSplit() {
+    void testNoSplit() {
         String noSplit = "0 * * * *";
         List<String> lines = splitChronSpec(noSplit);
         assertEquals(1, lines.size());
@@ -20,7 +20,7 @@ public class ChronSplittingTest {
     }
 
     @Test
-    public void testSimpleSplit() {
+    void testSimpleSplit() {
         String line1 = "#comment 1\n0 * * * *";
         String line2 = "#comment 2\n10 * * * *";
         String simpleSplit = line1 + "\n\n" + line2;
@@ -34,7 +34,7 @@ public class ChronSplittingTest {
     }
 
     @Test
-    public void testComplexSplit() {
+    void testComplexSplit() {
         String complexSplit = "\n#comment 1\n0 * * * *\n15 * * * *\n#something\n#comment 2\n\n10 * * * *\n\n";
         List<String> lines = splitChronSpec(complexSplit);
         assertEquals(3, lines.size());

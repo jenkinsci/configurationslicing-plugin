@@ -1,8 +1,6 @@
 package configurationslicing;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import configurationslicing.logrotator.LogRotationSlicer;
 import configurationslicing.logrotator.LogRotationSlicer.LogRotationBuildsSliceSpec;
@@ -11,17 +9,23 @@ import hudson.model.AbstractProject;
 import hudson.tasks.LogRotator;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
-public class LogRotationSlicerTest {
-    @Rule
-    public JenkinsRule r = new JenkinsRule();
+@WithJenkins
+class LogRotationSlicerTest {
+
+    private JenkinsRule r;
+
+    @BeforeEach
+    void setUp(JenkinsRule rule) {
+        r = rule;
+    }
 
     @Test
-    @SuppressWarnings("unchecked")
-    public void testSetValues() throws Exception {
+    void testSetValues() throws Exception {
         AbstractProject item = r.createFreeStyleProject();
 
         int daysToKeep = 111;
@@ -36,7 +40,7 @@ public class LogRotationSlicerTest {
         equalsLogRotator(item.getLogRotator(), daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep);
 
         numToKeep = 12345;
-        List<String> set = new ArrayList<String>();
+        List<String> set = new ArrayList<>();
         set.add(String.valueOf(numToKeep));
 
         LogRotationBuildsSliceSpec buildsSpec = new LogRotationBuildsSliceSpec();
@@ -44,7 +48,7 @@ public class LogRotationSlicerTest {
         equalsLogRotator(item.getLogRotator(), daysToKeep, numToKeep, artifactDaysToKeep, artifactNumToKeep);
 
         daysToKeep = 54321;
-        set = new ArrayList<String>();
+        set = new ArrayList<>();
         set.add(String.valueOf(daysToKeep));
 
         LogRotationDaysSliceSpec daysSpec = new LogRotationDaysSliceSpec();
@@ -61,7 +65,7 @@ public class LogRotationSlicerTest {
     }
 
     @Test
-    public void testLogRotatorEquals() {
+    void testLogRotatorEquals() {
         doTestLogRotatorEquals(0, 0, 0, 0, true);
         doTestLogRotatorEquals(-1, -1, -1, -1, true);
 

@@ -1,24 +1,30 @@
 package configurationslicing;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import configurationslicing.logfilesizechecker.LogfilesizecheckerSlicer;
 import hudson.plugins.logfilesizechecker.LogfilesizecheckerWrapper;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
-public class LogfilesizecheckerSlicerTest {
+@WithJenkins
+class LogfilesizecheckerSlicerTest {
 
-    @Rule
-    public final JenkinsRule r = new JenkinsRule();
+    private JenkinsRule r;
 
     int maxLogSize = 3;
     boolean failBuild = true;
     boolean setOwn = true;
 
+    @BeforeEach
+    void setUp(JenkinsRule rule) {
+        r = rule;
+    }
+
     @Test
-    public void testNewLogfilesizecheckerWrapper() {
+    void testNewLogfilesizecheckerWrapper() {
         LogfilesizecheckerWrapper wrapper = LogfilesizecheckerSlicer.LogfilesizeSliceSpec.newLogfilesizecheckerWrapper(
                 maxLogSize, failBuild, setOwn);
         assertEquals(maxLogSize, wrapper.maxLogSize);
@@ -27,7 +33,7 @@ public class LogfilesizecheckerSlicerTest {
     }
 
     @Test
-    public void testLogfilesizecheckerWrapperConstructor() {
+    void testLogfilesizecheckerWrapperConstructor() {
         LogfilesizecheckerWrapper wrapper = new LogfilesizecheckerWrapper(maxLogSize, failBuild, setOwn);
         assertEquals(maxLogSize, wrapper.maxLogSize);
         assertEquals(failBuild, wrapper.failBuild);

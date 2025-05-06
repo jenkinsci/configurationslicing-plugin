@@ -1,20 +1,28 @@
 package configurationslicing;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import jenkins.model.Jenkins;
 import org.htmlunit.FailingHttpStatusCodeException;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
 import org.jvnet.hudson.test.MockAuthorizationStrategy;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
-public class ConfigurationSlicingTest {
+@WithJenkins
+class ConfigurationSlicingTest {
 
-    public @Rule JenkinsRule j = new JenkinsRule();
+    private JenkinsRule j;
+
+    @BeforeEach
+    void setUp(JenkinsRule rule) {
+        j = rule;
+    }
 
     @Test
-    public void ensureManagementLinkRequiresAdministerPermission() throws Exception {
+    void ensureManagementLinkRequiresAdministerPermission() throws Exception {
         j.jenkins.setSecurityRealm(j.createDummySecurityRealm());
         j.jenkins.setAuthorizationStrategy(new MockAuthorizationStrategy()
                 .grant(Jenkins.READ)
@@ -24,12 +32,11 @@ public class ConfigurationSlicingTest {
                 .everywhere()
                 .to("root"));
 
-        assertEquals(
-                403,
-                assertThrows(
-                                FailingHttpStatusCodeException.class,
-                                () -> j.createWebClient().login("user").goTo("slicing"))
-                        .getStatusCode());
+        FailingHttpStatusCodeException ex = assertThrows(
+                FailingHttpStatusCodeException.class,
+                () -> j.createWebClient().login("user").goTo("slicing"));
+        assertEquals(403, ex.getStatusCode());
+
         j.createWebClient().login("root").goTo("slicing");
     }
 }
