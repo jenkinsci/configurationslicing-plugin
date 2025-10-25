@@ -4,8 +4,8 @@ import hudson.model.Item;
 import hudson.model.TopLevelItem;
 import java.util.List;
 import jenkins.model.Jenkins;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Predicate;
 
 /**
  * Helper class to provide all top level items configured in Jenkins, excluding other items
