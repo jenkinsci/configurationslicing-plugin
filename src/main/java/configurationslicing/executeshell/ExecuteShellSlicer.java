@@ -45,11 +45,6 @@ public class ExecuteShellSlicer extends AbstractBuildCommandSlicer<Shell> {
         }
 
         @Override
-        public String getUnstableReturn(Shell builder) {
-            return builder.getUnstableReturn();
-        }
-
-        @Override
         public List<Shell> getConcreteBuildersList(DescribableList<Builder, Descriptor<Builder>> buildersList) {
             return buildersList.getAll(Shell.class);
         }
