@@ -31,6 +31,7 @@ public class ExecuteShellSlicer extends AbstractBuildCommandSlicer<Shell> {
         public Shell createBuilder(String command, List<Shell> existingBuilders, Shell oldBuilder) {
             Shell newBuilder = new Shell(command);
             newBuilder.setUnstableReturn(oldBuilder.getUnstableReturn());
+            newBuilder.setConfiguredLocalRules(oldBuilder.getConfiguredLocalRules());
             return newBuilder;
         }
 
