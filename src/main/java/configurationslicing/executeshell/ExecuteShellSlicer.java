@@ -30,10 +30,10 @@ public class ExecuteShellSlicer extends AbstractBuildCommandSlicer<Shell> {
         @Override
         public Shell createBuilder(String command, List<Shell> existingBuilders, Shell oldBuilder) {
             Shell newBuilder = new Shell(command);
-            if ( oldBuilder != null ) {
+            if (oldBuilder != null) {
                 newBuilder.setUnstableReturn(oldBuilder.getUnstableReturn());
-                 // setConfiguredLocalRules is declared beta, commenting until beta is removed
-                 // newBuilder.setConfiguredLocalRules(oldBuilder.getConfiguredLocalRules());
+                // setConfiguredLocalRules is declared beta, commenting until beta is removed
+                // newBuilder.setConfiguredLocalRules(oldBuilder.getConfiguredLocalRules());
             }
             return newBuilder;
         }
