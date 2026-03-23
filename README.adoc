@@ -12,7 +12,7 @@ endif::[]
 
 image:https://img.shields.io/jenkins/plugin/v/configurationslicing.svg[Jenkins Plugin,link=https://plugins.jenkins.io/configurationslicing]
 image:https://img.shields.io/github/release/jenkinsci/configurationslicing-plugin.svg?label=release[GitHub release,link=https://github.com/jenkinsci/configurationslicing-plugin/releases/latest]
-image:https://ci.jenkins.io/job/Plugins/job/configurationslicing-plugin/job/master/badge/icon[Build Status,link=https://ci.jenkins.io/job/Plugins/job/configurationslicing-plugin/job/master/]
+image:https://ci.jenkins.io/buildStatus/icon?job=Plugins%2Fconfigurationslicing-plugin%2Fmaster[link='https://ci.jenkins.io/job/Plugins/job/configurationslicing-plugin/job/master/']
 
 toc::[]
 
