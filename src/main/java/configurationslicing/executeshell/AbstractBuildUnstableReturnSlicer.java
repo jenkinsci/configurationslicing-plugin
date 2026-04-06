@@ -12,7 +12,7 @@ import java.util.List;
 import jenkins.model.Jenkins;
 
 /**
- * @author Jacob Robertson
+ * @author jgyprime
  */
 public abstract class AbstractBuildUnstableReturnSlicer<B extends Builder> extends UnorderedStringSlicer<AbstractProject> {
 
