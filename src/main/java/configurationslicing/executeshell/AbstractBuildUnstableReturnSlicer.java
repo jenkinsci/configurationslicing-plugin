@@ -14,7 +14,8 @@ import jenkins.model.Jenkins;
 /**
  * @author jgyprime
  */
-public abstract class AbstractBuildUnstableReturnSlicer<B extends Builder> extends UnorderedStringSlicer<AbstractProject> {
+public abstract class AbstractBuildUnstableReturnSlicer<B extends Builder>
+        extends UnorderedStringSlicer<AbstractProject> {
 
     public AbstractBuildUnstableReturnSlicer(AbstractBuildUnstableReturnSliceSpec<B> spec) {
         super(spec);
@@ -56,7 +57,7 @@ public abstract class AbstractBuildUnstableReturnSlicer<B extends Builder> exten
         public abstract List<B> getConcreteBuildersList(DescribableList<Builder, Descriptor<Builder>> buildersList);
 
         public abstract String getCommand(B builder);
-        
+
         public abstract String getUnstableReturn(B builder);
 
         public abstract void setUnstableReturn(B builder, int value);

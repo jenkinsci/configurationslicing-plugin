@@ -62,7 +62,7 @@ public class ExecuteShellUnstableReturnSlicer extends AbstractBuildUnstableRetur
         public String getUnstableReturn(Shell builder) {
             if (builder != null) {
                 Integer retval = builder.getUnstableReturn();
-                if(retval != null) {
+                if (retval != null) {
                     return retval.toString();
                 } else {
                     return NOTHING;
