@@ -24,7 +24,7 @@ public class ExecuteShellUnstableReturnSlicer extends AbstractBuildUnstableRetur
         }
 
         public String getUrl() {
-            return "executeshellunstableueturnslice";
+            return "executeshellunstablereturnslice";
         }
 
         @Override
