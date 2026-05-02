@@ -141,7 +141,7 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>logstash</artifactId>
-      <version>2.3.2</version>
+      <version>2.5.0236.v8fc08ee0b_78d</version>
       <optional>true</optional>
       <exclusions>
         <exclusion>
