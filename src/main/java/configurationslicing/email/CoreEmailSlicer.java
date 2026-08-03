@@ -12,7 +12,7 @@ import hudson.tasks.Publisher;
 import hudson.util.DescribableList;
 import java.io.IOException;
 import jenkins.model.Jenkins;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 @Extension(optional = true)
 public class CoreEmailSlicer extends UnorderedStringSlicer<AbstractProject> {

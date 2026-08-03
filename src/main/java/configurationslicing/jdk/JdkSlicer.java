@@ -8,9 +8,9 @@ import hudson.model.JDK;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import jenkins.model.Jenkins;
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 @Extension
 public class JdkSlicer extends UnorderedStringSlicer<AbstractProject> {
@@ -75,7 +75,7 @@ public class JdkSlicer extends UnorderedStringSlicer<AbstractProject> {
         }
 
         public static boolean equals(JDK j1, JDK j2) {
-            if (ObjectUtils.equals(j1, j2)) {
+            if (Objects.equals(j1, j2)) {
                 return true;
             }
             if (j1 == null || j2 == null) {
