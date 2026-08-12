@@ -8,6 +8,7 @@ import hudson.model.Descriptor;
 import hudson.model.Project;
 import hudson.tasks.Builder;
 import hudson.util.DescribableList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +67,7 @@ public abstract class AbstractBuildUnstableReturnSlicer<B extends Builder>
 
         public abstract B createBuilder(String UnstableReturn, List<B> existingBuilders, B oldBuilder);
 
-public List<AbstractProject> getWorkDomain() {
+        public List<AbstractProject> getWorkDomain() {
             List<AbstractProject> list = new ArrayList<>();
             for (AbstractProject p : TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class)) {
                 if (p instanceof Project || p instanceof MatrixProject) {

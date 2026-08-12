@@ -61,7 +61,6 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
 
         public abstract B createBuilder(String command, List<B> existingBuilders, B oldBuilder);
 
-        @SuppressWarnings("unchecked")
         public List<AbstractProject> getWorkDomain() {
             List<AbstractProject> list = new ArrayList<>();
             for (AbstractProject p : TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class)) {
