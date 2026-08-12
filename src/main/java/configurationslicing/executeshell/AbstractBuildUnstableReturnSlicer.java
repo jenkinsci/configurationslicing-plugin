@@ -8,7 +8,6 @@ import hudson.model.Descriptor;
 import hudson.model.Project;
 import hudson.tasks.Builder;
 import hudson.util.DescribableList;
-
 import java.util.ArrayList;
 import java.util.List;
 
