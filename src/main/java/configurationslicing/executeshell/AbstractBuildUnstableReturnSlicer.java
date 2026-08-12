@@ -66,8 +66,7 @@ public abstract class AbstractBuildUnstableReturnSlicer<B extends Builder>
 
         public abstract B createBuilder(String UnstableReturn, List<B> existingBuilders, B oldBuilder);
 
-        @SuppressWarnings("unchecked")
-        public List<AbstractProject> getWorkDomain() {
+public List<AbstractProject> getWorkDomain() {
             List<AbstractProject> list = new ArrayList<>();
             for (AbstractProject p : TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class)) {
                 if (p instanceof Project || p instanceof MatrixProject) {
