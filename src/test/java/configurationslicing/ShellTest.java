@@ -48,9 +48,7 @@ class ShellTest {
     @Test
     void workDomainExcludesMatrixConfigurations() throws Exception {
         MatrixProject matrix = r.jenkins.createProject(MatrixProject.class, "FoxtrotLauncher");
-        matrix.setAxes(new AxisList(
-                new TextAxis("Env", "testenv"),
-                new TextAxis("Group", "tools", "alarms", "api")));
+        matrix.setAxes(new AxisList(new TextAxis("Env", "testenv"), new TextAxis("Group", "tools", "alarms", "api")));
         matrix.getBuildersList().add(new Shell("echo matrix"));
         matrix.save();
 
