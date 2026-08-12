@@ -1,5 +1,6 @@
 package configurationslicing.executeshell;
 
+import configurationslicing.TopLevelItemSelector;
 import configurationslicing.UnorderedStringSlicer;
 import hudson.matrix.MatrixProject;
 import hudson.model.AbstractProject;
@@ -9,7 +10,6 @@ import hudson.tasks.Builder;
 import hudson.util.DescribableList;
 import java.util.ArrayList;
 import java.util.List;
-import jenkins.model.Jenkins;
 
 /**
  * @author jgyprime
@@ -66,11 +66,10 @@ public abstract class AbstractBuildUnstableReturnSlicer<B extends Builder>
 
         public abstract B createBuilder(String UnstableReturn, List<B> existingBuilders, B oldBuilder);
 
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({"unchecked"})
         public List<AbstractProject> getWorkDomain() {
-            List<AbstractProject> list = new ArrayList<AbstractProject>();
-            List<AbstractProject> temp = Jenkins.get().getAllItems(AbstractProject.class);
-            for (AbstractProject p : temp) {
+            List<AbstractProject> list = new ArrayList<>();
+            for (AbstractProject p : TopLevelItemSelector.getAllTopLevelItems(AbstractProject.class)) {
                 if (p instanceof Project || p instanceof MatrixProject) {
                     list.add(p);
                 }
