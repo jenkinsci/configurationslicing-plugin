@@ -1,8 +1,13 @@
 package configurationslicing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import configurationslicing.executeshell.ExecuteShellSlicer;
+import hudson.matrix.Axis;
+import hudson.matrix.AxisList;
+import hudson.matrix.MatrixConfiguration;
+import hudson.matrix.MatrixProject;
 import hudson.model.Project;
 import hudson.tasks.Shell;
 import java.util.ArrayList;
@@ -48,6 +53,21 @@ class ShellTest {
         doTestSetMultipleShells("shell-" + (count++), new String[] {"a", "b", "c"}, new String[] {"", "d", "", "e"});
         doTestSetMultipleShells("shell-" + (count++), new String[] {"a", "b", "c"}, new String[] {"c", "b", "a"});
         doTestSetMultipleShells("shell-" + (count++), new String[] {}, new String[] {"a", "b"});
+    }
+
+    @Test
+    void testGetWorkDomainExcludesMatrixConfigurations() throws Exception {
+        ExecuteShellSlicer.ExecuteShellSliceSpec spec = new ExecuteShellSlicer.ExecuteShellSliceSpec();
+        MatrixProject matrixProject = r.createProject(MatrixProject.class, "matrix-project");
+        matrixProject.setAxes(new AxisList(new Axis("environment", "development", "production")));
+        matrixProject.getBuildersList().add(new Shell("echo matrix"));
+
+        List<?> workDomain = spec.getWorkDomain();
+
+        assertEquals(2, matrixProject.getItems().size());
+        assertEquals(1, workDomain.size());
+        assertEquals(matrixProject, workDomain.get(0));
+        assertFalse(workDomain.stream().anyMatch(MatrixConfiguration.class::isInstance));
     }
 
     public void doTestSetMultipleShells(String name, String[] oldCommands, String[] newCommands) throws Exception {

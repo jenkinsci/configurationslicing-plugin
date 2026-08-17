@@ -1,6 +1,7 @@
 package configurationslicing.executeshell;
 
 import configurationslicing.UnorderedStringSlicer;
+import hudson.matrix.MatrixConfiguration;
 import hudson.matrix.MatrixProject;
 import hudson.model.AbstractProject;
 import hudson.model.Descriptor;
@@ -66,6 +67,9 @@ public abstract class AbstractBuildCommandSlicer<B extends Builder> extends Unor
             List<AbstractProject> list = new ArrayList<AbstractProject>();
             List<AbstractProject> temp = Jenkins.get().getAllItems(AbstractProject.class);
             for (AbstractProject p : temp) {
+                if (p instanceof MatrixConfiguration) {
+                    continue;
+                }
                 if (p instanceof Project || p instanceof MatrixProject) {
                     list.add(p);
                 }
