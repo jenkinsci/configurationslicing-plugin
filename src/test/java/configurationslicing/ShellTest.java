@@ -1,8 +1,16 @@
 package configurationslicing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import configurationslicing.executeshell.ExecuteShellSlicer;
+import configurationslicing.executeshell.ExecuteShellUnstableReturnSlicer;
+import hudson.matrix.AxisList;
+import hudson.matrix.MatrixConfiguration;
+import hudson.matrix.MatrixProject;
+import hudson.matrix.TextAxis;
+import hudson.model.AbstractProject;
 import hudson.model.Project;
 import hudson.tasks.Shell;
 import java.util.ArrayList;
@@ -35,6 +43,37 @@ class ShellTest {
         List<String> values = spec.getValues(project);
         assertEquals(command1, values.get(0));
         assertEquals(command2, values.get(1));
+    }
+
+    @Test
+    void workDomainExcludesMatrixConfigurations() throws Exception {
+        MatrixProject matrix = r.jenkins.createProject(MatrixProject.class, "FoxtrotLauncher");
+        matrix.setAxes(new AxisList(new TextAxis("Env", "testenv"), new TextAxis("Group", "tools", "alarms", "api")));
+        matrix.getBuildersList().add(new Shell("echo matrix"));
+        matrix.save();
+
+        Project freestyle = createProject("standalone", "echo freestyle");
+
+        assertFalse(matrix.getItems().isEmpty(), "matrix configurations should exist");
+
+        assertWorkDomainExcludesConfigurations(new ExecuteShellSlicer.ExecuteShellSliceSpec(), matrix, freestyle);
+        assertWorkDomainExcludesConfigurations(
+                new ExecuteShellUnstableReturnSlicer.ExecuteShellUnstableReturnSliceSpec(), matrix, freestyle);
+    }
+
+    private void assertWorkDomainExcludesConfigurations(
+            UnorderedStringSlicer.UnorderedStringSlicerSpec<AbstractProject> spec,
+            MatrixProject matrix,
+            Project freestyle) {
+        List<AbstractProject> domain = spec.getWorkDomain();
+
+        assertTrue(domain.contains(matrix), "matrix parent job should be in work domain");
+        assertTrue(domain.contains(freestyle), "freestyle job should be in work domain");
+        for (MatrixConfiguration configuration : matrix.getItems()) {
+            assertFalse(
+                    domain.contains(configuration),
+                    () -> "matrix configuration should not be in work domain: " + configuration.getFullName());
+        }
     }
 
     @Test
