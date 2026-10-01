@@ -116,7 +116,7 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>gradle</artifactId>
-      <version>2.14</version>
+      <version>2.20.1253.vc116f0763a_eb_</version>
       <optional>true</optional>
     </dependency>
     <dependency>
